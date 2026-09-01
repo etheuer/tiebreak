@@ -1,0 +1,484 @@
+@import "tailwindcss";
+
+/*
+  Tiebreak design tokens.
+  Light-first. Dark mode follows the system preference.
+  One accent (verdigris) for the brand and product A; one paired data hue
+  (sienna) reserved for product B so a winner is never coded as good/bad.
+*/
+
+:root {
+  --bg: #f5f5f1;
+  --surface: #ffffff;
+  --surface-2: #ecece6;
+  --surface-3: #e3e3db;
+  --line: #dededa;
+  --line-2: #c6c6bb;
+
+  --ink: #17191a;
+  --ink-2: #565a57;
+  --ink-3: #85897f;
+
+  --accent: #0c7c6c;
+  --accent-2: #095c50;
+  --accent-soft: #dcefea;
+  --accent-tint: #f2f9f7;
+
+  --rival: #b0521e;
+  --rival-2: #8c3f16;
+  --rival-soft: #f7e7d9;
+  --rival-tint: #fdf6f1;
+
+  --shadow-1: 0 1px 2px rgb(20 22 20 / 0.05);
+  --shadow-2: 0 6px 24px -12px rgb(20 22 20 / 0.28);
+
+  --header-h: 56px;
+  --label-col: 108px;
+  --radius: 12px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --label-col: 210px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 60px;
+    --label-col: 260px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101214;
+    --surface: #171a1c;
+    --surface-2: #1e2225;
+    --surface-3: #262b2f;
+    --line: #282d31;
+    --line-2: #3a4046;
+
+    --ink: #e9eae6;
+    --ink-2: #a6aba6;
+    --ink-3: #7b807c;
+
+    --accent: #34b39c;
+    --accent-2: #5ccdb7;
+    --accent-soft: #10322d;
+    --accent-tint: #111f1d;
+
+    --rival: #e08b52;
+    --rival-2: #efa372;
+    --rival-soft: #33210f;
+    --rival-tint: #1d1712;
+
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-2: 0 6px 24px -12px rgb(0 0 0 / 0.7);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-tint: var(--accent-tint);
+
+  --color-rival: var(--rival);
+  --color-rival-2: var(--rival-2);
+  --color-rival-soft: var(--rival-soft);
+  --color-rival-tint: var(--rival-tint);
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- layout primitives ---------- */
+
+.shell {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.shell-wide {
+  max-width: 1320px;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    padding-inline: 28px;
+  }
+}
+
+.rule-top {
+  border-top: 1px solid var(--line);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.num {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.display {
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  font-weight: 700;
+}
+
+/* ---------- brand mark ---------- */
+
+.mark-slash {
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  background: var(--accent);
+  transform: skewX(-18deg);
+  border-radius: 1px;
+}
+
+/* ---------- comparison grid ---------- */
+
+.cmp-grid {
+  display: grid;
+  grid-template-columns: var(--label-col) 1fr 1fr;
+}
+
+.spec-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.spec-table col.col-label {
+  width: var(--label-col);
+}
+
+.spec-table th,
+.spec-table td {
+  padding: 9px 10px;
+  vertical-align: top;
+  text-align: left;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 640px) {
+  .spec-table th,
+  .spec-table td {
+    padding: 11px 16px;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+}
+
+.spec-table tr:first-child th,
+.spec-table tr:first-child td {
+  border-top: 0;
+}
+
+.spec-table th.row-label {
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.col-a {
+  background: var(--accent-tint);
+}
+
+.col-b {
+  background: var(--rival-tint);
+}
+
+.spec-table tbody tr:hover .col-a,
+.spec-table tbody tr:hover .col-b {
+  filter: brightness(0.985);
+}
+
+@media (prefers-color-scheme: dark) {
+  .spec-table tbody tr:hover .col-a,
+  .spec-table tbody tr:hover .col-b {
+    filter: brightness(1.35);
+  }
+}
+
+.val-same {
+  color: var(--ink-3);
+}
+
+.val-diff {
+  color: var(--ink);
+}
+
+.val-win-a {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.val-win-b {
+  color: var(--rival-2);
+  font-weight: 600;
+}
+
+.win-flag {
+  display: inline-block;
+  font-size: 9px;
+  line-height: 1;
+  transform: translateY(-1px);
+  margin-right: 4px;
+}
+
+/* Mobile only: let a shopper collapse to one product so values stop wrapping. */
+@media (max-width: 639px) {
+  .focus-a .col-b,
+  .focus-b .col-a {
+    display: none !important;
+  }
+
+  .focus-a .cmp-grid,
+  .focus-b .cmp-grid {
+    grid-template-columns: var(--label-col) 1fr;
+  }
+}
+
+/* ---------- controls ---------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.chip:hover {
+  color: var(--ink);
+  border-color: var(--line-2);
+}
+
+.chip[data-on="true"] {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--accent-2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 16px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn-primary {
+    color: #08201c;
+  }
+}
+
+.btn-ghost {
+  border: 1px solid var(--line-2);
+  color: var(--ink);
+}
+
+.btn-ghost:hover {
+  background: var(--surface-2);
+}
+
+.link-underline {
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.link-underline:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* ---------- decision panel ---------- */
+
+.db-check {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.db-row {
+  transition: background 0.15s ease;
+}
+
+.db-row[data-on="true"] {
+  background: var(--surface-2);
+}
+
+.db-side {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 0;
+}
+
+.db-trips {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.db-clear {
+  color: var(--ink-3);
+}
+
+.db-side[data-out="true"] {
+  color: var(--ink-3);
+  text-decoration: line-through;
+  text-decoration-color: var(--line-2);
+}
+
+.db-out {
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 1px 6px;
+  background: var(--surface-3);
+  color: var(--ink-2);
+  flex: none;
+}
+
+/* ---------- product mark ---------- */
+
+.p-mark {
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 120% at 20% 0%, color-mix(in oklab, var(--mark-hue) 24%, transparent), transparent 62%),
+    var(--surface-2);
+  color: var(--mark-hue);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  overflow: hidden;
+  flex: none;
+}
+
+/* ---------- misc ---------- */
+
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-x::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border-radius: 999px;
+}
+
+.hairline-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(70% 80% at 50% 0%, #000 0%, transparent 78%);
+}
