@@ -1,6 +1,13 @@
 import { SPEC_UNITS } from '@/data/spec-units'
 import { MARKETS, type MarketId } from '@/lib/markets'
 import { qty } from '@/lib/units'
+import { CATALOG_AS_OF } from '@/lib/site'
+
+export function formatCatalogDate(dateStr: string = CATALOG_AS_OF): string {
+  const [year, month, day] = dateStr.split('-').map(Number)
+  const date = new Date(Date.UTC(year, month - 1, day))
+  return new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(date)
+}
 
 export function displaySpec(spec: string, key: string, market: MarketId): string {
   if (market === 'us') return spec

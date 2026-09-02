@@ -1,10 +1,35 @@
-import { getCategories, getComparisons, getProducts } from '@/lib/data'
+import { getCategories, getComparisons, getProducts, type Comparison, type Product } from '@/lib/data'
 import { buildVerdict, verdictLine } from '@/lib/verdict'
-import { categoryHref, compareHref, priceShort, productHref, subLabel } from '@/lib/nav'
-import { absUrl, SITE_NAME } from '@/lib/site'
+import { categoryHref, compareHref, hubHref, isFeeBased, SUBCATEGORY_LABEL } from '@/lib/nav'
+import { absUrl, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
 import type { MarketId } from '@/lib/markets'
+import { formatMoney } from '@/lib/format'
+import { checkDealBreakers, flattenRows, sentenceCase } from '@/lib/decision'
+import { casesFor } from '@/data/use-cases'
+import { buildLensAnswers } from '@/lib/faq'
 
-export async function buildLlmsText(market: MarketId): Promise<string> {
+const FLAGSHIP_TERMS = [
+  'iPhone',
+  'Galaxy',
+  'MacBook',
+  'OLED',
+  'Bravia',
+  'A95',
+  'Dyson',
+  'Amex',
+  'WH-1000',
+  'Bose',
+] as const
+
+function compareMarkdownHref(comparison: Comparison, market: MarketId): string {
+  return compareHref(comparison, market).replace(/\/$/, '/index.md')
+}
+
+function flagshipTerm(name: string): (typeof FLAGSHIP_TERMS)[number] | null {
+  return FLAGSHIP_TERMS.find((term) => name.includes(term)) ?? null
+}
+
+export async function buildLlmsText(market: MarketId = 'us'): Promise<string> {
   const [products, comparisons, categories] = await Promise.all([
     getProducts(market),
     getComparisons(market),
@@ -13,79 +38,172 @@ export async function buildLlmsText(market: MarketId): Promise<string> {
 
   const byId = new Map(products.map((p) => [p.id, p]))
 
-  const matchupsBySub = new Map<string, typeof comparisons>()
-  for (const c of comparisons) {
-    const productA = byId.get(c.productA)
-    const sub = productA?.subcategory ?? 'other'
-    const list = matchupsBySub.get(sub) ?? []
-    list.push(c)
-    matchupsBySub.set(sub, list)
+  // Curate matchups: one featured pair per subcategory + up to 20 flagship pairs
+  const selectedComps: typeof comparisons = []
+  const seenSlugs = new Set<string>()
+
+  for (const sub of Object.keys(SUBCATEGORY_LABEL)) {
+    const found = comparisons.find((c) => {
+      const pA = byId.get(c.productA)
+      return pA?.subcategory === sub
+    })
+    if (found) {
+      const slug = `${found.productA}-vs-${found.productB}`
+      selectedComps.push(found)
+      seenSlugs.add(slug)
+    }
   }
 
-  const productsBySub = new Map<string, typeof products>()
-  for (const p of products) {
-    const list = productsBySub.get(p.subcategory) ?? []
-    list.push(p)
-    productsBySub.set(p.subcategory, list)
+  const buckets = new Map<string, Comparison[]>()
+  for (const term of FLAGSHIP_TERMS) buckets.set(term, [])
+  for (const c of comparisons) {
+    const slug = `${c.productA}-vs-${c.productB}`
+    if (seenSlugs.has(slug)) continue
+    const term = flagshipTerm(c.productName)
+    if (!term) continue
+    buckets.get(term)!.push(c)
+  }
+  let added = 0
+  let round = 0
+  while (added < 20) {
+    let progressed = false
+    for (const term of FLAGSHIP_TERMS) {
+      const bucket = buckets.get(term)!
+      const next = bucket[round]
+      if (!next) continue
+      const slug = `${next.productA}-vs-${next.productB}`
+      if (seenSlugs.has(slug)) continue
+      selectedComps.push(next)
+      seenSlugs.add(slug)
+      added += 1
+      progressed = true
+      if (added >= 20) break
+    }
+    if (!progressed) break
+    round += 1
   }
 
   const lines: string[] = []
   lines.push(`# ${SITE_NAME}`)
   lines.push('')
   lines.push(
-    market === 'uk'
-      ? 'UK English edition. Head-to-head product comparisons scored from published specifications.'
-      : 'Head-to-head product comparisons scored from published specifications. Every matchup delivers a spec-by-spec breakdown, highlights critical differences, and provides a clear verdict for shoppers who have already narrowed their choice down to two.'
-  )
-  lines.push('')
-  lines.push(
-    `Most figures come from official spec sheets. Some rows (marked on the page) are other published figures that usually do not appear on the maker sheet. ${SITE_NAME} does not run a lab. Rankings reflect published numbers, not measurements we took.`
+    `> Head-to-head product comparisons scored from published specifications for shoppers deciding between two options. Spec-sheet comparisons not lab tests. US catalog. Catalog as of ${CATALOG_AS_OF}.`
   )
   lines.push('')
   lines.push('## Matchups')
   lines.push('')
 
-  for (const [sub, comps] of matchupsBySub.entries()) {
-    lines.push(`### ${subLabel(sub)}`)
-    lines.push('')
-    for (const c of comps) {
-      const a = byId.get(c.productA)
-      const b = byId.get(c.productB)
-      const claim = a && b ? verdictLine(a, b, buildVerdict(a, b, market), market) : c.description
-      lines.push(`- [${c.productName}](${absUrl(compareHref(c, market))}): ${claim}`)
-    }
-    lines.push('')
+  for (const c of selectedComps) {
+    const a = byId.get(c.productA)
+    const b = byId.get(c.productB)
+    const claim = a && b ? verdictLine(a, b, buildVerdict(a, b, market), market) : c.description
+    const html = absUrl(compareHref(c, market))
+    const md = absUrl(compareMarkdownHref(c, market))
+    lines.push(`- [${c.productName}](${html}): ${claim} — [Markdown](${md})`)
   }
 
+  lines.push('')
+  lines.push('## All matchups')
+  lines.push('')
+  lines.push(`- [All comparisons](${absUrl(hubHref(market))}): Full directory of all pairwise product comparisons`)
+  lines.push(`- [Sitemap](${absUrl('/sitemap.xml')}): Complete XML index of all comparison, product, and category URLs`)
+  lines.push('')
+  lines.push('## Methodology')
+  lines.push('')
+  lines.push(`- [How Tiebreak works](${absUrl('/about/')}): Scoring methodology based entirely on published manufacturer specifications`)
+  lines.push('')
   lines.push('## Products')
   lines.push('')
-  for (const [sub, prods] of productsBySub.entries()) {
-    lines.push(`### ${subLabel(sub)}`)
-    lines.push('')
-    for (const p of prods) {
-      lines.push(`- [${p.name}](${absUrl(productHref(p, market))}): ${priceShort(p, market)} · ${p.description}`)
-    }
-    lines.push('')
-  }
-
-  lines.push('## Categories')
-  lines.push('')
   for (const cat of categories) {
-    lines.push(`- [${cat.name}](${absUrl(categoryHref(cat.id, market))})`)
+    lines.push(`- [${cat.name}](${absUrl(categoryHref(cat.id, market))}): ${cat.name} comparisons and spec sheets`)
   }
   lines.push('')
-
-  lines.push('## About this site')
-  lines.push('')
-  lines.push('- US catalog only on this launch. Figures are published specs, not lab tests we ran. Some rows are marked as not on the official sheet.')
-  lines.push('- Prices are list snapshots, not live offers. Credit-card pages are not financial advice.')
-  lines.push(`- [How ${SITE_NAME} works](${absUrl('/about/')})`)
-  lines.push(`- [Privacy](${absUrl('/privacy/')}) · [Terms](${absUrl('/terms/')}) · [Contact](${absUrl('/contact/')})`)
+  lines.push(`- [Privacy Policy](${absUrl('/privacy/')})`)
+  lines.push(`- [Terms of Service](${absUrl('/terms/')})`)
+  lines.push(`- [Contact](${absUrl('/contact/')})`)
   lines.push('')
 
-  lines.push('## Machine-readable')
+  return lines.join('\n')
+}
+
+export function buildCompareMarkdown(
+  comparison: Comparison,
+  productA: Product,
+  productB: Product,
+  market: MarketId = 'us'
+): string {
+  const verdict = buildVerdict(productA, productB, market)
+  const answer = verdictLine(productA, productB, verdict, market)
+  const rows = flattenRows(verdict)
+  const checks = checkDealBreakers(productA, productB)
+  const useCases = casesFor(productA.subcategory)
+  const lenses = buildLensAnswers(productA, productB, rows, checks, useCases, market)
+
+  const diffRows = rows.filter((r) => r.differs)
+  const cheaper = verdict.priceLeader === 'a' ? productA : verdict.priceLeader === 'b' ? productB : null
+  const fee = isFeeBased(productA.subcategory)
+
+  const lines: string[] = []
+  lines.push('Index: /llms.txt')
   lines.push('')
-  lines.push(`- [Sitemap](${absUrl('/sitemap.xml')})`)
+  lines.push(`# ${comparison.productName}`)
+  lines.push(`Catalog as of ${CATALOG_AS_OF}`)
+  lines.push(`Canonical: ${absUrl(compareHref(comparison, market))}`)
+  lines.push('')
+  lines.push(answer)
+  lines.push('')
+  lines.push('## Score')
+  lines.push(`- ${productA.name}: ${verdict.aWins} win${verdict.aWins === 1 ? '' : 's'}`)
+  lines.push(`- ${productB.name}: ${verdict.bWins} win${verdict.bWins === 1 ? '' : 's'}`)
+  lines.push(`- Differing specs: ${verdict.differing} of ${verdict.total} tracked`)
+  if (cheaper) {
+    lines.push(
+      `- Price gap: ${formatMoney(verdict.priceGap, market)} (${cheaper.name} ${fee ? 'charges less a year' : 'costs less'})`
+    )
+  } else {
+    lines.push(`- Price gap: Same ${fee ? 'annual fee' : 'list price'}`)
+  }
+  lines.push('')
+  lines.push('## Deal-breakers')
+  const tripped = checks.filter((c) => c.a === 'trips' || c.b === 'trips')
+  if (tripped.length > 0) {
+    for (const check of tripped) {
+      const who = check.a === 'trips' && check.b === 'trips' ? 'Both' : check.a === 'trips' ? productA.name : productB.name
+      lines.push(`- ${who}: ${sentenceCase(check.label)}${check.why ? ` (${check.why})` : ''}`)
+    }
+  } else {
+    lines.push('- Neither product triggers standard category deal-breakers.')
+  }
+  lines.push('')
+  if (lenses.length > 0) {
+    lines.push('## Best for')
+    for (const lens of lenses) {
+      lines.push(`### ${lens.label}`)
+      lines.push(lens.headline)
+      for (const reason of lens.reasons) {
+        lines.push(`- ${reason}`)
+      }
+      lines.push('')
+    }
+  }
+  lines.push('## Specs that differ')
+  if (diffRows.length > 0) {
+    lines.push(`| Specification | ${productA.name} | ${productB.name} |`)
+    lines.push('| --- | --- | --- |')
+    for (const r of diffRows) {
+      lines.push(`| ${r.label.replace(/\|/g, '\\|')} | ${r.a.replace(/\|/g, '\\|')} | ${r.b.replace(/\|/g, '\\|')} |`)
+    }
+  } else {
+    lines.push('- No tracked specifications differ.')
+  }
+  lines.push('')
+  lines.push('## Sources')
+  if (productA.officialSource?.url) {
+    lines.push(`- [${productA.name}](${productA.officialSource.url}) (as of ${productA.officialSource.asOf})`)
+  }
+  if (productB.officialSource?.url) {
+    lines.push(`- [${productB.name}](${productB.officialSource.url}) (as of ${productB.officialSource.asOf})`)
+  }
   lines.push('')
 
   return lines.join('\n')

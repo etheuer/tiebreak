@@ -88,6 +88,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  const seenSubs = new Set<string>()
+  for (const product of usProducts) {
+    const key = `${product.category}/${product.subcategory}`
+    if (!seenSubs.has(key)) {
+      seenSubs.add(key)
+      const subPath = `/category/${product.category}/${product.subcategory}/`
+      entries.push({
+        url: absUrl(subPath),
+        lastModified,
+        priority: 0.8,
+        alternates: languages(subPath, false),
+      })
+    }
+  }
+
   for (const comparison of usComparisons) {
     const usPath = compareHref(comparison)
     const slug = `${comparison.productA}-vs-${comparison.productB}`

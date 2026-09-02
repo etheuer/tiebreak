@@ -214,12 +214,22 @@ export async function CategoryListing({
             <section key={list.sub} className="py-10" aria-labelledby={`list-${list.sub}`}>
               <div className="flex flex-wrap items-baseline justify-between gap-3 border-b-2 border-line pb-2.5">
                 <h2 id={`list-${list.sub}`} className="display text-[21px] sm:text-[25px]">
-                  {list.label}
+                  <Link href={`/category/${currentCategory.id}/${list.sub}/`} className="hover:text-accent">
+                    {list.label}
+                  </Link>
                 </h2>
-                <p className="num text-[12px] text-ink-3">
-                  {list.attributes} attributes tracked · sorted by{' '}
-                  {priceCaption(list.sub).toLowerCase()}
-                </p>
+                <div className="flex items-center gap-3 text-[12px] text-ink-3">
+                  <span className="num">
+                    {list.attributes} attributes tracked · sorted by{' '}
+                    {priceCaption(list.sub).toLowerCase()}
+                  </span>
+                  <Link
+                    href={`/category/${currentCategory.id}/${list.sub}/`}
+                    className="font-medium text-accent hover:underline hidden sm:inline"
+                  >
+                    All {list.label.toLowerCase()} comparisons →
+                  </Link>
+                </div>
               </div>
 
               {list.lenses.length > 0 && (
