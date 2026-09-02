@@ -2,12 +2,14 @@ import type { Product } from '@/lib/data'
 
 type Tone = 'a' | 'b' | 'neutral'
 
-const SIZES = {
+export const SIZES = {
   xs: { box: 28, glyph: 16, radius: 7 },
   sm: { box: 40, glyph: 22, radius: 9 },
   md: { box: 64, glyph: 34, radius: 12 },
   lg: { box: 96, glyph: 52, radius: 16 },
 } as const
+
+export type ProductMarkSize = keyof typeof SIZES
 
 const TONE_VAR: Record<Tone, string> = {
   a: 'var(--accent)',
@@ -17,7 +19,7 @@ const TONE_VAR: Record<Tone, string> = {
 
 /** Line art per product type. The dataset ships placeholder image URLs, so the
  *  silhouette is the honest thumbnail: it never 404s and reads at 28px. */
-function Glyph({ subcategory, size }: { subcategory: string; size: number }) {
+export function Glyph({ subcategory, size }: { subcategory: string; size: number }) {
   const common = {
     width: size,
     height: size,

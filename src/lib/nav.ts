@@ -48,6 +48,36 @@ export function categoryHref(categoryId: string, market: MarketId = 'us'): strin
   return marketPath(market, `/category/${categoryId}/`)
 }
 
+/** Order-independent key for a product pair. Shared by server and client. */
+export function pairKey(idA: string, idB: string): string {
+  return [idA, idB].sort().join('\0')
+}
+
+/**
+ * Custom comparison for any two products, scored live in the browser.
+ * Published matchups keep their own pages; this covers every other pair.
+ */
+export function buildHref(idA: string, idB: string, market: MarketId = 'us'): string {
+  // Built by hand: marketPath normalizes a trailing slash, which would land
+  // after the query string and corrupt the params.
+  const base = market === 'us' ? '/compare/build/' : '/uk/compare/build/'
+  return `${base}?a=${encodeURIComponent(idA)}&b=${encodeURIComponent(idB)}`
+}
+
+/**
+ * Resolve "compare these two" to the published breakdown when one exists,
+ * otherwise to the live custom comparison. Never a dead end.
+ */
+export function comparePairHref(
+  comparisons: Comparison[],
+  idA: string,
+  idB: string,
+  market: MarketId = 'us'
+): string {
+  const match = findComparison(comparisons, idA, idB)
+  return match ? compareHref(match, market) : buildHref(idA, idB, market)
+}
+
 export function homeHref(market: MarketId = 'us'): string {
   return marketPath(market, '/')
 }

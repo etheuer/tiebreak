@@ -14,6 +14,7 @@ import {
 } from '@/lib/data'
 import { buildVerdict, verdictLine, type Side } from '@/lib/verdict'
 import {
+  buildHref,
   categoryHref,
   compareHref,
   findComparison,
@@ -31,7 +32,7 @@ import { absUrl, clip, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
 import { displaySpec, formatCatalogDate } from '@/lib/format'
 import { casesFor } from '@/data/use-cases'
 import { SpecTables } from '@/components/SpecTables'
-import { ProductMark } from '@/components/ProductMark'
+import { ProductImage } from '@/components/ProductImage'
 import { DecisionPanel } from '@/components/DecisionPanel'
 import { GenerationalUpgradeBanner } from '@/components/GenerationalUpgradeBanner'
 import { TcoCard } from '@/components/TcoCard'
@@ -116,12 +117,14 @@ function ProductPanel({
   side,
   wins,
   swaps,
+  keepId,
   market,
 }: {
   product: Product
   side: Side
   wins: number
   swaps: SwapOption[]
+  keepId: string
   isLeader: boolean
   market: MarketId
 }) {
@@ -130,7 +133,7 @@ function ProductPanel({
   return (
     <div className="card min-w-0 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-3 sm:p-4 h-[72px]" style={{ borderTop: `3px solid ${side === 'a' ? 'var(--accent)' : 'var(--rival)'}` }}>
       <div className="flex items-center gap-3 min-w-0">
-        <ProductMark product={product} size="sm" tone={side} />
+        <ProductImage product={product} size="sm" tone={side} />
         <div className="min-w-0 flex flex-col justify-center">
           <Link
             href={productHref(product, market)}
@@ -176,14 +179,17 @@ function ProductPanel({
                   </span>
                 </Link>
               ) : (
-                <span
+                <Link
                   key={option.id}
-                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-meta text-ink-3"
-                  title="No matchup published for that pair yet"
+                  href={buildHref(option.id, keepId, market)}
+                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-meta hover:bg-surface-2"
+                  title="No published matchup yet: score this pair live"
                 >
                   <span className="truncate">{option.name}</span>
-                  <span className="text-label">soon</span>
-                </span>
+                  <span className="num shrink-0 text-label text-ink-3">
+                    {option.priceText} · custom
+                  </span>
+                </Link>
               )
             )}
           </div>
@@ -375,6 +381,7 @@ export async function CompareMatchup({
             side="a"
             wins={verdict.aWins}
             swaps={swapsA}
+            keepId={productB.id}
             isLeader={verdict.leader === 'a'}
             market={market}
           />
@@ -390,6 +397,7 @@ export async function CompareMatchup({
             side="b"
             wins={verdict.bWins}
             swaps={swapsB}
+            keepId={productA.id}
             isLeader={verdict.leader === 'b'}
             market={market}
           />

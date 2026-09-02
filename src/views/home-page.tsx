@@ -8,6 +8,8 @@ import { buildVerdict } from '@/lib/verdict'
 import { categoryHref, compareHref, subLabel } from '@/lib/nav'
 import { primaryUseCase } from '@/data/use-cases'
 import { VsCard } from '@/components/VsCard'
+import { CompareBuilder } from '@/components/CompareBuilder'
+import { builderData } from '@/views/compare-build'
 
 export async function homeMetadata(market: MarketId): Promise<Metadata> {
   const ukProducts = await getProducts('uk')
@@ -64,6 +66,8 @@ export async function HomePage({ market }: { market: MarketId }) {
     ...pair,
     verdict: buildVerdict(pair.productA, pair.productB, market),
   }))
+
+  const { builderProducts, published } = builderData(products, comparisons, market)
 
   const subcategories = [...new Set(products.map((product) => product.subcategory))].map((sub) => {
     const entry = pairs.find((pair) => pair.productA.subcategory === sub)
@@ -162,6 +166,14 @@ export async function HomePage({ market }: { market: MarketId }) {
               />
             ))}
           </div>
+        </section>
+
+        <section aria-label="Compare any two products" className="border-t border-line py-14">
+          <h2 className="display text-h2">Compare any two</h2>
+          <p className="mt-2 max-w-xl text-body text-ink-2">
+            Your shortlist isn&apos;t on the list? Pick the pair and get the verdict instantly.
+          </p>
+          <CompareBuilder products={builderProducts} published={published} market={market} />
         </section>
 
         <section id="categories" className="scroll-mt-24 border-t border-line py-14">

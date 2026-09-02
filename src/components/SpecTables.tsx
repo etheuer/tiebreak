@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, useRef } from 'react'
 import Link from 'next/link'
 import type { Product } from '@/lib/data'
 import type { ScoredGroup, ScoredRow, Side } from '@/lib/verdict'
-import { ProductMark } from '@/components/ProductMark'
+import { ProductImage } from '@/components/ProductImage'
 import { priceShort, productHref } from '@/lib/nav'
 import { columnLabels, shortName } from '@/lib/decision'
 import { displaySpec } from '@/lib/format'
@@ -166,7 +166,7 @@ export function SpecTables({
                 key={side}
                 className={`${side === 'a' ? 'col-a' : 'col-b'} flex items-center gap-2 border-l border-line px-2.5 py-2 sm:gap-2.5 sm:px-4`}
               >
-                <ProductMark product={product} size="xs" tone={side} className="hidden sm:grid" />
+                <ProductImage product={product} size="xs" tone={side} className="hidden sm:grid" />
                 <span className="min-w-0">
                   <Link
                     href={productHref(product, market)}

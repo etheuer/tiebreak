@@ -25,7 +25,7 @@ import { absUrl, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
 import { formatCatalogDate } from '@/lib/format'
 import { casesFor } from '@/data/use-cases'
 import { buildAnswer, checkDealBreakers, flattenRows, lensRows, shortName } from '@/lib/decision'
-import { ProductMark } from '@/components/ProductMark'
+import { ProductImage } from '@/components/ProductImage'
 import { FinanceDisclaimer } from '@/components/CatalogNotes'
 
 const FLAGSHIP_PATTERN = /(?:iPhone|Galaxy|MacBook|OLED|Bravia|A95|Dyson|Amex|WH-1000|Bose)/i
@@ -322,11 +322,11 @@ export async function SubcategoryListing({
                 <span className="num hidden w-6 shrink-0 text-body font-semibold text-ink-3 sm:block">
                   {index + 1}
                 </span>
-                <ProductMark product={product} size="md" className="hidden sm:grid" />
+                <ProductImage product={product} size="md" className="hidden sm:grid" />
 
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start gap-3">
-                    <ProductMark product={product} size="sm" className="sm:hidden" />
+                    <ProductImage product={product} size="sm" className="sm:hidden" />
                     <div className="min-w-0">
                       <p className="eyebrow">{product.brand}</p>
                       <h3 className="mt-0.5 text-subhead font-semibold tracking-[-0.02em]">

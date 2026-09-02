@@ -21,7 +21,7 @@ import {
 import { absUrl, clip, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
 import { formatCatalogDate, formatMoney } from '@/lib/format'
 import { buildProductFaq } from '@/lib/faq'
-import { ProductMark } from '@/components/ProductMark'
+import { ProductImage } from '@/components/ProductImage'
 import { ProductSpecs } from '@/components/ProductSpecs'
 import { VsCard } from '@/components/VsCard'
 import { FinanceDisclaimer, PriceNote } from '@/components/CatalogNotes'
@@ -134,7 +134,7 @@ export async function ProductDetail({
       </nav>
 
       <header className="mt-5 flex flex-col gap-6 border-b border-line pb-9 sm:flex-row sm:items-start sm:gap-7">
-        <ProductMark product={product} size="lg" />
+        <ProductImage product={product} size="lg" />
         <div className="min-w-0 flex-1">
           <p className="eyebrow">
             {product.brand} · {subLabel(product.subcategory)}
@@ -241,7 +241,7 @@ export async function ProductDetail({
               return (
                 <div key={alternative.id} className="card flex flex-col p-4">
                   <div className="flex items-start gap-3">
-                    <ProductMark product={alternative} size="sm" />
+                    <ProductImage product={alternative} size="sm" />
                     <div className="min-w-0">
                       <p className="eyebrow">{alternative.brand}</p>
                       <p className="mt-0.5 truncate text-body font-semibold">{alternative.name}</p>

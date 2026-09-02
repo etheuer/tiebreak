@@ -90,9 +90,9 @@ export async function getAllComparisons(): Promise<Comparison[]> {
   return comparisons
 }
 
-function pairKey(productA: string, productB: string): string {
-  return [productA, productB].sort().join('\0')
-}
+import { pairKey } from '@/lib/nav'
+
+export { pairKey }
 
 function buildComparisonDescription(a: Product, b: Product, market: MarketId): string {
   const verdict = buildVerdict(a, b, market)

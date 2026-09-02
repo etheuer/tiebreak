@@ -6,6 +6,8 @@ import { compareHref, homeHref, hubHref, SUBCATEGORY_LABEL, subLabel } from '@/l
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { absUrl, SITE_NAME } from '@/lib/site'
+import { CompareBuilder } from '@/components/CompareBuilder'
+import { builderData } from '@/views/compare-build'
 
 export async function generateHubMetadata(market: MarketId): Promise<Metadata> {
   const [comparisons, ukComparisons] = await Promise.all([
@@ -42,6 +44,7 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
     getComparisons(market),
   ])
 
+  const { builderProducts, published } = builderData(products, comparisons, market)
   const byId = new Map(products.map((p) => [p.id, p]))
 
   // Group by subcategory
@@ -89,6 +92,14 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
           ))}
         </div>
       </header>
+
+      <section aria-label="Compare any two products" className="border-b border-line py-8">
+        <h2 className="display text-h3">Compare any two</h2>
+        <p className="mt-2 max-w-xl text-body text-ink-2">
+          Missing pair? Score it instantly from published specs.
+        </p>
+        <CompareBuilder products={builderProducts} published={published} market={market} />
+      </section>
 
       <div className="py-8 grid gap-10">
         {grouped.map((group) => (

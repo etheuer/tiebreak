@@ -9,7 +9,7 @@ import { buildVerdict } from '@/lib/verdict'
 import { categoryHref, compareHref, homeHref, isFeeBased, priceCaption, priceShort, productHref, subLabel } from '@/lib/nav'
 import { absUrl, SITE_NAME } from '@/lib/site'
 import { casesFor } from '@/data/use-cases'
-import { ProductMark } from '@/components/ProductMark'
+import { ProductImage } from '@/components/ProductImage'
 import { VsCard } from '@/components/VsCard'
 import { FinanceDisclaimer } from '@/components/CatalogNotes'
 
@@ -254,11 +254,11 @@ export async function CategoryListing({
                       <span className="num hidden w-6 shrink-0 text-body font-semibold text-ink-3 sm:block">
                         {index + 1}
                       </span>
-                      <ProductMark product={product} size="md" className="hidden sm:grid" />
+                      <ProductImage product={product} size="md" className="hidden sm:grid" />
 
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start gap-3">
-                          <ProductMark product={product} size="sm" className="sm:hidden" />
+                          <ProductImage product={product} size="sm" className="sm:hidden" />
                           <div className="min-w-0">
                             <p className="eyebrow">{product.brand}</p>
                             <h3 className="mt-0.5 text-subhead font-semibold tracking-[-0.02em]">
