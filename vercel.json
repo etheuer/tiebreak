@@ -2,9 +2,11 @@
   "trailingSlash": true,
   "redirects": [
     { "source": "/us", "destination": "/", "permanent": true },
-    { "source": "/us/:path*", "destination": "/:path*", "permanent": true },
+    { "source": "/us/", "destination": "/", "permanent": true },
+    { "source": "/us/:path+", "destination": "/:path*", "permanent": true },
     { "source": "/uk", "destination": "/", "permanent": true },
-    { "source": "/uk/:path*", "destination": "/", "permanent": true }
+    { "source": "/uk/", "destination": "/", "permanent": true },
+    { "source": "/uk/:path+", "destination": "/", "permanent": true }
   ],
   "headers": [
     {
