@@ -1,9 +1,13 @@
-import type { Product } from '@/lib/data'
+import type { Comparison, Product } from '@/lib/data'
 import type { UseCase } from '@/data/use-cases'
 import { buildAnswer, lensRows, sentenceCase, shortName, type DealBreakerCheck, type LensRow } from '@/lib/decision'
 import { priceLabel, type Verdict } from '@/lib/verdict'
-import { isFeeBased } from '@/lib/nav'
+import { isFeeBased, priceShort } from '@/lib/nav'
 import type { MarketId } from '@/lib/markets'
+import { catalogFor } from '@/data/spec-catalog'
+import { highlightFields, specValue } from '@/lib/specs'
+import { displaySpec, listJoin } from '@/lib/format'
+import { CATALOG_AS_OF } from '@/lib/site'
 
 export type Qa = { q: string; a: string }
 export type LensAnswer = { id: string; label: string; job: string; headline: string; reasons: string[] }
@@ -78,4 +82,48 @@ export function buildCompareFaq(
   })
 
   return faq.slice(0, 4)
+}
+
+export function buildProductFaq(
+  product: Product,
+  comparisons: Comparison[],
+  market: MarketId = 'us'
+): Qa[] {
+  const faq: Qa[] = []
+  const fee = isFeeBased(product.subcategory)
+
+  // 1. Price snapshot
+  const price = priceShort(product, market)
+  faq.push({
+    q: `How much does ${product.name} cost?`,
+    a: fee
+      ? `${product.name} has an annual fee of ${price} (catalog snapshot as of ${CATALOG_AS_OF}). This is based on published issuer terms and is not a live financial offer.`
+      : `${product.name} lists at ${price} (manufacturer list price snapshot as of ${CATALOG_AS_OF}). Retail prices vary by merchant and this is not a live quote.`,
+  })
+
+  // 2. Key specs (3 highlight fields)
+  const highlights = highlightFields(catalogFor(product.subcategory)).slice(0, 3)
+  if (highlights.length > 0) {
+    const specList = highlights.map(
+      (h) => `${h.label.toLowerCase()} (${displaySpec(specValue(product, h.key), h.key, market)})`
+    )
+    faq.push({
+      q: `What are ${product.name}’s key specs?`,
+      a: `Key specifications for ${product.name} include ${listJoin(specList, market)}.`,
+    })
+  }
+
+  // 3. Matchups (up to 6)
+  const matching = comparisons
+    .filter((c) => c.productA === product.id || c.productB === product.id)
+    .slice(0, 6)
+  if (matching.length > 0) {
+    const matchNames = matching.map((c) => c.productName)
+    faq.push({
+      q: `What does ${product.name} compare against?`,
+      a: `${product.name} is compared head to head against ${listJoin(matchNames, market)}.`,
+    })
+  }
+
+  return faq
 }
