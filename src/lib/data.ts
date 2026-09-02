@@ -74,12 +74,18 @@ export async function getAllComparisons(): Promise<Comparison[]> {
   const dir = path.join(process.cwd(), 'src/data/comparisons')
   const files = await fs.readdir(dir)
   const jsonFiles = files.filter((f) => f.endsWith('.json'))
-  const comparisons = await Promise.all(
-    jsonFiles.map(async (file) => {
-      const data = await fs.readFile(path.join(dir, file), 'utf-8')
-      return JSON.parse(data) as Comparison
-    })
-  )
+  const comparisons: Comparison[] = []
+  const BATCH_SIZE = 32
+  for (let i = 0; i < jsonFiles.length; i += BATCH_SIZE) {
+    const batch = jsonFiles.slice(i, i + BATCH_SIZE)
+    const items = await Promise.all(
+      batch.map(async (file) => {
+        const data = await fs.readFile(path.join(dir, file), 'utf-8')
+        return JSON.parse(data) as Comparison
+      })
+    )
+    comparisons.push(...items)
+  }
   comparisonsCache = comparisons
   return comparisons
 }
