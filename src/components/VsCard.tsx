@@ -11,8 +11,8 @@ function Side({ product, side, market }: { product: Product; side: 'a' | 'b'; ma
     <div className="flex min-w-0 flex-1 items-center gap-2.5">
       <ProductMark product={product} size="sm" tone={side} />
       <div className="min-w-0">
-        <p className="truncate text-[13.5px] font-semibold leading-tight">{product.name}</p>
-        <p className="num mt-0.5 text-[12.5px] text-ink-3">{priceShort(product, market)}</p>
+        <p className="truncate text-cell font-semibold leading-tight">{product.name}</p>
+        <p className="num mt-0.5 text-meta text-ink-3">{priceShort(product, market)}</p>
       </div>
     </div>
   )
@@ -46,14 +46,14 @@ export function VsCard({
     >
       <div className="flex items-center justify-between gap-3">
         <span className="eyebrow">{subLabel(productA.subcategory)}</span>
-        <span className="num text-[11.5px] text-ink-3">{verdict.differing} differences</span>
+        <span className="num text-micro text-ink-3">{verdict.differing} differences</span>
       </div>
 
       <div className="mt-3.5 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
         <Side product={productA} side="a" market={market} />
         <span
           aria-hidden
-          className="grid shrink-0 place-items-center rounded-full border border-line text-[12px] font-bold text-ink-3"
+          className="grid shrink-0 place-items-center rounded-full border border-line text-label font-bold text-ink-3"
           style={{ width: 26, height: 26 }}
         >
           VS
@@ -61,7 +61,7 @@ export function VsCard({
         <Side product={productB} side="b" market={market} />
       </div>
 
-      <p className="mt-4 text-[13px] leading-snug text-ink-2">
+      <p className="mt-4 text-meta leading-snug text-ink-2">
         {leader ? (
           <>
             <span className="font-semibold text-ink">
@@ -86,7 +86,7 @@ export function VsCard({
         )}
       </p>
 
-      <span className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-accent">
+      <span className="mt-4 inline-flex items-center gap-1.5 text-meta font-semibold text-accent">
         See the breakdown
         <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden className="transition-transform group-hover:translate-x-0.5">
           <path d="M2 6h7M6.2 3.2 9 6l-2.8 2.8" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
