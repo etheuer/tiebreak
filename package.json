@@ -11,7 +11,8 @@
     "check:i18n": "node scripts/check-i18n.mjs",
     "check:catalog": "node scripts/check-catalog.mjs",
     "check:export": "node scripts/check-catalog.mjs --export && node scripts/check-i18n.mjs --export",
-    "verify": "npm run lint && npm run typecheck && npm run check:catalog && npm run check:i18n && npm run build && npm run check:export"
+    "verify": "npm run lint && npm run typecheck && npm run check:catalog && npm run check:i18n && npm run build && npm run check:export",
+    "test": "npm run verify"
   },
   "dependencies": {
     "next": "16.3.4",

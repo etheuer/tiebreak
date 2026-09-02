@@ -1,4 +1,5 @@
 # Clinchmark
+[![CI](https://github.com/etheuer/tiebreak/actions/workflows/ci.yml/badge.svg)](https://github.com/etheuer/tiebreak/actions/workflows/ci.yml)
 
 Head-to-head product comparisons. Pick two products, get a spec-by-spec verdict.
 
