@@ -25,7 +25,7 @@ runs lint, types, catalog checks, the i18n data checks, and a production build.
 
 1. Set `NEXT_PUBLIC_SITE_URL` to the real `https://` origin (no trailing slash). Canonicals, sitemap, and share cards bake this in at **build** time.
 2. Optional: `NEXT_PUBLIC_SITE_EMAIL` for the contact and privacy pages. If unset, those pages point at GitHub issues.
-3. Optional: `NEXT_PUBLIC_POSTHOG_KEY` and `NEXT_PUBLIC_POSTHOG_HOST` to turn on page-view analytics.
+3. Optional: `NEXT_PUBLIC_POSTHOG_KEY` and `NEXT_PUBLIC_POSTHOG_HOST` (see `.env.example`) to turn on client analytics. These are inlined at **build** time. If the key is unset, the PostHog client no-ops and live stays dark. Do not commit a `phc_` value.
 4. Host the contents of `.next-static/` (the `next build` export) behind HTTPS with trailing slashes. `vercel.json` already 301s `/us` and `/uk` to `/`, and sets basic security headers.
 
 ## What the pages are

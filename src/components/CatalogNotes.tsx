@@ -1,5 +1,6 @@
 import { isFeeBased } from '@/lib/nav'
 import type { Product } from '@/lib/pricing'
+import { OfficialSourceLink } from '@/components/OfficialSourceLink'
 
 function formatAsOf(iso: string): string {
   const date = new Date(`${iso}T12:00:00Z`)
@@ -32,15 +33,14 @@ function IssuerTermsList({ products }: { products: Product[] }) {
         const source = product.officialSource!
         return (
           <li key={product.id}>
-            <a
+            <OfficialSourceLink
               href={source.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              productId={product.id}
               className="text-accent hover:underline"
             >
               {product.name} issuer terms
               <span className="sr-only"> (opens in a new tab)</span>
-            </a>
+            </OfficialSourceLink>
             {source.asOf ? <span> · checked {formatAsOf(source.asOf)}</span> : null}
           </li>
         )

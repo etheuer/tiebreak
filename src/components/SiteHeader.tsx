@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { JumpEntry } from '@/lib/nav'
 import { SITE_NAME } from '@/lib/site'
+import { capture } from '@/lib/analytics'
 
 const KIND_LABEL: Record<JumpEntry['kind'], string> = {
   compare: 'Matchup',
@@ -45,6 +46,14 @@ export function SiteHeader({
   const [query, setQuery] = useState('')
   const [cursor, setCursor] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+  const openRef = useRef(false)
+  openRef.current = open
+
+  const openSearch = useCallback((source: 'button' | 'slash' | 'mod_k') => {
+    if (!openRef.current) capture('search_opened', { source })
+    setOpen(true)
+    setMenu(false)
+  }, [])
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -60,22 +69,28 @@ export function SiteHeader({
   }, [])
 
   const go = useCallback(
-    (href: string) => {
+    (entry: JumpEntry) => {
+      capture('search_result_clicked', {
+        kind: entry.kind,
+        query_length: query.trim().length,
+      })
       close()
       setMenu(false)
-      router.push(href)
+      router.push(entry.href)
     },
-    [close, router]
+    [close, query, router]
   )
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
       const target = event.target as HTMLElement | null
       const typing = target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)
-      if ((event.key === 'k' && (event.metaKey || event.ctrlKey)) || (event.key === '/' && !typing)) {
+      if (event.key === 'k' && (event.metaKey || event.ctrlKey)) {
         event.preventDefault()
-        setOpen(true)
-        setMenu(false)
+        openSearch('mod_k')
+      } else if (event.key === '/' && !typing) {
+        event.preventDefault()
+        openSearch('slash')
       }
       if (event.key === 'Escape') {
         close()
@@ -84,7 +99,7 @@ export function SiteHeader({
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [close])
+  }, [close, openSearch])
 
   useEffect(() => {
     if (open) inputRef.current?.focus()
@@ -93,6 +108,18 @@ export function SiteHeader({
   useEffect(() => {
     setCursor(0)
   }, [query])
+
+  useEffect(() => {
+    const q = query.trim()
+    if (!open || !q) return
+    const timer = window.setTimeout(() => {
+      capture('search_performed', {
+        query_length: q.length,
+        result_count: results.length,
+      })
+    }, 350)
+    return () => window.clearTimeout(timer)
+  }, [open, query, results.length])
 
   function onSearchKey(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'ArrowDown') {
@@ -103,7 +130,7 @@ export function SiteHeader({
       setCursor((c) => Math.max(c - 1, 0))
     } else if (event.key === 'Enter' && results[cursor]) {
       event.preventDefault()
-      go(results[cursor].href)
+      go(results[cursor])
     }
   }
 
@@ -130,7 +157,7 @@ export function SiteHeader({
         <div className="ml-auto flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={() => openSearch('button')}
             className="flex items-center gap-2 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-meta text-ink-3 transition-colors hover:border-line-2 hover:text-ink-2 sm:w-[248px] md:w-auto lg:w-[292px]"
             aria-label="Search products and matchups"
           >
@@ -236,7 +263,7 @@ export function SiteHeader({
                     <button
                       type="button"
                       onMouseEnter={() => setCursor(i)}
-                      onClick={() => go(entry.href)}
+                      onClick={() => go(entry)}
                       className="flex w-full items-center gap-3 px-4 py-2.5 text-left"
                       style={{ background: i === cursor ? 'var(--surface-2)' : 'transparent' }}
                     >

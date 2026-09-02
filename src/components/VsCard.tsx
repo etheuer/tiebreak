@@ -1,10 +1,10 @@
-import Link from 'next/link'
 import type { Comparison, Product } from '@/lib/data'
 import { compareHref, isFeeBased, priceShort, subLabel } from '@/lib/nav'
 import { priceLabel, type Verdict } from '@/lib/verdict'
 import { shortName } from '@/lib/decision'
 import type { MarketId } from '@/lib/markets'
 import { ProductMark } from '@/components/ProductMark'
+import { CompareLink } from '@/components/CompareLink'
 
 function Side({ product, side, market }: { product: Product; side: 'a' | 'b'; market: MarketId }) {
   return (
@@ -39,7 +39,7 @@ export function VsCard({
   const sameBrand = productA.brand === productB.brand
 
   return (
-    <Link
+    <CompareLink
       href={compareHref(comparison, market)}
       className="card group min-w-0 flex flex-col p-4 transition-all hover:border-line-2 hover:translate-y-[-2px] hover:shadow-md sm:p-5"
       style={{ boxShadow: 'var(--shadow-1)' }}
@@ -100,6 +100,6 @@ export function VsCard({
           <path d="M2 6h7M6.2 3.2 9 6l-2.8 2.8" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
-    </Link>
+    </CompareLink>
   )
 }
