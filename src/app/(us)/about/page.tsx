@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { LegalPage, legalMetadata } from '@/views/legal-page'
 
 export const metadata = legalMetadata(
@@ -39,9 +38,6 @@ export default function AboutPage() {
       <p>
         The public site is the United States catalog. A UK edition exists in the codebase and is
         not published yet.
-      </p>
-      <p>
-        Found a wrong spec? <Link href="/contact/" className="text-accent hover:underline">Tell us</Link>.
       </p>
     </LegalPage>
   )

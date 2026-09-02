@@ -120,7 +120,6 @@ export async function buildLlmsText(market: MarketId = 'us'): Promise<string> {
   lines.push('')
   lines.push(`- [Privacy Policy](${absUrl('/privacy/')})`)
   lines.push(`- [Terms of Service](${absUrl('/terms/')})`)
-  lines.push(`- [Contact](${absUrl('/contact/')})`)
   lines.push('')
 
   return lines.join('\n')

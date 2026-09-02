@@ -60,7 +60,6 @@ export const LEGAL_LINKS = [
   { label: 'About', href: '/about/' },
   { label: 'Privacy', href: '/privacy/' },
   { label: 'Terms', href: '/terms/' },
-  { label: 'Contact', href: '/contact/' },
 ] as const
 
 /**
