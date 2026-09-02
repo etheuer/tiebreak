@@ -41,23 +41,31 @@ export function VsCard({
   return (
     <Link
       href={compareHref(comparison, market)}
-      className="card group min-w-0 flex flex-col p-4 transition-all hover:border-line-2 sm:p-5"
+      className="card group min-w-0 flex flex-col p-4 transition-all hover:border-line-2 hover:translate-y-[-2px] hover:shadow-md sm:p-5"
       style={{ boxShadow: 'var(--shadow-1)' }}
     >
       <div className="flex items-center justify-between gap-3">
         <span className="eyebrow">{subLabel(productA.subcategory)}</span>
-        <span className="num text-micro text-ink-3">{verdict.differing} differences</span>
+        <span className="num text-micro text-ink-3">{verdict.differing} <span className="font-medium">differing</span> specs</span>
       </div>
 
       <div className="mt-3.5 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
         <Side product={productA} side="a" market={market} />
-        <span
-          aria-hidden
-          className="grid shrink-0 place-items-center rounded-full border border-line text-label font-bold text-ink-3"
-          style={{ width: 26, height: 26 }}
-        >
+        {leader ? (
+          <span className="grid shrink-0 place-items-center rounded-full bg-accent-soft text-accent text-micro font-bold" style={{ width: 26, height: 26 }} aria-label="Winner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+          </span>
+        ) : (
+          <span
+            aria-hidden
+            className="grid shrink-0 place-items-center rounded-full border border-line text-label font-bold text-ink-3"
+            style={{ width: 26, height: 26 }}
+          >
           VS
         </span>
+        )}
         <Side product={productB} side="b" market={market} />
       </div>
 

@@ -74,8 +74,20 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
         <p className="eyebrow">Directory</p>
         <h1 className="display mt-2 text-[32px] sm:text-[44px]">All matchups</h1>
         <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-ink-2">
-          Every head-to-head comparison published on {SITE_NAME}, scored from published specifications with a verdict for every pair.
+          Browse every head-to-head comparison published on {SITE_NAME}. Each matchup is scored from published
+          specifications with a verdict for every pair.
         </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {grouped.map((group) => (
+            <a
+              key={group.sub}
+              href={`#${group.sub}`}
+              className="chip text-[13px]"
+            >
+              {group.label}
+            </a>
+          ))}
+        </div>
       </header>
 
       <div className="py-8 grid gap-10">
