@@ -11,7 +11,7 @@ import { displaySpec } from '@/lib/format'
 import type { MarketId } from '@/lib/markets'
 import { originNote } from '@/data/spec-catalog'
 
-const STORAGE_KEY = 'tiebreak:hide-identical'
+const STORAGE_KEY = 'clinchmark:hide-identical'
 
 function Cell({ row, side, market }: { row: ScoredRow; side: Side; market: MarketId }) {
   const raw = side === 'a' ? row.a : row.b

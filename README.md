@@ -1,4 +1,4 @@
-# Tiebreak
+# Clinchmark
 
 Head-to-head product comparisons. Pick two products, get a spec-by-spec verdict.
 

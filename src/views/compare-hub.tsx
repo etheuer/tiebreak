@@ -13,7 +13,7 @@ export async function generateHubMetadata(market: MarketId): Promise<Metadata> {
     getComparisons('uk'),
   ])
   const includeUk = ukComparisons.length > 0
-  const description = `Every head-to-head published on Tiebreak: ${comparisons.length} matchups across TVs, laptops, phones, headphones, cordless vacuums, air purifiers and credit cards, each with a spec-by-spec verdict.`
+  const description = `Every head-to-head published on ${SITE_NAME}: ${comparisons.length} matchups across TVs, laptops, phones, headphones, cordless vacuums, air purifiers and credit cards, each with a spec-by-spec verdict.`
   const title = 'All product matchups'
   const path = hubHref(market)
   return {
@@ -74,7 +74,7 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
         <p className="eyebrow">Directory</p>
         <h1 className="display mt-2 text-[32px] sm:text-[44px]">All matchups</h1>
         <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-ink-2">
-          Every head-to-head comparison published on Tiebreak, scored from published specifications with a verdict for every pair.
+          Every head-to-head comparison published on {SITE_NAME}, scored from published specifications with a verdict for every pair.
         </p>
       </header>
 

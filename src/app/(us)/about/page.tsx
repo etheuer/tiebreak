@@ -2,16 +2,16 @@ import Link from 'next/link'
 import { LegalPage, legalMetadata } from '@/views/legal-page'
 
 export const metadata = legalMetadata(
-  'How Tiebreak works',
-  'Tiebreak compares two products from published figures and scores a spec-by-spec verdict. No lab tests, no live prices.',
+  'How Clinchmark works',
+  'Clinchmark compares two products from published figures and scores a spec-by-spec verdict. No lab tests, no live prices.',
   '/about/'
 )
 
 export default function AboutPage() {
   return (
-    <LegalPage eyebrow="About" title="How Tiebreak works">
+    <LegalPage eyebrow="About" title="How Clinchmark works">
       <p>
-        Tiebreak is for people who have already narrowed a purchase to two options. Each matchup
+        Clinchmark is for people who have already narrowed a purchase to two options. Each matchup
         scores the specs both products publish, then writes a one-line verdict.
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">What the numbers are</h2>

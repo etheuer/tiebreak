@@ -1,7 +1,7 @@
 import { getCategories, getComparisons, getProducts } from '@/lib/data'
 import { buildVerdict, verdictLine } from '@/lib/verdict'
 import { categoryHref, compareHref, priceShort, productHref, subLabel } from '@/lib/nav'
-import { absUrl } from '@/lib/site'
+import { absUrl, SITE_NAME } from '@/lib/site'
 import type { MarketId } from '@/lib/markets'
 
 export async function buildLlmsText(market: MarketId): Promise<string> {
@@ -30,7 +30,7 @@ export async function buildLlmsText(market: MarketId): Promise<string> {
   }
 
   const lines: string[] = []
-  lines.push('# Tiebreak')
+  lines.push(`# ${SITE_NAME}`)
   lines.push('')
   lines.push(
     market === 'uk'
@@ -39,7 +39,7 @@ export async function buildLlmsText(market: MarketId): Promise<string> {
   )
   lines.push('')
   lines.push(
-    'Most figures come from official spec sheets. Some rows (marked on the page) are other published figures that usually do not appear on the maker sheet. Tiebreak does not run a lab. Rankings reflect published numbers, not measurements we took.'
+    `Most figures come from official spec sheets. Some rows (marked on the page) are other published figures that usually do not appear on the maker sheet. ${SITE_NAME} does not run a lab. Rankings reflect published numbers, not measurements we took.`
   )
   lines.push('')
   lines.push('## Matchups')
@@ -79,7 +79,7 @@ export async function buildLlmsText(market: MarketId): Promise<string> {
   lines.push('')
   lines.push('- US catalog only on this launch. Figures are published specs, not lab tests we ran. Some rows are marked as not on the official sheet.')
   lines.push('- Prices are list snapshots, not live offers. Credit-card pages are not financial advice.')
-  lines.push(`- [How Tiebreak works](${absUrl('/about/')})`)
+  lines.push(`- [How ${SITE_NAME} works](${absUrl('/about/')})`)
   lines.push(`- [Privacy](${absUrl('/privacy/')}) · [Terms](${absUrl('/terms/')}) · [Contact](${absUrl('/contact/')})`)
   lines.push('')
 

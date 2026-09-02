@@ -104,7 +104,7 @@ export async function HomePage({ market }: { market: MarketId }) {
             <span style={{ color: 'var(--accent)' }}>One answer.</span>
           </h1>
           <p className="mt-6 max-w-xl text-[16px] leading-relaxed text-ink-2 sm:text-[18px]">
-            You already narrowed it down. Tiebreak puts the pair side by side, marks every
+            You already narrowed it down. Clinchmark puts the pair side by side, marks every
             difference, and says which one wins on the numbers that matter.
           </p>
 

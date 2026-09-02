@@ -3,7 +3,7 @@ import { LegalPage, legalMetadata } from '@/views/legal-page'
 
 export const metadata = legalMetadata(
   'Privacy policy',
-  'Tiebreak is a static comparison site. We do not run accounts. Analytics load only when configured.',
+  'Clinchmark is a static comparison site. We do not run accounts. Analytics load only when configured.',
   '/privacy/'
 )
 
@@ -12,7 +12,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage title="Privacy policy">
       <p>
-        Tiebreak is a static website. There are no user accounts, and we do not ask you to create
+        Clinchmark is a static website. There are no user accounts, and we do not ask you to create
         one. Product pages are files we generate in advance and host as HTML.
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">What we collect</h2>

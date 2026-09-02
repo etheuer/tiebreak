@@ -1,7 +1,7 @@
 import { getCategories, getComparisons, getProducts } from '@/lib/data'
 import { buildJumpIndex, categoryHref, homeHref, hubHref } from '@/lib/nav'
 import { isMarketPublished, type MarketId } from '@/lib/markets'
-import { SITE_URL } from '@/lib/site'
+import { SITE_NAME, SITE_URL } from '@/lib/site'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { MarketBanner } from '@/components/MarketBanner'
@@ -39,13 +39,13 @@ export async function AppShell({
       {
         '@type': 'Organization',
         '@id': `${SITE_URL}/#org`,
-        name: 'Tiebreak',
+        name: SITE_NAME,
         url: SITE_URL,
       },
       {
         '@type': 'WebSite',
         '@id': `${SITE_URL}/#website`,
-        name: 'Tiebreak',
+        name: SITE_NAME,
         url: SITE_URL,
         publisher: { '@id': `${SITE_URL}/#org` },
       },

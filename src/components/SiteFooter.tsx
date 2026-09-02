@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Category, Comparison, Product } from '@/lib/data'
 import { categoryHref, compareHref, hubHref, LEGAL_LINKS, SUBCATEGORY_LABEL } from '@/lib/nav'
 import { MARKETS, type MarketId } from '@/lib/markets'
+import { SITE_NAME } from '@/lib/site'
 
 export function SiteFooter({
   categories,
@@ -39,7 +40,7 @@ export function SiteFooter({
                 <path d="M7.4 12.6 13 3.4" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" opacity="0.55" />
               </svg>
             </span>
-            <span className="font-bold tracking-[-0.03em]">Tiebreak</span>
+            <span className="font-bold tracking-[-0.03em]">{SITE_NAME}</span>
           </div>
           <p className="mt-3 max-w-sm text-[13.5px] leading-relaxed text-ink-2">
             Head to head spec comparisons for people who have already narrowed it down to two.
@@ -91,7 +92,7 @@ export function SiteFooter({
 
       <div className="rule-top">
         <div className="shell flex flex-col gap-2 py-5 text-[12.5px] text-ink-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} Tiebreak</p>
+          <p>&copy; {new Date().getFullYear()} {SITE_NAME}</p>
           <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-1">
             {LEGAL_LINKS.map((link) => (
               <Link key={link.href} href={link.href} className="hover:text-accent">

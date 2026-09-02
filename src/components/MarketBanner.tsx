@@ -11,7 +11,7 @@ import {
   type MarketId,
 } from '@/lib/markets'
 
-const STORAGE_KEY = 'tiebreak:market'
+const STORAGE_KEY = 'clinchmark:market'
 
 function publishedInUk(
   usPath: string,

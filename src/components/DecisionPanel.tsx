@@ -16,8 +16,8 @@ import {
 import type { MarketId } from '@/lib/markets'
 
 const OVERALL = 'overall'
-const lensKey = (sub: string) => `tiebreak:for:${sub}`
-const mattersKey = (sub: string) => `tiebreak:deal-breakers:${sub}`
+const lensKey = (sub: string) => `clinchmark:for:${sub}`
+const mattersKey = (sub: string) => `clinchmark:deal-breakers:${sub}`
 
 function hashLens(): string | null {
   const match = window.location.hash.match(/(?:^#|&)for=([a-z0-9-]+)/i)

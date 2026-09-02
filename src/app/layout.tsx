@@ -20,8 +20,8 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Tiebreak - head to head product comparisons',
-    template: '%s | Tiebreak',
+    default: `${SITE_NAME} - head to head product comparisons`,
+    template: `%s | ${SITE_NAME}`,
   },
   description:
     'Put two products side by side and get an answer. Spec by spec comparisons for TVs, laptops, phones, headphones, vacuums, air purifiers and credit cards.',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Tiebreak - head to head product comparisons',
+    title: `${SITE_NAME} - head to head product comparisons`,
     description:
       'Put two products side by side and get an answer. Spec by spec comparisons for TVs, laptops, phones, headphones, vacuums, air purifiers and credit cards.',
     type: 'website',

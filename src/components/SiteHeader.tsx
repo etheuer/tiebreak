@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { JumpEntry } from '@/lib/nav'
+import { SITE_NAME } from '@/lib/site'
 
 const KIND_LABEL: Record<JumpEntry['kind'], string> = {
   compare: 'Matchup',
@@ -13,7 +14,7 @@ const KIND_LABEL: Record<JumpEntry['kind'], string> = {
 
 function Wordmark({ href }: { href: string }) {
   return (
-    <Link href={href} className="flex items-center gap-2 shrink-0" aria-label="Tiebreak home">
+    <Link href={href} className="flex items-center gap-2 shrink-0" aria-label={`${SITE_NAME} home`}>
       <span
         aria-hidden
         className="grid place-items-center rounded-md"
@@ -24,7 +25,7 @@ function Wordmark({ href }: { href: string }) {
           <path d="M7.4 12.6 13 3.4" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" opacity="0.55" />
         </svg>
       </span>
-      <span className="text-[17px] font-bold tracking-[-0.03em] text-ink">Tiebreak</span>
+      <span className="text-[17px] font-bold tracking-[-0.03em] text-ink">{SITE_NAME}</span>
     </Link>
   )
 }

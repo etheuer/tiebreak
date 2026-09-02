@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const dynamic = 'force-static'
-export const alt = 'Tiebreak — head to head product comparisons'
+export const alt = 'Clinchmark — head to head product comparisons'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -44,7 +44,7 @@ export default function OpenGraphImage() {
             </svg>
           </div>
           <div style={{ fontSize: 28, fontWeight: 700, color: '#17191a', letterSpacing: '-0.04em' }}>
-            Tiebreak
+            Clinchmark
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>

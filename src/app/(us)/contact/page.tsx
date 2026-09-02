@@ -3,7 +3,7 @@ import { LegalPage, legalMetadata } from '@/views/legal-page'
 
 export const metadata = legalMetadata(
   'Contact',
-  'Report a wrong spec, a stale price, or a broken page on Tiebreak.',
+  'Report a wrong spec, a stale price, or a broken page on Clinchmark.',
   '/contact/'
 )
 

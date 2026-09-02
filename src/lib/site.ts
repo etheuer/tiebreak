@@ -1,7 +1,7 @@
-// TODO(owner): set NEXT_PUBLIC_SITE_URL to the real domain before deploying.
-// The fallback is a placeholder; canonicals, sitemap and OG URLs bake it in at build time.
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tiebreak.app').replace(/\/$/, '')
-export const SITE_NAME = 'Tiebreak'
+// Set NEXT_PUBLIC_SITE_URL to https://clinchmark.com after that domain is ours.
+// Do not fall back to tiebreak.app — that hostname is someone else's tennis app.
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tiebreak-gilt.vercel.app').replace(/\/$/, '')
+export const SITE_NAME = 'Clinchmark'
 export const SITE_EMAIL = (process.env.NEXT_PUBLIC_SITE_EMAIL ?? '').trim()
 export const GITHUB_REPO = 'https://github.com/etheuer/tiebreak'
 export const CATALOG_AS_OF = '2026-09-01'

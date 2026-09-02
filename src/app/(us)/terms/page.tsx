@@ -3,7 +3,7 @@ import { LegalPage, legalMetadata } from '@/views/legal-page'
 
 export const metadata = legalMetadata(
   'Terms of use',
-  'Tiebreak is informational. Specs are published figures, prices are list snapshots, and credit-card pages are not financial advice.',
+  'Clinchmark is informational. Specs are published figures, prices are list snapshots, and credit-card pages are not financial advice.',
   '/terms/'
 )
 
@@ -11,7 +11,7 @@ export default function TermsPage() {
   return (
     <LegalPage title="Terms of use">
       <p>
-        By using Tiebreak you agree to these terms. The site is a free information resource. It is
+        By using Clinchmark you agree to these terms. The site is a free information resource. It is
         not a store, a lender, or an advisor.
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">No professional advice</h2>
@@ -26,7 +26,7 @@ export default function TermsPage() {
         mark on the page. We do not run a lab. Makers change sheets, retailers change prices, and
         issuers change card terms. We do not promise that a page is complete or current. Confirm
         facts with the manufacturer, seller, or issuer before you buy or apply.
-        See <Link href="/about/" className="text-accent hover:underline">how Tiebreak works</Link>.
+        See <Link href="/about/" className="text-accent hover:underline">how Clinchmark works</Link>.
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">Trademarks</h2>
       <p>
@@ -40,7 +40,7 @@ export default function TermsPage() {
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">Acceptable use</h2>
       <p>
-        Do not scrape the site in a way that harms the host, impersonate Tiebreak, or republish
+        Do not scrape the site in a way that harms the host, impersonate Clinchmark, or republish
         the verdicts as your own lab results.
       </p>
     </LegalPage>
