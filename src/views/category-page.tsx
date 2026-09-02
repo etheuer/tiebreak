@@ -152,7 +152,7 @@ export async function CategoryListing({
     <div className="shell">
       <nav
         aria-label="Breadcrumb"
-        className="flex items-center gap-1.5 pt-6 text-[12.5px] text-ink-3"
+        className="flex items-center gap-1.5 pt-6 text-meta text-ink-3"
       >
         <Link href={homeHref(market)} className="hover:text-accent">
           Home
@@ -163,8 +163,8 @@ export async function CategoryListing({
 
       <header className="mt-5 border-b border-line pb-8">
         <p className="eyebrow">Category</p>
-        <h1 className="display mt-2 text-[32px] sm:text-[44px]">{currentCategory.name}</h1>
-        <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-ink-2">
+        <h1 className="display mt-2 text-h1">{currentCategory.name}</h1>
+        <p className="mt-3 max-w-xl text-body leading-relaxed text-ink-2">
           {products.length > 0
             ? `${products.length} products in the catalog across ${shortlists.length} product ${
                 shortlists.length === 1 ? 'type' : 'types'
@@ -189,10 +189,10 @@ export async function CategoryListing({
                 <path d="M7.5 10h9M7.5 14h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
             </span>
-            <h2 className="mt-4 text-[19px] font-semibold tracking-[-0.02em]">
+            <h2 className="mt-4 text-lead-lg font-semibold tracking-[-0.02em]">
               No {currentCategory.name.toLowerCase()} products yet
             </h2>
-            <p className="mx-auto mt-2.5 max-w-sm text-[13.5px] leading-relaxed text-ink-2">
+            <p className="mx-auto mt-2.5 max-w-sm text-cell leading-relaxed text-ink-2">
               Comparing {currentCategory.subcategories.join(', ').toLowerCase()} needs a spec catalog
               we do not have yet, and we would rather show nothing than a table of guesses. This page
               will fill in when the data lands.
@@ -213,12 +213,12 @@ export async function CategoryListing({
           {shortlists.map((list) => (
             <section key={list.sub} className="py-10" aria-labelledby={`list-${list.sub}`}>
               <div className="flex flex-wrap items-baseline justify-between gap-3 border-b-2 border-line pb-2.5">
-                <h2 id={`list-${list.sub}`} className="display text-[21px] sm:text-[25px]">
+                <h2 id={`list-${list.sub}`} className="display text-h3">
                   <Link href={`/category/${currentCategory.id}/${list.sub}/`} className="hover:text-accent">
                     {list.label}
                   </Link>
                 </h2>
-                <div className="flex items-center gap-3 text-[12px] text-ink-3">
+                <div className="flex items-center gap-3 text-label text-ink-3">
                   <span className="num">
                     {list.attributes} attributes tracked · sorted by{' '}
                     {priceCaption(list.sub).toLowerCase()}
@@ -234,7 +234,7 @@ export async function CategoryListing({
 
               {list.lenses.length > 0 && (
                 <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                  <span className="mr-1 text-[12px] text-ink-3">Buying for</span>
+                  <span className="mr-1 text-label text-ink-3">Buying for</span>
                   {list.lenses.map((lens) => (
                     <Link key={lens.id} href={lens.href} className="chip" title={lens.job}>
                       {lens.label}
@@ -251,7 +251,7 @@ export async function CategoryListing({
                       key={product.id}
                       className="card flex flex-col gap-4 p-4 transition-colors hover:border-line-2 sm:flex-row sm:items-center sm:gap-5"
                     >
-                      <span className="num hidden w-6 shrink-0 text-[15px] font-semibold text-ink-3 sm:block">
+                      <span className="num hidden w-6 shrink-0 text-body font-semibold text-ink-3 sm:block">
                         {index + 1}
                       </span>
                       <ProductMark product={product} size="md" className="hidden sm:grid" />
@@ -261,17 +261,17 @@ export async function CategoryListing({
                           <ProductMark product={product} size="sm" className="sm:hidden" />
                           <div className="min-w-0">
                             <p className="eyebrow">{product.brand}</p>
-                            <h3 className="mt-0.5 text-[16px] font-semibold tracking-[-0.02em]">
+                            <h3 className="mt-0.5 text-subhead font-semibold tracking-[-0.02em]">
                               <Link href={productHref(product, market)} className="hover:text-accent">
                                 {product.name}
                               </Link>
                             </h3>
                           </div>
                         </div>
-                        <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-ink-2">
+                        <p className="mt-2 line-clamp-2 text-meta leading-relaxed text-ink-2">
                           {product.description}
                         </p>
-                        <p className="mt-1.5 text-[12.5px] text-ink-3">
+                        <p className="mt-1.5 text-meta text-ink-3">
                           <span aria-hidden style={{ color: 'var(--accent)' }}>
                             +{' '}
                           </span>
@@ -280,15 +280,15 @@ export async function CategoryListing({
                       </div>
 
                       <div className="flex shrink-0 items-center justify-between gap-3 sm:flex-col sm:items-end sm:gap-2.5">
-                        <p className="num text-[20px] font-semibold tracking-[-0.03em]">
+                        <p className="num text-lead-lg font-semibold tracking-[-0.03em]">
                           {priceShort(product, market)}
                         </p>
                         {matchup ? (
-                          <Link href={matchup.href} className="btn btn-primary whitespace-nowrap text-[13px]">
+                          <Link href={matchup.href} className="btn btn-primary whitespace-nowrap text-meta">
                             Compare vs {matchup.rival.brand}
                           </Link>
                         ) : (
-                          <Link href={productHref(product, market)} className="btn btn-ghost text-[13px]">
+                          <Link href={productHref(product, market)} className="btn btn-ghost text-meta">
                             Spec sheet
                           </Link>
                         )}
@@ -302,10 +302,10 @@ export async function CategoryListing({
 
           {featuredComparisons.length > 0 && (
             <section className="border-t border-line py-12" aria-labelledby="cat-matchups">
-              <h2 id="cat-matchups" className="display text-[21px] sm:text-[25px]">
+              <h2 id="cat-matchups" className="display text-h3">
                 Matchups in {currentCategory.name.toLowerCase()}
               </h2>
-              <p className="mt-2 text-[13.5px] text-ink-2">
+              <p className="mt-2 text-cell text-ink-2">
                 {featuredComparisons.length < categoryComparisons.length
                   ? `${featuredComparisons.length} of ${categoryComparisons.length} published matchups, one product type at a time.`
                   : 'Every published matchup in this category.'}
@@ -335,7 +335,7 @@ export async function CategoryListing({
       {currentCategory.popular_searches.length > 0 && (
         <section className="border-t border-line py-12">
           <p className="eyebrow">What shoppers ask for in {currentCategory.name.toLowerCase()}</p>
-          <ul className="mt-3 grid gap-1.5 text-[14px] text-ink-2 sm:grid-cols-3">
+          <ul className="mt-3 grid gap-1.5 text-body text-ink-2 sm:grid-cols-3">
             {currentCategory.popular_searches.map((term) => (
               <li key={term}>{term}</li>
             ))}

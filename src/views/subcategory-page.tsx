@@ -168,7 +168,7 @@ export async function SubcategoryListing({
     <div className="shell">
       <nav
         aria-label="Breadcrumb"
-        className="flex flex-wrap items-center gap-1.5 pt-6 text-[12.5px] text-ink-3"
+        className="flex flex-wrap items-center gap-1.5 pt-6 text-meta text-ink-3"
       >
         <Link href={homeHref(market)} className="hover:text-accent">
           Home
@@ -183,10 +183,10 @@ export async function SubcategoryListing({
 
       <header className="mt-5 border-b border-line pb-8">
         <p className="eyebrow">{category.name} comparisons</p>
-        <h1 className="display mt-2 text-[32px] sm:text-[44px]">
+        <h1 className="display mt-2 text-h1">
           {subLabel(sub)} comparisons
         </h1>
-        <p className="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-ink-2">
+        <p className="mt-3 max-w-2xl text-body leading-relaxed text-ink-2">
           Compare {subProducts.length} {subLabel(sub).toLowerCase()} head to head across{' '}
           {attributesCount} tracked specifications. Every matchup is scored strictly from
           published maker spec sheets with no lab test estimates.
@@ -203,7 +203,7 @@ export async function SubcategoryListing({
             </>
           )}
         </p>
-        <p className="mt-2 text-[12px] text-ink-3">
+        <p className="mt-2 text-label text-ink-3">
           Catalog as of {formatCatalogDate(CATALOG_AS_OF)} · {subComparisons.length} published matchups
         </p>
         {isFeeBased(sub) ? <FinanceDisclaimer /> : null}
@@ -212,15 +212,15 @@ export async function SubcategoryListing({
       {useCases.length > 0 && subComparisons.length > 0 && (
         <section className="py-10 border-b border-line" aria-labelledby="use-case-winners">
           <div className="flex flex-wrap items-baseline justify-between gap-3 pb-2.5">
-            <h2 id="use-case-winners" className="display text-[21px] sm:text-[25px]">
+            <h2 id="use-case-winners" className="display text-h3">
               Best for each use
             </h2>
-            <p className="num text-[12px] text-ink-3">
+            <p className="num text-label text-ink-3">
               Use-case leaders scored across {useCases.length} buying priorities
             </p>
           </div>
           <div className="mt-4 overflow-x-auto card p-4">
-            <table className="w-full text-left text-[13px]">
+            <table className="w-full text-left text-cell">
               <thead>
                 <tr className="border-b border-line text-ink">
                   <th className="pb-3 pr-4 font-semibold">Matchup</th>
@@ -256,10 +256,10 @@ export async function SubcategoryListing({
 
       <section className="py-10 border-b border-line" aria-labelledby="all-matchups">
         <div className="flex flex-wrap items-baseline justify-between gap-3 pb-2.5">
-          <h2 id="all-matchups" className="display text-[21px] sm:text-[25px]">
+          <h2 id="all-matchups" className="display text-h3">
             {subLabel(sub)} matchups
           </h2>
-          <p className="num text-[12px] text-ink-3">
+          <p className="num text-label text-ink-3">
             {subComparisons.length} published comparisons
           </p>
         </div>
@@ -279,15 +279,15 @@ export async function SubcategoryListing({
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="eyebrow">{subLabel(productA.subcategory)}</span>
-                  <span className="num text-[11.5px] text-ink-3">{verdict.differing} differences</span>
+                  <span className="num text-micro text-ink-3">{verdict.differing} differences</span>
                 </div>
-                <h3 className="mt-2 text-[16px] font-semibold text-ink group-hover:text-accent">
+                <h3 className="mt-2 text-subhead font-semibold text-ink group-hover:text-accent">
                   {comparison.productName}
                 </h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">
+                <p className="mt-2 text-cell leading-relaxed text-ink-2">
                   {answer}
                 </p>
-                <div className="mt-4 flex items-center justify-between pt-3 border-t border-line text-[12.5px]">
+                <div className="mt-4 flex items-center justify-between pt-3 border-t border-line text-meta">
                   <span className="num text-ink-3">
                     {shortName(productA)} ({priceShort(productA, market)}) vs {shortName(productB)} ({priceShort(productB, market)})
                   </span>
@@ -303,10 +303,10 @@ export async function SubcategoryListing({
 
       <section className="py-10" aria-labelledby="sub-products">
         <div className="flex flex-wrap items-baseline justify-between gap-3 border-b-2 border-line pb-2.5">
-          <h2 id="sub-products" className="display text-[21px] sm:text-[25px]">
+          <h2 id="sub-products" className="display text-h3">
             All {subLabel(sub).toLowerCase()} in the catalog
           </h2>
-          <p className="num text-[12px] text-ink-3">
+          <p className="num text-label text-ink-3">
             {subProducts.length} products · sorted by {priceCaption(sub).toLowerCase()}
           </p>
         </div>
@@ -319,7 +319,7 @@ export async function SubcategoryListing({
                 key={product.id}
                 className="card flex flex-col gap-4 p-4 transition-colors hover:border-line-2 sm:flex-row sm:items-center sm:gap-5"
               >
-                <span className="num hidden w-6 shrink-0 text-[15px] font-semibold text-ink-3 sm:block">
+                <span className="num hidden w-6 shrink-0 text-body font-semibold text-ink-3 sm:block">
                   {index + 1}
                 </span>
                 <ProductMark product={product} size="md" className="hidden sm:grid" />
@@ -329,18 +329,18 @@ export async function SubcategoryListing({
                     <ProductMark product={product} size="sm" className="sm:hidden" />
                     <div className="min-w-0">
                       <p className="eyebrow">{product.brand}</p>
-                      <h3 className="mt-0.5 text-[16px] font-semibold tracking-[-0.02em]">
+                      <h3 className="mt-0.5 text-subhead font-semibold tracking-[-0.02em]">
                         <Link href={productHref(product, market)} className="hover:text-accent">
                           {product.name}
                         </Link>
                       </h3>
                     </div>
                   </div>
-                  <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-ink-2">
+                  <p className="mt-2 line-clamp-2 text-meta leading-relaxed text-ink-2">
                     {product.description}
                   </p>
                   {product.pros[0] && (
-                    <p className="mt-1.5 text-[12.5px] text-ink-3">
+                    <p className="mt-1.5 text-meta text-ink-3">
                       <span aria-hidden style={{ color: 'var(--accent)' }}>
                         +{' '}
                       </span>
@@ -350,15 +350,15 @@ export async function SubcategoryListing({
                 </div>
 
                 <div className="flex shrink-0 items-center justify-between gap-3 sm:flex-col sm:items-end sm:gap-2.5">
-                  <p className="num text-[20px] font-semibold tracking-[-0.03em]">
+                  <p className="num text-lead-lg font-semibold tracking-[-0.03em]">
                     {priceShort(product, market)}
                   </p>
                   {matchup ? (
-                    <Link href={matchup.href} className="btn btn-primary whitespace-nowrap text-[13px]">
+                    <Link href={matchup.href} className="btn btn-primary whitespace-nowrap text-meta">
                       Compare vs {matchup.rival.brand}
                     </Link>
                   ) : (
-                    <Link href={productHref(product, market)} className="btn btn-ghost text-[13px]">
+                    <Link href={productHref(product, market)} className="btn btn-ghost text-meta">
                       Spec sheet
                     </Link>
                   )}

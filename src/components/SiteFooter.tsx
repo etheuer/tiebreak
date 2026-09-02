@@ -42,7 +42,7 @@ export function SiteFooter({
             </span>
             <span className="font-bold tracking-[-0.03em]">{SITE_NAME}</span>
           </div>
-          <p className="mt-3 max-w-sm text-[13.5px] leading-relaxed text-ink-2">
+          <p className="mt-3 max-w-sm text-cell leading-relaxed text-ink-2">
             Head to head spec comparisons for people who have already narrowed it down to two.
             Figures are published specs and other published numbers we mark on the page, not lab
             tests we ran.
@@ -56,7 +56,7 @@ export function SiteFooter({
               <li key={category.id}>
                 <Link
                   href={categoryHref(category.id, market)}
-                  className="text-[13.5px] text-ink-2 transition-colors hover:text-accent"
+                  className="text-cell text-ink-2 transition-colors hover:text-accent"
                 >
                   {category.name}
                 </Link>
@@ -72,7 +72,7 @@ export function SiteFooter({
               <li key={comparison.productA + comparison.productB}>
                 <Link
                   href={compareHref(comparison, market)}
-                  className="text-[13.5px] text-ink-2 transition-colors hover:text-accent"
+                  className="text-cell text-ink-2 transition-colors hover:text-accent"
                 >
                   {comparison.productName}
                 </Link>
@@ -81,7 +81,7 @@ export function SiteFooter({
             <li>
               <Link
                 href={hubHref(market)}
-                className="text-[13.5px] font-semibold text-ink transition-colors hover:text-accent"
+                className="text-cell font-semibold text-ink transition-colors hover:text-accent"
               >
                 All matchups &rarr;
               </Link>
@@ -91,7 +91,7 @@ export function SiteFooter({
       </div>
 
       <div className="rule-top">
-        <div className="shell flex flex-col gap-2 py-5 text-[12.5px] text-ink-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+        <div className="shell flex flex-col gap-2 py-5 text-meta text-ink-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} {SITE_NAME}</p>
           <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-1">
             {LEGAL_LINKS.map((link) => (
