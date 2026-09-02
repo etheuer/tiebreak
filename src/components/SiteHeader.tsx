@@ -46,14 +46,12 @@ export function SiteHeader({
   const [query, setQuery] = useState('')
   const [cursor, setCursor] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
-  const openRef = useRef(false)
-  openRef.current = open
 
   const openSearch = useCallback((source: 'button' | 'slash' | 'mod_k') => {
-    if (!openRef.current) capture('search_opened', { source })
+    if (!open) capture('search_opened', { source })
     setOpen(true)
     setMenu(false)
-  }, [])
+  }, [open])
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase()
