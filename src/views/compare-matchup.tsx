@@ -33,6 +33,10 @@ import { casesFor } from '@/data/use-cases'
 import { SpecTables } from '@/components/SpecTables'
 import { ProductMark } from '@/components/ProductMark'
 import { DecisionPanel } from '@/components/DecisionPanel'
+import { GenerationalUpgradeBanner } from '@/components/GenerationalUpgradeBanner'
+import { TcoCard } from '@/components/TcoCard'
+import { PhysicalFitSection } from '@/components/PhysicalFitSection'
+import { OwnerFrictionCheck } from '@/components/OwnerFrictionCheck'
 import { ShareVerdict } from '@/components/ShareVerdict'
 import { FinanceDisclaimer, PriceNote } from '@/components/CatalogNotes'
 
@@ -391,9 +395,21 @@ export async function CompareMatchup({
           />
         </div>
 
-        {/* Decision aids: buying-for lens, straight answer, deal-breakers. */}
+        {/* Generational Upgrade Analysis */}
+        <GenerationalUpgradeBanner productA={productA} productB={productB} />
+
+        {/* Decision aids: buying-for lens, straight answer, deal-breakers, ecosystem filter */}
         <DecisionPanel productA={productA} productB={productB} rows={rows} useCases={useCases} checks={checks} market={market}>
         </DecisionPanel>
+
+        {/* True 3-Year Cost of Ownership (TCO) */}
+        <TcoCard productA={productA} productB={productB} market={market} />
+
+        {/* Physical Fit & Living Space Reality Check */}
+        <PhysicalFitSection productA={productA} productB={productB} />
+
+        {/* 90-Day Owner Regret & Friction Check */}
+        <OwnerFrictionCheck productA={productA} productB={productB} />
       </div>
 
       <div className="mt-12">

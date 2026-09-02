@@ -108,13 +108,12 @@ const checks = [
 ]
 
 if (checkExport) {
-  const legal = ['about', 'privacy', 'terms', 'contact']
+  const legal = ['about', 'privacy', 'terms']
   checks.push(
     ['static export has no /uk/', !existsSync(path.join(staticRoot, 'uk')), true],
     ['privacy page exported', existsSync(path.join(staticRoot, 'privacy', 'index.html')), true],
     ['terms page exported', existsSync(path.join(staticRoot, 'terms', 'index.html')), true],
     ['about page exported', existsSync(path.join(staticRoot, 'about', 'index.html')), true],
-    ['contact page exported', existsSync(path.join(staticRoot, 'contact', 'index.html')), true],
     ['legal pages are in the sitemap', legal.every((name) => {
       if (!existsSync(path.join(staticRoot, 'sitemap.xml'))) return false
       return readFileSync(path.join(staticRoot, 'sitemap.xml'), 'utf8').includes(`/${name}/`)

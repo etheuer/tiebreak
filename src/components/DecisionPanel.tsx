@@ -15,10 +15,16 @@ import {
 } from '@/lib/decision'
 
 import type { MarketId } from '@/lib/markets'
+import {
+  compareEcosystemImpact,
+  ECOSYSTEM_OPTIONS,
+  type EcosystemId,
+} from '@/data/ecosystems'
 
 const OVERALL = 'overall'
 const lensKey = (sub: string) => `clinchmark:for:${sub}`
 const mattersKey = (sub: string) => `clinchmark:deal-breakers:${sub}`
+const ecosystemKey = 'clinchmark:ecosystem'
 
 function hashLens(): string | null {
   const match = window.location.hash.match(/(?:^#|&)for=([a-z0-9-]+)/i)
@@ -68,6 +74,7 @@ export function DecisionPanel({
   const sub = productA.subcategory
   const [lensId, setLensId] = useState<string>(OVERALL)
   const [matters, setMatters] = useState<string[]>([])
+  const [ecosystem, setEcosystem] = useState<EcosystemId>('neutral')
 
   useEffect(() => {
     const valid = new Set(useCases.map((useCase) => useCase.id))
@@ -81,6 +88,14 @@ export function DecisionPanel({
       } catch {
         // storage blocked: overall is fine
       }
+    }
+    try {
+      const storedEco = window.localStorage.getItem(ecosystemKey)
+      if (storedEco === 'apple' || storedEco === 'android-windows' || storedEco === 'neutral') {
+        setEcosystem(storedEco)
+      }
+    } catch {
+      // ignore
     }
     try {
       const raw = window.localStorage.getItem(mattersKey(sub))
@@ -110,6 +125,15 @@ export function DecisionPanel({
     }
   }
 
+  function chooseEcosystem(id: EcosystemId) {
+    setEcosystem(id)
+    try {
+      window.localStorage.setItem(ecosystemKey, id)
+    } catch {
+      // ignore
+    }
+  }
+
   function toggleMatters(id: string) {
     setMatters((prev) => {
       const next = prev.includes(id) ? prev.filter((entry) => entry !== id) : [...prev, id]
@@ -121,6 +145,12 @@ export function DecisionPanel({
       return next
     })
   }
+
+  const hasEcosystem = ['headphones', 'smartphones', 'laptops'].includes(sub)
+  const ecosystemComparison = useMemo(
+    () => compareEcosystemImpact(productA, productB, ecosystem),
+    [productA, productB, ecosystem]
+  )
 
   const useCase = useMemo(() => useCases.find((entry) => entry.id === lensId) ?? null, [useCases, lensId])
   // A lens scores only its own keys; Overall scores every row and shows the highlight rows.
@@ -186,6 +216,38 @@ export function DecisionPanel({
           </p>
         </div>
 
+        {/* Ecosystem picker */}
+        {hasEcosystem && (
+          <div className="flex flex-col gap-2 border-b border-line bg-surface-2/40 px-4 py-2.5 sm:px-5 md:flex-row md:items-center md:gap-4">
+            <p className="eyebrow shrink-0 text-ink-3">Your devices</p>
+            <div
+              className="scroll-x -mx-1 flex gap-1.5 px-1 py-0.5"
+              role="radiogroup"
+              aria-label="Filter by your device ecosystem"
+            >
+              {ECOSYSTEM_OPTIONS.map((opt) => (
+                <button
+                  key={opt.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={ecosystem === opt.id}
+                  data-on={ecosystem === opt.id}
+                  onClick={() => chooseEcosystem(opt.id)}
+                  className="chip shrink-0 py-1 text-meta"
+                  title={opt.description}
+                >
+                  {opt.shortLabel}
+                </button>
+              ))}
+            </div>
+            <p className="text-meta leading-snug text-ink-3 md:ml-auto md:max-w-[42%] md:text-right">
+              {ecosystem === 'neutral'
+                ? 'Select your ecosystem to flag non-functional features or platform lock-in.'
+                : ECOSYSTEM_OPTIONS.find((o) => o.id === ecosystem)?.description}
+            </p>
+          </div>
+        )}
+
         <div className="grid md:grid-cols-[1.15fr_1fr]">
           {/* Straight answer */}
           <div className="p-4 sm:p-5">
@@ -214,6 +276,26 @@ export function DecisionPanel({
               <p className="mt-3 rounded-md bg-surface-2 px-3 py-2 text-meta leading-snug text-ink-2">
                 {answer.caveat}
               </p>
+            )}
+
+            {hasEcosystem && ecosystemComparison.recommendation && (
+              <div className="mt-3 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-cell leading-snug text-ink">
+                <p className="font-semibold text-ink">📱 {ecosystemComparison.recommendation}</p>
+                {ecosystemComparison.a.crippledFeatures && ecosystemComparison.a.crippledFeatures.length > 0 && (
+                  <ul className="mt-1.5 list-disc pl-4 text-meta text-rival-2 space-y-0.5">
+                    {ecosystemComparison.a.crippledFeatures.map((f) => (
+                      <li key={f}>{cols.a}: {f}</li>
+                    ))}
+                  </ul>
+                )}
+                {ecosystemComparison.b.crippledFeatures && ecosystemComparison.b.crippledFeatures.length > 0 && (
+                  <ul className="mt-1.5 list-disc pl-4 text-meta text-rival-2 space-y-0.5">
+                    {ecosystemComparison.b.crippledFeatures.map((f) => (
+                      <li key={f}>{cols.b}: {f}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             )}
 
             <div className="mt-4">
