@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getCategories, getComparisons, getProductById, getProducts } from '@/lib/data'
+import { getCategories, getComparisons, getProductById, getProducts, inMarket, priceOf } from '@/lib/data'
+import type { MarketId } from '@/lib/markets'
+import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { catalogFor } from '@/data/spec-catalog'
 import { highlightFields, specValue } from '@/lib/specs'
 import { buildVerdict } from '@/lib/verdict'
 import {
+  categoryHref,
   compareHref,
   findComparison,
+  homeHref,
   isFeeBased,
   priceCaption,
   priceShort,
@@ -15,37 +19,39 @@ import {
   subLabel,
 } from '@/lib/nav'
 import { absUrl, clip, SITE_NAME } from '@/lib/site'
+import { formatMoney } from '@/lib/format'
 import { ProductMark } from '@/components/ProductMark'
 import { ProductSpecs } from '@/components/ProductSpecs'
 import { VsCard } from '@/components/VsCard'
 
-export async function generateStaticParams() {
-  const products = await getProducts()
+export async function generateStaticParamsForMarket(market: MarketId) {
+  const products = await getProducts(market)
   return products.map((product) => ({
     slug: [product.category, product.id],
   }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>
-}): Promise<Metadata> {
+export async function generateMetadataForMarket(
+  { params }: { params: Promise<{ slug: string[] }> },
+  market: MarketId
+): Promise<Metadata> {
   const { slug } = await params
-  const product = slug?.length >= 2 ? await getProductById(slug[1]) : null
-  if (!product) return { title: 'Product not found' }
+  const product = slug?.length >= 2 ? await getProductById(slug[1], market) : null
+  if (!product || !inMarket(product, market)) return { title: 'Product not found' }
   const title = `${product.name} specs and price`
-  const description = clip(`${product.name} at ${priceShort(product)}: ${product.description}`, 158)
+  const description = clip(`${product.name} at ${priceShort(product, market)}: ${product.description}`, 158)
+  const includeUk = inMarket(product, 'uk')
   return {
     title,
     description,
-    alternates: { canonical: productHref(product) },
+    alternates: pageAlternates(productHref(product), market, includeUk),
     openGraph: {
       title,
       description,
-      url: productHref(product),
+      url: productHref(product, market),
       type: 'website',
       siteName: SITE_NAME,
+      locale: openGraphLocale(market),
     },
     twitter: {
       card: 'summary',
@@ -55,21 +61,27 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProductPage({ params }: { params: Promise<{ slug: string[] }> }) {
+export async function ProductDetail({
+  params,
+  market,
+}: {
+  params: Promise<{ slug: string[] }>
+  market: MarketId
+}) {
   const { slug } = await params
   if (!slug || slug.length < 2) {
     notFound()
   }
 
-  const product = await getProductById(slug[1])
-  if (!product) {
+  const product = await getProductById(slug[1], market)
+  if (!product || !inMarket(product, market)) {
     notFound()
   }
 
   const [products, comparisons, categories] = await Promise.all([
-    getProducts(),
-    getComparisons(),
-    getCategories(),
+    getProducts(market),
+    getComparisons(market),
+    getCategories(market),
   ])
 
   const byId = new Map(products.map((item) => [item.id, item]))
@@ -102,13 +114,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <div className="shell">
       <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 pt-6 text-[12.5px] text-ink-3">
-        <Link href="/" className="hover:text-accent">
+        <Link href={homeHref(market)} className="hover:text-accent">
           Home
         </Link>
         <span aria-hidden>/</span>
         {category && (
           <>
-            <Link href={`/category/${category.id}/`} className="hover:text-accent">
+            <Link href={categoryHref(category.id, market)} className="hover:text-accent">
               {category.name}
             </Link>
             <span aria-hidden>/</span>
@@ -131,7 +143,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="shrink-0 sm:text-right">
           <p className="eyebrow">{priceCaption(product.subcategory)}</p>
           <p className="num mt-1 text-[30px] font-semibold tracking-[-0.03em]">
-            {priceShort(product)}
+            {priceShort(product, market)}
           </p>
           <p className="num mt-1 text-[12px] text-ink-3">{attributeCount} attributes tracked</p>
         </div>
@@ -151,7 +163,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       )}
 
       <section className="grid gap-3 border-t border-line py-10 md:grid-cols-2 md:gap-5">
-        <div className="card p-5" style={{ borderLeft: '3px solid var(--accent)' }}>
+        <div className="card p-5">
           <h2 className="text-[15px] font-semibold">What it does well</h2>
           <ul className="mt-3 grid gap-2">
             {product.pros.map((pro) => (
@@ -164,7 +176,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             ))}
           </ul>
         </div>
-        <div className="card p-5" style={{ borderLeft: '3px solid var(--line-2)' }}>
+        <div className="card p-5">
           <h2 className="text-[15px] font-semibold">Where it gives ground</h2>
           <ul className="mt-3 grid gap-2">
             {product.cons.map((con) => (
@@ -194,11 +206,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               if (!productA || !productB) return null
               return (
                 <VsCard
+                  market={market}
                   key={comparison.productA + comparison.productB}
                   comparison={comparison}
                   productA={productA}
                   productB={productB}
-                  verdict={buildVerdict(productA, productB)}
+                  verdict={buildVerdict(productA, productB, market)}
                 />
               )
             })}
@@ -227,16 +240,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       <p className="mt-0.5 truncate text-[14px] font-semibold">{alternative.name}</p>
                     </div>
                     <p className="num ml-auto shrink-0 text-[13px] text-ink-3">
-                      {priceShort(alternative)}
+                      {priceShort(alternative, market)}
                     </p>
                   </div>
                   <div className="mt-4 flex gap-2">
                     {matchup && (
-                      <Link href={compareHref(matchup)} className="chip">
+                      <Link href={compareHref(matchup, market)} className="chip">
                         Compare
                       </Link>
                     )}
-                    <Link href={productHref(alternative)} className="chip">
+                    <Link href={productHref(alternative, market)} className="chip">
                       Specs
                     </Link>
                   </div>
@@ -250,39 +263,47 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            isFeeBased(product.subcategory)
-              ? {
-                  '@context': 'https://schema.org',
-                  '@type': 'CreditCard',
-                  name: product.name,
-                  description: product.description,
-                  url: absUrl(productHref(product)),
-                  provider: {
-                    '@type': 'Organization',
-                    name: product.brand,
-                  },
-                  feesAndCommissionsSpecification: `Annual fee $${product.price}`,
-                }
-              : {
-                  '@context': 'https://schema.org',
-                  '@type': 'Product',
-                  name: product.name,
-                  brand: {
-                    '@type': 'Brand',
-                    name: product.brand,
-                  },
-                  description: product.description,
-                  category: subLabel(product.subcategory),
-                  url: absUrl(productHref(product)),
-                  offers: {
-                    '@type': 'Offer',
-                    price: product.price,
-                    priceCurrency: 'USD',
-                    url: absUrl(productHref(product)),
-                  },
-                }
-          ),
+          __html: JSON.stringify((() => {
+            const point = priceOf(product, market)
+            if (isFeeBased(product.subcategory)) {
+              return {
+                '@context': 'https://schema.org',
+                '@type': 'CreditCard',
+                name: product.name,
+                description: product.description,
+                url: absUrl(productHref(product, market)),
+                provider: {
+                  '@type': 'Organization',
+                  name: product.brand,
+                },
+                feesAndCommissionsSpecification: point
+                  ? `Annual fee ${formatMoney(point.amount, market)}`
+                  : 'Annual fee not listed',
+              }
+            }
+            return {
+              '@context': 'https://schema.org',
+              '@type': 'Product',
+              name: product.name,
+              brand: {
+                '@type': 'Brand',
+                name: product.brand,
+              },
+              description: product.description,
+              category: subLabel(product.subcategory),
+              url: absUrl(productHref(product, market)),
+              ...(point
+                ? {
+                    offers: {
+                      '@type': 'Offer',
+                      price: point.amount,
+                      priceCurrency: point.currency,
+                      url: absUrl(productHref(product, market)),
+                    },
+                  }
+                : {}),
+            }
+          })()),
         }}
       />
 
@@ -297,7 +318,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: absUrl('/'),
+                item: absUrl(homeHref(market)),
               },
               ...(category
                 ? [
@@ -305,7 +326,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       '@type': 'ListItem',
                       position: 2,
                       name: category.name,
-                      item: absUrl(`/category/${category.id}/`),
+                      item: absUrl(categoryHref(category.id, market)),
                     },
                     {
                       '@type': 'ListItem',

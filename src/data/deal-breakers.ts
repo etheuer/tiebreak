@@ -1,5 +1,13 @@
 import type { Subcategory } from './spec-catalog'
 import { isSubcategory } from './spec-catalog'
+import { SPEC_UNITS } from './spec-units'
+import {
+  HEAVY_LAPTOP_G,
+  HEAVY_PURIFIER_G,
+  HEAVY_VACUUM_G,
+  qty,
+  SMALL_COVERAGE_M2,
+} from '@/lib/units'
 
 /**
  * A deal-breaker is one spec fact that makes a shopper drop a product on the
@@ -14,7 +22,7 @@ export type DealBreakerRule = {
   label: string
   /** The consequence, one line. */
   why: string
-  trips: (value: string) => boolean | null
+  trips: (value: string, key: string) => boolean | null
 }
 
 const NUMBER = /\d[\d,]*(?:\.\d+)?/g
@@ -25,39 +33,47 @@ function numbers(value: string): number[] {
     .filter((n) => Number.isFinite(n))
 }
 
-type Test = (value: string) => boolean | null
+type Test = (value: string, key: string) => boolean | null
 
 /** Wraps a test so an empty or missing spec reads as unknown, never as a trip. */
-function known(test: (value: string) => boolean): Test {
-  return (value) => (!value || value.trim() === '' || value.trim() === '—' ? null : test(value))
+function known(test: (value: string, key: string) => boolean): Test {
+  return (value, key) => (!value || value.trim() === '' || value.trim() === '—' ? null : test(value, key))
+}
+
+function magnitudes(value: string, key: string): number[] {
+  if (SPEC_UNITS[key]) {
+    const parsed = qty(value, key)
+    return parsed ? [parsed.value] : []
+  }
+  return numbers(value)
 }
 
 const isNo = known((value) => /^\s*no\b/i.test(value))
 const has = (pattern: RegExp) => known((value) => pattern.test(value))
 const lacks = (pattern: RegExp) => known((value) => !pattern.test(value))
 const firstBelow = (limit: number) =>
-  known((value) => {
-    const [first] = numbers(value)
+  known((value, key) => {
+    const [first] = magnitudes(value, key)
     return first !== undefined && first < limit
   })
 const firstAbove = (limit: number) =>
-  known((value) => {
-    const [first] = numbers(value)
+  known((value, key) => {
+    const [first] = magnitudes(value, key)
     return first !== undefined && first > limit
   })
 const firstAtLeast = (limit: number) =>
-  known((value) => {
-    const [first] = numbers(value)
+  known((value, key) => {
+    const [first] = magnitudes(value, key)
     return first !== undefined && first >= limit
   })
 const maxAbove = (limit: number) =>
-  known((value) => {
-    const all = numbers(value)
+  known((value, key) => {
+    const all = magnitudes(value, key)
     return all.length > 0 && Math.max(...all) > limit
   })
 const maxBelow = (limit: number) =>
-  known((value) => {
-    const all = numbers(value)
+  known((value, key) => {
+    const all = magnitudes(value, key)
     return all.length > 0 && Math.max(...all) < limit
   })
 
@@ -133,7 +149,7 @@ export const DEAL_BREAKERS: Record<Subcategory, DealBreakerRule[]> = {
       key: 'weight',
       label: 'Over 4 lb (1.8 kg)',
       why: 'Heavy in a backpack on a daily commute.',
-      trips: firstAbove(4),
+      trips: firstAbove(HEAVY_LAPTOP_G),
     },
     {
       id: 'sixty-hz-laptop',
@@ -200,7 +216,7 @@ export const DEAL_BREAKERS: Record<Subcategory, DealBreakerRule[]> = {
       key: 'weight',
       label: 'Over 7 lb (3.2 kg)',
       why: 'Tiring on stairs and above shoulder height.',
-      trips: firstAbove(7),
+      trips: firstAbove(HEAVY_VACUUM_G),
     },
     {
       id: 'short-runtime',
@@ -281,14 +297,14 @@ export const DEAL_BREAKERS: Record<Subcategory, DealBreakerRule[]> = {
       key: 'coverage',
       label: 'Under 1,000 sq ft coverage',
       why: 'Undersized for an open-plan living area.',
-      trips: maxBelow(1000),
+      trips: maxBelow(SMALL_COVERAGE_M2),
     },
     {
       id: 'heavy-purifier',
       key: 'weight',
       label: 'Over 25 lb (11 kg)',
       why: 'Hard to move between rooms.',
-      trips: firstAbove(25),
+      trips: firstAbove(HEAVY_PURIFIER_G),
     },
   ],
   'credit-cards': [

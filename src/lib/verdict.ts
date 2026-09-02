@@ -1,7 +1,12 @@
 import type { Product } from '@/lib/data'
+import { priceOf } from '@/lib/pricing'
 import { mergeCatalogs, type SpecField } from '@/data/spec-catalog'
 import { buildComparisonGroups, type RenderedGroup } from '@/lib/specs'
 import { isFeeBased } from '@/lib/nav'
+import { formatMoney } from '@/lib/format'
+import { type MarketId } from '@/lib/markets'
+import { SPEC_UNITS } from '@/data/spec-units'
+import { qty } from '@/lib/units'
 
 export type Side = 'a' | 'b'
 
@@ -194,11 +199,17 @@ function judge(key: string, a: string, b: string): { winner: Side | null; reason
   const direction = NUMERIC_RULES[key]
   if (!direction) return { winner: null, reason: null }
 
-  const mA = measure(a, direction)
-  const mB = measure(b, direction)
+  let mA: { value: number; unit: string } | null
+  let mB: { value: number; unit: string } | null
+  if (SPEC_UNITS[key]) {
+    mA = qty(a, key)
+    mB = qty(b, key)
+  } else {
+    mA = measure(a, direction)
+    mB = measure(b, direction)
+    if (mA && mB && mA.unit !== mB.unit) return { winner: null, reason: null }
+  }
   if (!mA || !mB) return { winner: null, reason: null }
-  // Different units are not comparable (kg vs lb, GB vs TB).
-  if (mA.unit !== mB.unit) return { winner: null, reason: null }
   if (mA.value === mB.value) return { winner: null, reason: null }
 
   const aBetter = direction === 'higher' ? mA.value > mB.value : mA.value < mB.value
@@ -212,7 +223,7 @@ function highlightKeys(productA: Product, productB: Product): Set<string> {
   return new Set(fields.map((field) => field.key))
 }
 
-export function buildVerdict(productA: Product, productB: Product): Verdict {
+export function buildVerdict(productA: Product, productB: Product, market: MarketId = 'us'): Verdict {
   const base: RenderedGroup[] = buildComparisonGroups(productA, productB)
   const keyHighlights = highlightKeys(productA, productB)
 
@@ -266,9 +277,17 @@ export function buildVerdict(productA: Product, productB: Product): Verdict {
     }
   })
 
-  const priceGap = Math.abs(productA.price - productB.price)
-  const priceLeader: Side | null =
-    productA.price === productB.price ? null : productA.price < productB.price ? 'a' : 'b'
+  const priceA = priceOf(productA, market)
+  const priceB = priceOf(productB, market)
+  const priced = priceA && priceB && priceA.currency === priceB.currency
+  const priceGap = priced ? Math.abs(priceA.amount - priceB.amount) : 0
+  const priceLeader: Side | null = !priced
+    ? null
+    : priceA.amount === priceB.amount
+      ? null
+      : priceA.amount < priceB.amount
+        ? 'a'
+        : 'b'
 
   return {
     groups,
@@ -285,10 +304,15 @@ export function buildVerdict(productA: Product, productB: Product): Verdict {
 }
 
 /** One-line answer for shoppers who will not scroll. */
-export function verdictLine(productA: Product, productB: Product, verdict: Verdict): string {
+export function verdictLine(
+  productA: Product,
+  productB: Product,
+  verdict: Verdict,
+  market: MarketId = 'us'
+): string {
   const { leader, aWins, bWins, scored, total } = verdict
   const cheaper = verdict.priceLeader === 'a' ? productA : verdict.priceLeader === 'b' ? productB : null
-  const amount = `$${verdict.priceGap.toLocaleString()}`
+  const amount = cheaper ? formatMoney(verdict.priceGap, market) : ''
   const fee = cheaper ? isFeeBased(cheaper.subcategory) : false
   const edge = fee ? `charges ${amount} a year less` : `costs ${amount} less`
 
@@ -300,8 +324,8 @@ export function verdictLine(productA: Product, productB: Product, verdict: Verdi
 
   if (!leader) {
     return cheaper
-      ? `They split the ${scored} numerically rankable specs evenly, so cost decides it: ${cheaper.name} ${edge}.`
-      : `They split the ${scored} numerically rankable specs evenly, with nothing to separate them on cost.`
+      ? `They split the ${scored} rankable spec${scored === 1 ? '' : 's'} evenly, so cost decides it: ${cheaper.name} ${edge}.`
+      : `They split the ${scored} rankable spec${scored === 1 ? '' : 's'} evenly, with nothing to separate them on cost.`
   }
 
   const winner = leader === 'a' ? productA : productB
@@ -312,9 +336,9 @@ export function verdictLine(productA: Product, productB: Product, verdict: Verdi
   const thin = scored < 5 ? ` Most of the ${total} attributes tracked here are descriptive rather than numeric.` : ''
 
   if (cheaper && cheaper.id === winner.id) {
-    return `${winner.name} leads ${wins}-${loses} on the ${scored} numerically rankable specs and ${edge}, which makes it the straightforward pick.${thin}`
+    return `${winner.name} leads ${wins} to ${loses} on the ${scored} rankable spec${scored === 1 ? '' : 's'} and ${edge}, which makes it the straightforward pick.${thin}`
   }
-  return `${winner.name} leads ${wins}-${loses} on the ${scored} numerically rankable specs${
+  return `${winner.name} leads ${wins} to ${loses} on the ${scored} rankable spec${scored === 1 ? '' : 's'}${
     cheaper ? `, but ${cheaper.name} ${edge}` : ''
   }.${thin}`
 }
@@ -330,6 +354,6 @@ export function leadAreas(verdict: Verdict): { a: string[]; b: string[] } {
   return { a, b }
 }
 
-export function priceLabel(price: number): string {
-  return `$${price.toLocaleString('en-US')}`
+export function priceLabel(price: number, market: MarketId = 'us'): string {
+  return formatMoney(price, market)
 }

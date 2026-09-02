@@ -17,7 +17,7 @@
 
   --ink: #17191a;
   --ink-2: #565a57;
-  --ink-3: #85897f;
+  --ink-3: #6c7067;
 
   --accent: #0c7c6c;
   --accent-2: #095c50;
@@ -211,7 +211,7 @@ body {
 
 .cmp-grid {
   display: grid;
-  grid-template-columns: var(--label-col) 1fr 1fr;
+  grid-template-columns: var(--label-col) minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .spec-table {
@@ -295,7 +295,7 @@ body {
 
 .win-flag {
   display: inline-block;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1;
   transform: translateY(-1px);
   margin-right: 4px;
@@ -310,7 +310,7 @@ body {
 
   .focus-a .cmp-grid,
   .focus-b .cmp-grid {
-    grid-template-columns: var(--label-col) 1fr;
+    grid-template-columns: var(--label-col) minmax(0, 1fr);
   }
 }
 
@@ -481,4 +481,19 @@ body {
     linear-gradient(to bottom, var(--line) 1px, transparent 1px);
   background-size: 28px 28px;
   mask-image: radial-gradient(70% 80% at 50% 0%, #000 0%, transparent 78%);
+}
+
+@media (max-width: 639px) {
+  .chip, .db-check, .mobile-switch-btn {
+    position: relative;
+  }
+  .chip::after, .db-check::after, .mobile-switch-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
 }

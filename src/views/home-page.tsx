@@ -1,22 +1,29 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getCategories, getComparisons, getProducts } from '@/lib/data'
+import { marketPath, type MarketId } from '@/lib/markets'
+import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict } from '@/lib/verdict'
-import { compareHref, subLabel } from '@/lib/nav'
+import { categoryHref, compareHref, subLabel } from '@/lib/nav'
 import { primaryUseCase } from '@/data/use-cases'
 import { VsCard } from '@/components/VsCard'
 
-export const metadata: Metadata = {
-  alternates: { canonical: '/' },
-  openGraph: { url: '/' },
+export async function homeMetadata(market: MarketId): Promise<Metadata> {
+  const ukProducts = await getProducts('uk')
+  const includeUk = ukProducts.length > 0
+  const path = marketPath(market, '/')
+  return {
+    alternates: pageAlternates('/', market, includeUk),
+    openGraph: { url: path, locale: openGraphLocale(market) },
+  }
 }
 
-export default async function Home() {
+export async function HomePage({ market }: { market: MarketId }) {
   const [products, comparisons, categories] = await Promise.all([
-    getProducts(),
-    getComparisons(),
-    getCategories(),
+    getProducts(market),
+    getComparisons(market),
+    getCategories(market),
   ])
 
   const byId = new Map(products.map((product) => [product.id, product]))
@@ -55,7 +62,7 @@ export default async function Home() {
 
   const cards = featured.map((pair) => ({
     ...pair,
-    verdict: buildVerdict(pair.productA, pair.productB),
+    verdict: buildVerdict(pair.productA, pair.productB, market),
   }))
 
   const subcategories = [...new Set(products.map((product) => product.subcategory))].map((sub) => {
@@ -66,7 +73,7 @@ export default async function Home() {
       attributes: catalogFor(sub).reduce((sum, group) => sum + group.fields.length, 0),
       products: products.filter((product) => product.subcategory === sub).length,
       matchups: pairs.filter((pair) => pair.productA.subcategory === sub).length,
-      href: entry ? compareHref(entry.comparison) : null,
+      href: entry ? compareHref(entry.comparison, market) : null,
     }
   })
 
@@ -90,7 +97,7 @@ export default async function Home() {
       <section className="relative overflow-hidden border-b border-line">
         <div className="hairline-grid pointer-events-none absolute inset-0 opacity-[0.55]" aria-hidden />
         <div className="shell relative py-14 sm:py-20">
-          <p className="eyebrow">Head to head spec comparisons</p>
+
           <h1 className="display mt-4 max-w-3xl text-[38px] sm:text-[58px] lg:text-[68px]">
             Two products.
             <br />
@@ -111,7 +118,7 @@ export default async function Home() {
               ) : null
             )}
             <span className="ml-1 hidden text-[12.5px] text-ink-3 sm:inline">
-              or press <kbd className="num rounded border border-line px-1.5 py-0.5 text-[10.5px]">/</kbd> to
+              or press <kbd className="num rounded border border-line px-1.5 py-0.5 text-[12px]">/</kbd> to
               search
             </span>
           </div>
@@ -143,7 +150,7 @@ export default async function Home() {
             <p className="num text-[12.5px] text-ink-3">{pairs.length} published</p>
           </div>
 
-          <div className="mt-6 grid gap-3 md:grid-cols-2 md:gap-4">
+          <div className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-[repeat(2,minmax(0,1fr))] md:gap-4">
             {cards.map((card) => (
               <VsCard
                 key={card.comparison.productA + card.comparison.productB}
@@ -151,6 +158,7 @@ export default async function Home() {
                 productA={card.productA}
                 productB={card.productB}
                 verdict={card.verdict}
+                market={market}
               />
             ))}
           </div>
@@ -158,76 +166,30 @@ export default async function Home() {
 
         <section id="categories" className="scroll-mt-24 border-t border-line py-14">
           <h2 className="display text-[24px] sm:text-[30px]">Browse by category</h2>
-          <p className="mt-2 text-[14px] text-ink-2">
-            Pick a category to see what is in the catalog and where the matchups are.
-          </p>
-
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 flex flex-col divide-y divide-line border-y border-line">
             {categories.map((category) => {
-              const count = products.filter((product) => product.category === category.id).length
+              const categoryProducts = products.filter((product) => product.category === category.id)
+              if (categoryProducts.length === 0) return null
+              const activeSubs = [...new Set(categoryProducts.map((product) => product.subcategory))]
+              if (activeSubs.length === 0) return null
               return (
-                <Link
-                  key={category.id}
-                  href={`/category/${category.id}/`}
-                  className="card group flex flex-col p-5 transition-colors hover:border-line-2"
-                >
-                  <div className="flex items-baseline justify-between gap-3">
-                    <h3 className="text-[17px] font-semibold tracking-[-0.02em]">{category.name}</h3>
-                    <span className="num text-[12px] text-ink-3">
-                      {count > 0 ? `${count} products` : 'empty'}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-[13px] leading-relaxed text-ink-2">
-                    {category.subcategories.join(' · ')}
-                  </p>
-                  <span
-                    className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold"
-                    style={{ color: count > 0 ? 'var(--accent)' : 'var(--ink-3)' }}
-                  >
-                    {count > 0 ? 'Open category' : 'Nothing here yet'}
-                    {count > 0 && (
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        aria-hidden
-                        className="transition-transform group-hover:translate-x-0.5"
+                <div key={category.id} className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-6">
+                  <h3 className="w-32 shrink-0 text-[15px] font-semibold">{category.name}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {activeSubs.map((sub) => (
+                      <Link
+                        key={sub}
+                        href={`${categoryHref(category.id, market)}#list-${sub}`}
+                        className="chip"
                       >
-                        <path
-                          d="M2 6h7M6.2 3.2 9 6l-2.8 2.8"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    )}
-                  </span>
-                </Link>
+                        {subLabel(sub)}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               )
             })}
           </div>
-        </section>
-
-        <section className="border-t border-line py-14">
-          <h2 className="display text-[20px] sm:text-[24px]">What gets compared</h2>
-          <div className="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
-            {subcategories.map((entry) => (
-              <div key={entry.sub} className="border-t-2 border-line pt-3">
-                <p className="num text-[26px] font-semibold tracking-[-0.03em]">{entry.attributes}</p>
-                <p className="mt-0.5 text-[13.5px] font-medium">{entry.label}</p>
-                <p className="mt-1 text-[12.5px] text-ink-3">
-                  attributes tracked across {entry.products} products and {entry.matchups} matchups
-                </p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 max-w-2xl text-[13px] leading-relaxed text-ink-3">
-            Spec groups follow the conventions shoppers already know: GSMArena style groupings for
-            phones, RTINGS style picture and gaming splits for TVs. Figures are manufacturer
-            published, so anything we cannot rank honestly is shown as a difference without a winner.
-          </p>
         </section>
       </div>
     </>

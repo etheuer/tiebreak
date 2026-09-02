@@ -2,23 +2,31 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getComparisons, getProducts } from '@/lib/data'
 import { buildVerdict, verdictLine } from '@/lib/verdict'
-import { compareHref, SUBCATEGORY_LABEL, subLabel } from '@/lib/nav'
+import { compareHref, homeHref, hubHref, SUBCATEGORY_LABEL, subLabel } from '@/lib/nav'
+import type { MarketId } from '@/lib/markets'
+import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { absUrl, SITE_NAME } from '@/lib/site'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const comparisons = await getComparisons()
+export async function generateHubMetadata(market: MarketId): Promise<Metadata> {
+  const [comparisons, ukComparisons] = await Promise.all([
+    getComparisons(market),
+    getComparisons('uk'),
+  ])
+  const includeUk = ukComparisons.length > 0
   const description = `Every head-to-head published on Tiebreak: ${comparisons.length} matchups across TVs, laptops, phones, headphones, cordless vacuums, air purifiers and credit cards, each with a spec-by-spec verdict.`
   const title = 'All product matchups'
+  const path = hubHref(market)
   return {
     title,
     description,
-    alternates: { canonical: '/compare/' },
+    alternates: pageAlternates('/compare/', market, includeUk),
     openGraph: {
       title,
       description,
-      url: '/compare/',
+      url: path,
       type: 'website',
       siteName: SITE_NAME,
+      locale: openGraphLocale(market),
     },
     twitter: {
       card: 'summary',
@@ -28,10 +36,10 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function CompareHubPage() {
+export async function CompareHubPage({ market }: { market: MarketId }) {
   const [products, comparisons] = await Promise.all([
-    getProducts(),
-    getComparisons(),
+    getProducts(market),
+    getComparisons(market),
   ])
 
   const byId = new Map(products.map((p) => [p.id, p]))
@@ -55,7 +63,7 @@ export default async function CompareHubPage() {
   return (
     <div className="shell">
       <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 pt-6 text-[12.5px] text-ink-3">
-        <Link href="/" className="hover:text-accent">
+        <Link href={homeHref(market)} className="hover:text-accent">
           Home
         </Link>
         <span aria-hidden>/</span>
@@ -82,12 +90,12 @@ export default async function CompareHubPage() {
                 const productB = byId.get(c.productB)
                 const claim =
                   productA && productB
-                    ? verdictLine(productA, productB, buildVerdict(productA, productB))
+                    ? verdictLine(productA, productB, buildVerdict(productA, productB, market), market)
                     : c.description
                 return (
                   <li key={c.productA + c.productB} className="card p-4">
                     <Link
-                      href={compareHref(c)}
+                      href={compareHref(c, market)}
                       className="text-[15px] font-semibold text-ink hover:text-accent"
                     >
                       {c.productName}
@@ -135,7 +143,7 @@ export default async function CompareHubPage() {
               '@type': 'ListItem',
               position: index + 1,
               name: c.productName,
-              url: absUrl(compareHref(c)),
+              url: absUrl(compareHref(c, market)),
             })),
           }),
         }}

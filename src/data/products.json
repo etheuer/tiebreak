@@ -21,9 +21,9 @@
       "specifications": {
         "panel_type": "Mini-LED QLED (VA)",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "120 Hz (up to 144 Hz PC)",
-        "peak_brightness": "~1,500\u20132,000 nits HDR",
+        "peak_brightness": "~1,500–2,000 nits HDR",
         "contrast": "Very high (local-dimmed LED, not infinite)",
         "local_dimming": "Quantum Mini LED full-array",
         "viewing_angle": "Wide (Ultra Viewing Angle layer)",
@@ -47,7 +47,22 @@
         "wall_mount": "Standard VESA",
         "burn_in_risk": "None (LED)",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
     },
     {
       "id": "lg-g3-oled",
@@ -70,15 +85,15 @@
       "specifications": {
         "panel_type": "WOLED evo with MLA",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "120 Hz",
-        "peak_brightness": "~1,400\u20132,000 nits small-window HDR",
+        "peak_brightness": "~1,400–2,000 nits small-window HDR",
         "contrast": "Infinite (per-pixel)",
         "local_dimming": "Per-pixel (self-emissive)",
         "viewing_angle": "Excellent",
         "screen_finish": "Glossy",
         "hdr_formats": "Dolby Vision, HDR10, HLG (no HDR10+)",
-        "processor": "\u03b19 Gen6 AI Processor 4K",
+        "processor": "α9 Gen6 AI Processor 4K",
         "motion_handling": "Excellent OLED response time",
         "upscaling": "AI Super Upscaling",
         "hdmi_2_1_ports": "4",
@@ -96,7 +111,22 @@
         "wall_mount": "Included flush Gallery mount",
         "burn_in_risk": "Yes (mitigated by pixel shift / screen move)",
         "warranty": "1 year (panel varies by region)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
     },
     {
       "id": "sony-a95l",
@@ -120,9 +150,9 @@
       "specifications": {
         "panel_type": "QD-OLED",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "120 Hz",
-        "peak_brightness": "~1,000\u20131,500 nits HDR",
+        "peak_brightness": "~1,000–1,500 nits HDR",
         "contrast": "Infinite (per-pixel)",
         "local_dimming": "Per-pixel (self-emissive)",
         "viewing_angle": "Excellent",
@@ -135,7 +165,7 @@
         "four_k_120": "Yes (on HDMI 2.1 ports)",
         "vrr": "Yes",
         "allm": "Yes",
-        "input_lag": "~8\u201312 ms",
+        "input_lag": "~8–12 ms",
         "gsync_freesync": "FreeSync, HDMI VRR",
         "audio_system": "Acoustic Surface Audio+, 2.2 ch 60W",
         "dolby_atmos": "Yes",
@@ -146,7 +176,22 @@
         "wall_mount": "VESA; optional BRAVIA CAM",
         "burn_in_risk": "Yes (QD-OLED; pixel shift / panel care)",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
     },
     {
       "id": "macbook-pro-16",
@@ -170,7 +215,7 @@
       "specifications": {
         "display_size": "16.2 inches",
         "display_type": "Liquid Retina XDR mini-LED",
-        "resolution": "3456 \u00d7 2234",
+        "resolution": "3456 × 2234",
         "refresh_rate": "120 Hz ProMotion",
         "brightness": "1,000 nits SDR / 1,600 nits HDR peak",
         "color_gamut": "P3, True Tone",
@@ -190,14 +235,27 @@
         "trackpad": "Force Touch, large",
         "webcam": "1080p Center Stage",
         "speakers": "Six-speaker Spatial Audio",
-        "thunderbolt": "3\u00d7 Thunderbolt 4",
+        "thunderbolt": "3× Thunderbolt 4",
         "hdmi": "HDMI 2.1",
         "sd_card": "SDXC",
         "magsafe": "MagSafe 3",
         "headphone_jack": "Yes (3.5 mm)",
         "os": "macOS",
         "repairability": "Low (soldered memory/storage)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "dell-xps-16",
@@ -221,9 +279,9 @@
       "specifications": {
         "display_size": "16.3 inches",
         "display_type": "OLED touch",
-        "resolution": "3840 \u00d7 2400 (3.2K)",
+        "resolution": "3840 × 2400 (3.2K)",
         "refresh_rate": "60 Hz (OLED config)",
-        "brightness": "~400\u2013500 nits typical OLED",
+        "brightness": "~400–500 nits typical OLED",
         "color_gamut": "DCI-P3, touch + pen support",
         "touchscreen": "Yes",
         "processor": "Intel Core Ultra 9 185H",
@@ -232,7 +290,7 @@
         "ram_upgradable": "No (soldered)",
         "storage": "1TB SSD",
         "storage_upgradable": "Yes (replaceable SSD)",
-        "battery_life": "~8\u201312 hours mixed use",
+        "battery_life": "~8–12 hours mixed use",
         "charger": "100W USB-C",
         "weight": "4.5 lb (2.04 kg)",
         "thickness": "18.5 mm",
@@ -241,14 +299,27 @@
         "trackpad": "Large haptic/precision glass",
         "webcam": "FHD IR (Windows Hello)",
         "speakers": "Quad speakers, Dolby Atmos",
-        "thunderbolt": "2\u00d7 Thunderbolt 4 + USB-C",
+        "thunderbolt": "2× Thunderbolt 4 + USB-C",
         "hdmi": "No native HDMI (dongle)",
         "sd_card": "microSD",
         "magsafe": "No",
         "headphone_jack": "Yes (3.5 mm)",
         "os": "Windows 11",
         "repairability": "Medium (SSD swappable; RAM not)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "iphone-16-pro",
@@ -270,7 +341,7 @@
         "Only 5x optical zoom"
       ],
       "specifications": {
-        "dimensions": "149.6 \u00d7 71.5 \u00d7 8.3 mm",
+        "dimensions": "149.6 × 71.5 × 8.3 mm",
         "weight": "199 g",
         "build": "Ceramic Shield front, textured matte glass back, grade 5 titanium frame",
         "ip_rating": "IP68 (6 m / 30 min)",
@@ -278,9 +349,9 @@
         "stylus": "No",
         "display_type": "LTPO Super Retina XDR OLED",
         "display_size": "6.3 inches",
-        "resolution": "1206 \u00d7 2622",
+        "resolution": "1206 × 2622",
         "ppi": "~460 ppi",
-        "refresh_rate": "1\u2013120 Hz ProMotion",
+        "refresh_rate": "1–120 Hz ProMotion",
         "peak_brightness": "2,000 nits outdoor / ~1,000 nits typical",
         "hdr": "Dolby Vision, HDR10, HLG",
         "screen_protection": "Ceramic Shield (2024)",
@@ -295,7 +366,7 @@
         "storage_options": "128 GB / 256 GB / 512 GB / 1 TB",
         "expandable_storage": "No",
         "main_camera": "48 MP Fusion, f/1.78, 24 mm, sensor-shift OIS",
-        "ultrawide_camera": "48 MP, f/2.2, 13 mm, 120\u00b0",
+        "ultrawide_camera": "48 MP, f/2.2, 13 mm, 120°",
         "telephoto_camera": "12 MP, f/2.8, 120 mm, 5x optical, 3D sensor-shift OIS",
         "optical_zoom": "5x optical (25x digital)",
         "ois": "Sensor-shift OIS on main and telephoto",
@@ -303,7 +374,7 @@
         "front_camera": "12 MP, f/1.9, autofocus, Retina Flash",
         "front_video": "4K 60 fps, cinematic mode",
         "battery_capacity": "3,582 mAh (typical)",
-        "wired_charging": "~20\u201325 W USB-C (no charger in box)",
+        "wired_charging": "~20–25 W USB-C (no charger in box)",
         "wireless_charging": "MagSafe up to 25 W, Qi2",
         "reverse_charging": "No",
         "charger_in_box": "No",
@@ -318,7 +389,35 @@
         "biometrics": "Face ID (no fingerprint)",
         "extra_controls": "Action Button, Camera Control",
         "unique_features": "Dynamic Island, Apple Intelligence, MagSafe, Find My"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)",
+            "sim": "Dual SIM (nano-SIM and eSIM)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://support.apple.com/en-gb/121031"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box"
+      ]
     },
     {
       "id": "galaxy-s24-ultra",
@@ -340,7 +439,7 @@
         "Flat 6.8-inch body is harder one-handed"
       ],
       "specifications": {
-        "dimensions": "162.3 \u00d7 79.0 \u00d7 8.6 mm",
+        "dimensions": "162.3 × 79.0 × 8.6 mm",
         "weight": "232 g",
         "build": "Gorilla Armor front and back, titanium frame",
         "ip_rating": "IP68 (1.5 m / 30 min)",
@@ -348,9 +447,9 @@
         "stylus": "S Pen (integrated, IP68)",
         "display_type": "Dynamic LTPO AMOLED 2X, flat",
         "display_size": "6.8 inches",
-        "resolution": "1440 \u00d7 3120 (QHD+)",
+        "resolution": "1440 × 3120 (QHD+)",
         "ppi": "~505 ppi",
-        "refresh_rate": "1\u2013120 Hz LTPO",
+        "refresh_rate": "1–120 Hz LTPO",
         "peak_brightness": "2,600 nits peak",
         "hdr": "HDR10+",
         "screen_protection": "Corning Gorilla Armor, anti-reflective",
@@ -358,14 +457,14 @@
         "os": "Android 14, One UI 6.1 (upgradable)",
         "os_updates": "7 major OS versions + 7 years security",
         "chipset": "Snapdragon 8 Gen 3 for Galaxy (4 nm)",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 5\u00d7 A720 + 2\u00d7 A520)",
+        "cpu": "8-core (1× Cortex-X4 + 5× A720 + 2× A520)",
         "gpu": "Adreno 750",
         "ram": "12 GB",
         "storage": "256 GB UFS 4.0 (reviewed)",
         "storage_options": "256 GB / 512 GB / 1 TB",
         "expandable_storage": "No",
         "main_camera": "200 MP, f/1.7, 24 mm, 1/1.3\", OIS, multi-direction PDAF",
-        "ultrawide_camera": "12 MP, f/2.2, 13 mm, 120\u00b0",
+        "ultrawide_camera": "12 MP, f/2.2, 13 mm, 120°",
         "telephoto_camera": "10 MP 3x + 50 MP 5x periscope (both OIS)",
         "optical_zoom": "5x optical (10x lossless / 100x digital)",
         "ois": "OIS on main and both telephotos",
@@ -388,7 +487,35 @@
         "biometrics": "Ultrasonic in-display fingerprint + face unlock",
         "extra_controls": "S Pen button, programmable side key",
         "unique_features": "S Pen, Samsung DeX, Galaxy AI, Vision Booster"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)",
+            "sim": "Dual nano-SIM + eSIM"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://www.samsung.com/uk/smartphones/galaxy-s24-ultra/specs/"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box"
+      ]
     },
     {
       "id": "dyson-v15-detect",
@@ -417,11 +544,11 @@
         "floor_types": "Hard floors, low/medium pile carpet, upholstery",
         "dust_sensing": "Piezo particle counter + LCD breakdown",
         "max_runtime": "60 minutes (low / non-motorized)",
-        "typical_runtime": "~20\u201330 minutes auto on mixed floors",
+        "typical_runtime": "~20–30 minutes auto on mixed floors",
         "charge_time": "~4.5 hours",
         "weight": "6.8 lb (3.1 kg) whole machine",
         "bin_capacity": "0.77 L",
-        "noise": "~75\u201380 dB (high)",
+        "noise": "~75–80 dB (high)",
         "display": "LCD: particle counts, mode, remaining time",
         "filtration": "Fully sealed HEPA",
         "sealed_system": "Yes (whole-machine)",
@@ -429,7 +556,20 @@
         "docking_station": "Wall dock + charging",
         "warranty": "2 years",
         "bagless": "Yes"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "shark-stratos",
@@ -458,11 +598,11 @@
         "floor_types": "Hard floors, carpet, area rugs",
         "dust_sensing": "Clean Sense IQ dirt sensor (no particle sizing)",
         "max_runtime": "60 minutes (lowest setting)",
-        "typical_runtime": "~15\u201325 minutes auto / high",
-        "charge_time": "~3\u20134 hours",
+        "typical_runtime": "~15–25 minutes auto / high",
+        "charge_time": "~3–4 hours",
         "weight": "5.9 lb (2.7 kg)",
         "bin_capacity": "0.55 L",
-        "noise": "~78\u201382 dB (high)",
+        "noise": "~78–82 dB (high)",
         "display": "LED indicators (no LCD particle graph)",
         "filtration": "HEPA",
         "sealed_system": "Anti-allergen complete seal (claimed)",
@@ -470,7 +610,20 @@
         "docking_station": "Charging dock",
         "warranty": "5 years (typical Shark limited)",
         "bagless": "Yes"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "lg-c4-oled",
@@ -480,7 +633,7 @@
       "subcategory": "tvs",
       "price": 1799,
       "image_url": "https://via.placeholder.com/300x200?text=LG+C4",
-      "description": "Versatile 65-inch 4K OLED TV with \u03b19 AI Processor Gen7 and 144Hz PC gaming support.",
+      "description": "Versatile 65-inch 4K OLED TV with α9 AI Processor Gen7 and 144Hz PC gaming support.",
       "pros": [
         "Perfect blacks and near-infinite contrast",
         "144Hz refresh rate with full HDMI 2.1 bandwidth",
@@ -493,15 +646,15 @@
       "specifications": {
         "panel_type": "WOLED evo",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "120 Hz (up to 144 Hz PC)",
-        "peak_brightness": "~1,000\u20131,150 nits HDR",
+        "peak_brightness": "~1,000–1,150 nits HDR",
         "contrast": "Infinite (per-pixel)",
         "local_dimming": "Per-pixel (self-emissive)",
         "viewing_angle": "Excellent",
         "screen_finish": "Glossy with anti-reflective coating",
         "hdr_formats": "Dolby Vision, HDR10, HLG",
-        "processor": "\u03b19 AI Processor 4K Gen7",
+        "processor": "α9 AI Processor 4K Gen7",
         "motion_handling": "Instant OLED response time",
         "upscaling": "AI Super Upscaling 4K",
         "hdmi_2_1_ports": "4",
@@ -519,7 +672,22 @@
         "wall_mount": "VESA 300x200",
         "burn_in_risk": "Yes (OLED care suite included)",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
     },
     {
       "id": "sony-bravia-9",
@@ -542,9 +710,9 @@
       "specifications": {
         "panel_type": "Mini-LED QLED (VA)",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "120 Hz",
-        "peak_brightness": "~3,000\u20133,500 nits HDR",
+        "peak_brightness": "~3,000–3,500 nits HDR",
         "contrast": "Extremely high (thousands of dimming zones)",
         "local_dimming": "XR Backlight Master Drive Mini-LED",
         "viewing_angle": "Wide (X-Wide Angle layer)",
@@ -568,7 +736,22 @@
         "wall_mount": "VESA 300x300",
         "burn_in_risk": "None (LED)",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
     },
     {
       "id": "samsung-s95d",
@@ -591,9 +774,9 @@
       "specifications": {
         "panel_type": "QD-OLED",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "144 Hz",
-        "peak_brightness": "~1,700\u20132,000 nits HDR",
+        "peak_brightness": "~1,700–2,000 nits HDR",
         "contrast": "Infinite (per-pixel)",
         "local_dimming": "Per-pixel (self-emissive)",
         "viewing_angle": "Ultra Wide",
@@ -617,7 +800,22 @@
         "wall_mount": "Slim Fit Wall-Mount / VESA",
         "burn_in_risk": "Yes (QD-OLED real-time safeguard)",
         "warranty": "1 year (3-year panel in some regions)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
     },
     {
       "id": "tcl-qm8",
@@ -640,9 +838,9 @@
       "specifications": {
         "panel_type": "Mini-LED QLED (VA HVA)",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "120 Hz (up to 144 Hz PC / 240 Hz DLG)",
-        "peak_brightness": "~3,500\u20135,000 nits HDR",
+        "peak_brightness": "~3,500–5,000 nits HDR",
         "contrast": "Extreme local contrast",
         "local_dimming": "QD-Mini LED (5,000+ zones)",
         "viewing_angle": "Moderate",
@@ -666,7 +864,10 @@
         "wall_mount": "VESA 400x400",
         "burn_in_risk": "None (LED)",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "hisense-u8n",
@@ -689,7 +890,7 @@
       "specifications": {
         "panel_type": "Mini-LED QLED (VA)",
         "screen_size": "65 inches",
-        "resolution": "3840 \u00d7 2160 (4K)",
+        "resolution": "3840 × 2160 (4K)",
         "native_refresh": "144 Hz",
         "peak_brightness": "~3,000 nits HDR",
         "contrast": "High native contrast + dynamic local dimming",
@@ -715,7 +916,22 @@
         "wall_mount": "VESA 400x300",
         "burn_in_risk": "None (LED)",
         "warranty": "2 years"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
     },
     {
       "id": "asus-rog-zephyrus-g16",
@@ -738,7 +954,7 @@
       "specifications": {
         "display_size": "16.0 inches",
         "display_type": "ROG Nebula OLED",
-        "resolution": "2560 \u00d7 1600 (2.5K)",
+        "resolution": "2560 × 1600 (2.5K)",
         "refresh_rate": "240 Hz",
         "brightness": "500 nits peak HDR",
         "color_gamut": "100% DCI-P3, Pantone Validated",
@@ -748,8 +964,8 @@
         "ram": "32GB LPDDR5x",
         "ram_upgradable": "No (soldered)",
         "storage": "1TB PCIe 4.0 NVMe SSD",
-        "storage_upgradable": "Yes (2\u00d7 M.2 slots)",
-        "battery_life": "~8\u201310 hours productivity",
+        "storage_upgradable": "Yes (2× M.2 slots)",
+        "battery_life": "~8–10 hours productivity",
         "charger": "240W AC + 100W USB-C PD support",
         "weight": "4.30 lb (1.95 kg)",
         "thickness": "16.4 mm",
@@ -758,14 +974,27 @@
         "trackpad": "Extra-large glass touchpad",
         "webcam": "1080p FHD IR with Windows Hello",
         "speakers": "6-speaker system with dual force-canceling woofers",
-        "thunderbolt": "1\u00d7 Thunderbolt 4 + 1\u00d7 USB-C 3.2 Gen 2",
+        "thunderbolt": "1× Thunderbolt 4 + 1× USB-C 3.2 Gen 2",
         "hdmi": "HDMI 2.1 FRL",
         "sd_card": "SD Express 7.0",
         "magsafe": "No (Slim Power Jack)",
         "headphone_jack": "Yes (3.5 mm combo)",
         "os": "Windows 11 Home",
         "repairability": "Medium (swappable SSDs and Wi-Fi card)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "lenovo-thinkpad-x1-carbon",
@@ -788,7 +1017,7 @@
       "specifications": {
         "display_size": "14.0 inches",
         "display_type": "OLED 2.8K Anti-glare",
-        "resolution": "2880 \u00d7 1800",
+        "resolution": "2880 × 1800",
         "refresh_rate": "120 Hz",
         "brightness": "400 nits SDR / 500 nits HDR",
         "color_gamut": "100% DCI-P3, Eyesafe certified",
@@ -798,8 +1027,8 @@
         "ram": "32GB LPDDR5x",
         "ram_upgradable": "No (soldered)",
         "storage": "1TB PCIe 4.0 SSD",
-        "storage_upgradable": "Yes (1\u00d7 M.2 2280 NVMe)",
-        "battery_life": "~11\u201313 hours mixed use",
+        "storage_upgradable": "Yes (1× M.2 2280 NVMe)",
+        "battery_life": "~11–13 hours mixed use",
         "charger": "65W USB-C Slim",
         "weight": "2.42 lb (1.09 kg)",
         "thickness": "14.9 mm",
@@ -808,14 +1037,27 @@
         "trackpad": "Haptic glass TrackPad + physical buttons",
         "webcam": "1080p FHD + IR with privacy shutter",
         "speakers": "Stereo speakers with Dolby Atmos",
-        "thunderbolt": "2\u00d7 Thunderbolt 4 + 2\u00d7 USB-A 3.2",
+        "thunderbolt": "2× Thunderbolt 4 + 2× USB-A 3.2",
         "hdmi": "HDMI 2.1",
         "sd_card": "No",
         "magsafe": "No",
         "headphone_jack": "Yes (3.5 mm)",
         "os": "Windows 11 Pro",
         "repairability": "High (modular battery, keyboard, and SSD)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "framework-laptop-16",
@@ -838,7 +1080,7 @@
       "specifications": {
         "display_size": "16.0 inches",
         "display_type": "Matte IPS LCD",
-        "resolution": "2560 \u00d7 1600 (16:10)",
+        "resolution": "2560 × 1600 (16:10)",
         "refresh_rate": "165 Hz",
         "brightness": "500 nits",
         "color_gamut": "100% DCI-P3, FreeSync Premium",
@@ -846,10 +1088,10 @@
         "processor": "AMD Ryzen 7 7840HS",
         "gpu": "AMD Radeon RX 7700S (8GB VRAM modular bay)",
         "ram": "32GB DDR5-5600",
-        "ram_upgradable": "Yes (2\u00d7 SO-DIMM sockets up to 64GB)",
+        "ram_upgradable": "Yes (2× SO-DIMM sockets up to 64GB)",
         "storage": "1TB PCIe 4.0 NVMe",
-        "storage_upgradable": "Yes (2\u00d7 M.2 sockets: 2280 + 2230)",
-        "battery_life": "~7\u20139 hours mixed use",
+        "storage_upgradable": "Yes (2× M.2 sockets: 2280 + 2230)",
+        "battery_life": "~7–9 hours mixed use",
         "charger": "180W GaN USB-C PD 3.1",
         "weight": "5.29 lb (2.40 kg)",
         "thickness": "20.95 mm",
@@ -865,7 +1107,20 @@
         "headphone_jack": "Optional modular 3.5mm card",
         "os": "Windows 11 / Linux (Fedora/Ubuntu)",
         "repairability": "10/10 (All components user-replaceable with QR codes)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "microsoft-surface-laptop-7",
@@ -888,7 +1143,7 @@
       "specifications": {
         "display_size": "15.0 inches",
         "display_type": "PixelSense Flow IPS Touchscreen",
-        "resolution": "2496 \u00d7 1664 (3:2)",
+        "resolution": "2496 × 1664 (3:2)",
         "refresh_rate": "120 Hz Dynamic",
         "brightness": "600 nits SDR",
         "color_gamut": "sRGB and DCI-P3 color profiles",
@@ -908,14 +1163,27 @@
         "trackpad": "Large Haptic Precision Touchpad",
         "webcam": "1080p FHD Studio Camera with AI effects",
         "speakers": "Omnisonic Speakers with Dolby Atmos",
-        "thunderbolt": "2\u00d7 USB4 / USB-C + 1\u00d7 USB-A 3.1",
+        "thunderbolt": "2× USB4 / USB-C + 1× USB-A 3.1",
         "hdmi": "No (USB-C display out)",
         "sd_card": "MicroSDXC reader",
         "magsafe": "Surface Connect magnetic port",
         "headphone_jack": "Yes (3.5 mm)",
         "os": "Windows 11 Home on ARM",
         "repairability": "High (easily removable bottom and SSD door)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "apple-macbook-air-15",
@@ -938,7 +1206,7 @@
       "specifications": {
         "display_size": "15.3 inches",
         "display_type": "Liquid Retina IPS LED",
-        "resolution": "2880 \u00d7 1864",
+        "resolution": "2880 × 1864",
         "refresh_rate": "60 Hz",
         "brightness": "500 nits",
         "color_gamut": "P3 wide color, True Tone",
@@ -958,14 +1226,27 @@
         "trackpad": "Force Touch trackpad",
         "webcam": "1080p FaceTime HD camera",
         "speakers": "Six-speaker sound system with force-cancelling woofers",
-        "thunderbolt": "2\u00d7 Thunderbolt / USB 4 ports",
+        "thunderbolt": "2× Thunderbolt / USB 4 ports",
         "hdmi": "No (USB-C display output)",
         "sd_card": "No",
         "magsafe": "MagSafe 3",
         "headphone_jack": "Yes (3.5 mm with high-impedance support)",
         "os": "macOS Sonoma",
         "repairability": "Low (soldered RAM and SSD)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "hp-spectre-x360-16",
@@ -977,7 +1258,7 @@
       "image_url": "https://via.placeholder.com/300x200?text=HP+Spectre+16",
       "description": "Versatile 2-in-1 convertible laptop with 2.8K OLED touchscreen and 360-degree geared hinge.",
       "pros": [
-        "Stunning 2.8K 120Hz OLED 360\u00b0 convertible touch display",
+        "Stunning 2.8K 120Hz OLED 360° convertible touch display",
         "Included rechargeable tilt pen with magnetic attachment",
         "9MP AI camera with night vision and auto-framing"
       ],
@@ -988,7 +1269,7 @@
       "specifications": {
         "display_size": "16.0 inches",
         "display_type": "2.8K OLED Touchscreen with Corning Gorilla Glass",
-        "resolution": "2880 \u00d7 1800",
+        "resolution": "2880 × 1800",
         "refresh_rate": "120 Hz VRR",
         "brightness": "400 nits SDR / 500 nits HDR",
         "color_gamut": "100% DCI-P3, Low Blue Light",
@@ -998,8 +1279,8 @@
         "ram": "32GB LPDDR5x",
         "ram_upgradable": "No (soldered)",
         "storage": "1TB PCIe Gen4 NVMe M.2 SSD",
-        "storage_upgradable": "Yes (1\u00d7 M.2 slot)",
-        "battery_life": "~10\u201312 hours mixed productivity",
+        "storage_upgradable": "Yes (1× M.2 slot)",
+        "battery_life": "~10–12 hours mixed productivity",
         "charger": "100W USB Type-C power adapter",
         "weight": "4.30 lb (1.95 kg)",
         "thickness": "19.8 mm",
@@ -1008,14 +1289,27 @@
         "trackpad": "Haptic glass trackpad",
         "webcam": "HP Wide Vision 9MP IR camera with temporal noise reduction",
         "speakers": "Quad speakers tuned by Poly Studio with Audio Boost",
-        "thunderbolt": "2\u00d7 Thunderbolt 4 with USB Type-C + 1\u00d7 USB-A",
+        "thunderbolt": "2× Thunderbolt 4 with USB Type-C + 1× USB-A",
         "hdmi": "HDMI 2.1",
         "sd_card": "No",
         "magsafe": "No",
         "headphone_jack": "Yes (3.5 mm combo)",
         "os": "Windows 11 Home",
         "repairability": "Medium (accessible SSD and Wi-Fi card)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
     },
     {
       "id": "google-pixel-9-pro",
@@ -1036,7 +1330,7 @@
         "Charging speeds capped at ~27W"
       ],
       "specifications": {
-        "dimensions": "152.8 \u00d7 72.0 \u00d7 8.5 mm",
+        "dimensions": "152.8 × 72.0 × 8.5 mm",
         "weight": "199 g",
         "build": "Corning Gorilla Glass Victus 2 front/back, polished aluminum frame",
         "ip_rating": "IP68 (1.5 m / 30 min)",
@@ -1044,9 +1338,9 @@
         "stylus": "No",
         "display_type": "Super Actua LTPO OLED",
         "display_size": "6.3 inches",
-        "resolution": "1280 \u00d7 2856",
+        "resolution": "1280 × 2856",
         "ppi": "~495 ppi",
-        "refresh_rate": "1\u2013120 Hz Smooth Display",
+        "refresh_rate": "1–120 Hz Smooth Display",
         "peak_brightness": "3,000 nits peak / 2,000 nits High Brightness Mode",
         "hdr": "HDR10, HDR10+, Ultra HDR",
         "screen_protection": "Corning Gorilla Glass Victus 2",
@@ -1054,19 +1348,19 @@
         "os": "Android 14 (upgradable)",
         "os_updates": "7 years of OS, security, and Feature Drops",
         "chipset": "Google Tensor G4 (4 nm) + Titan M2 security",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 3\u00d7 A720 + 4\u00d7 A520)",
+        "cpu": "8-core (1× Cortex-X4 + 3× A720 + 4× A520)",
         "gpu": "Mali-G715 MC7",
         "ram": "16 GB",
         "storage": "256 GB UFS 3.1 (reviewed)",
         "storage_options": "128 GB / 256 GB / 512 GB / 1 TB",
         "expandable_storage": "No",
         "main_camera": "50 MP Octa PD, f/1.68, 25 mm, 1/1.31\", OIS",
-        "ultrawide_camera": "48 MP Quad PD with Macro Focus, f/1.7, 123\u00b0",
+        "ultrawide_camera": "48 MP Quad PD with Macro Focus, f/1.7, 123°",
         "telephoto_camera": "48 MP Quad PD, f/2.8, 113 mm, 5x optical zoom, OIS",
         "optical_zoom": "5x optical (up to 30x Super Res Zoom)",
         "ois": "OIS on wide and telephoto lenses",
         "rear_video": "8K 30 fps (via Video Boost), 4K 24/30/60 fps, 10-bit HDR",
-        "front_camera": "42 MP Dual PD with autofocus, f/2.2, 103\u00b0 ultrawide",
+        "front_camera": "42 MP Dual PD with autofocus, f/2.2, 103° ultrawide",
         "front_video": "4K 60 fps",
         "battery_capacity": "4,700 mAh",
         "wired_charging": "27 W fast charging (50% in ~30 min)",
@@ -1084,7 +1378,35 @@
         "biometrics": "Ultrasonic in-display fingerprint + Face Unlock (Class 3)",
         "extra_controls": "Power, Volume, Thermometer sensor",
         "unique_features": "Gemini Live AI, Best Take, Magic Editor, Add Me, Temperature sensor"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://support.google.com/pixelphone/answer/7158570?hl=en-GB"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box",
+        "sim"
+      ]
     },
     {
       "id": "oneplus-12",
@@ -1105,7 +1427,7 @@
         "Curved display glass is more prone to accidental touches"
       ],
       "specifications": {
-        "dimensions": "164.3 \u00d7 75.8 \u00d7 9.15 mm",
+        "dimensions": "164.3 × 75.8 × 9.15 mm",
         "weight": "220 g",
         "build": "Corning Gorilla Glass Victus 2 front, glass back, aluminum frame",
         "ip_rating": "IP65 (water resistant splash/spray)",
@@ -1113,9 +1435,9 @@
         "stylus": "No",
         "display_type": "ProXDR LTPO AMOLED with Aqua Touch",
         "display_size": "6.82 inches",
-        "resolution": "1440 \u00d7 3168 (2K)",
+        "resolution": "1440 × 3168 (2K)",
         "ppi": "~510 ppi",
-        "refresh_rate": "1\u2013120 Hz dynamic",
+        "refresh_rate": "1–120 Hz dynamic",
         "peak_brightness": "4,500 nits peak / 1,600 nits HBM",
         "hdr": "Dolby Vision, HDR10+, HDR10, HLG",
         "screen_protection": "Corning Gorilla Glass Victus 2",
@@ -1123,14 +1445,14 @@
         "os": "OxygenOS 14 based on Android 14",
         "os_updates": "4 major Android OS updates + 5 years security",
         "chipset": "Snapdragon 8 Gen 3 (4 nm)",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 5\u00d7 A720 + 2\u00d7 A520)",
+        "cpu": "8-core (1× Cortex-X4 + 5× A720 + 2× A520)",
         "gpu": "Adreno 750",
         "ram": "16 GB LPDDR5X",
         "storage": "512 GB UFS 4.0",
         "storage_options": "256 GB / 512 GB",
         "expandable_storage": "No",
         "main_camera": "50 MP Sony LYT-808, f/1.6, 23 mm, 1/1.4\", OIS",
-        "ultrawide_camera": "48 MP Sony IMX581, f/2.2, 14 mm, 114\u00b0 FOV",
+        "ultrawide_camera": "48 MP Sony IMX581, f/2.2, 14 mm, 114° FOV",
         "telephoto_camera": "64 MP OmniVision OV64B periscope, f/2.6, 70 mm, 3x optical, OIS",
         "optical_zoom": "3x optical (6x in-sensor zoom / 120x digital)",
         "ois": "OIS on main and periscope telephoto",
@@ -1153,7 +1475,35 @@
         "biometrics": "Ultra-fast optical in-display fingerprint + face unlock",
         "extra_controls": "3-position Alert Slider, IR blaster",
         "unique_features": "Aqua Touch wet-finger technology, Hasselblad Color Calibration, Trinity Engine"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://service.oneplus.com/content/dam/support/user-manuals/common/OnePlus_12_CPH2581_Quick_Guide_EU.pdf"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box",
+        "sim"
+      ]
     },
     {
       "id": "xiaomi-14-ultra",
@@ -1163,7 +1513,7 @@
       "subcategory": "smartphones",
       "price": 1399,
       "image_url": "https://via.placeholder.com/300x200?text=Xiaomi+14+Ultra",
-      "description": "Photography juggernaut with 1-inch LYT-900 sensor, stepless variable aperture, and quad Leica camera array.",
+      "description": "Grey import in the US; official in other regions. Photography juggernaut with 1-inch LYT-900 sensor, stepless variable aperture, and quad Leica camera array.",
       "pros": [
         "Quad 50MP Leica cameras with 1-inch stepless variable aperture",
         "Exceptional manual photography and 8K log video controls",
@@ -1174,7 +1524,7 @@
         "HyperOS software has more bloatware than stock Android"
       ],
       "specifications": {
-        "dimensions": "161.4 \u00d7 75.3 \u00d7 9.2 mm",
+        "dimensions": "161.4 × 75.3 × 9.2 mm",
         "weight": "219.8 g",
         "build": "Xiaomi Shield Glass front, vegan leather back, aluminum frame",
         "ip_rating": "IP68 (1.5 m / 30 min)",
@@ -1182,9 +1532,9 @@
         "stylus": "No",
         "display_type": "LTPO AMOLED, 68B colors",
         "display_size": "6.73 inches",
-        "resolution": "1440 \u00d7 3200 (WQHD+)",
+        "resolution": "1440 × 3200 (WQHD+)",
         "ppi": "~522 ppi",
-        "refresh_rate": "1\u2013120 Hz dynamic",
+        "refresh_rate": "1–120 Hz dynamic",
         "peak_brightness": "3,000 nits peak",
         "hdr": "Dolby Vision, HDR10+, HLG",
         "screen_protection": "Xiaomi Shield Glass",
@@ -1192,14 +1542,14 @@
         "os": "HyperOS based on Android 14",
         "os_updates": "4 major Android OS updates + 5 years security",
         "chipset": "Snapdragon 8 Gen 3 (4 nm)",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 5\u00d7 A720 + 2\u00d7 A520)",
+        "cpu": "8-core (1× Cortex-X4 + 5× A720 + 2× A520)",
         "gpu": "Adreno 750",
         "ram": "16 GB LPDDR5X",
         "storage": "512 GB UFS 4.0",
         "storage_options": "512 GB / 1 TB",
         "expandable_storage": "No",
-        "main_camera": "50 MP 1-inch Sony LYT-900, f/1.63\u2013f/4.0 variable aperture, 23 mm, OIS",
-        "ultrawide_camera": "50 MP Leica, f/1.8, 12 mm, 122\u00b0 FOV",
+        "main_camera": "50 MP 1-inch Sony LYT-900, f/1.63–f/4.0 variable aperture, 23 mm, OIS",
+        "ultrawide_camera": "50 MP Leica, f/1.8, 12 mm, 122° FOV",
         "telephoto_camera": "50 MP 3.2x optical (75 mm, f/1.8, OIS) + 50 MP 5x periscope (120 mm, f/2.5, OIS)",
         "optical_zoom": "5x optical (up to 120x digital)",
         "ois": "OIS on main and both telephoto cameras",
@@ -1222,7 +1572,25 @@
         "biometrics": "Optical in-display fingerprint + AI Face Unlock",
         "extra_controls": "Optional Leica Photography Kit with physical shutter button",
         "unique_features": "Leica Summilux lenses, 1-inch sensor, Stepless variable aperture"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "cellular",
+        "charger_in_box",
+        "sim"
+      ]
     },
     {
       "id": "samsung-galaxy-z-fold-6",
@@ -1243,7 +1611,7 @@
         "Cameras unchanged from Fold 5 generation"
       ],
       "specifications": {
-        "dimensions": "Unfolded: 153.5 \u00d7 132.6 \u00d7 5.6 mm / Folded: 153.5 \u00d7 68.1 \u00d7 12.1 mm",
+        "dimensions": "Unfolded: 153.5 × 132.6 × 5.6 mm / Folded: 153.5 × 68.1 × 12.1 mm",
         "weight": "239 g",
         "build": "Gorilla Glass Victus 2 cover/back, Enhanced Armor Aluminum frame",
         "ip_rating": "IP48 (water resistant to 1.5m + solid particles >1mm)",
@@ -1251,9 +1619,9 @@
         "stylus": "S Pen Fold Edition support (inner screen only, sold separately)",
         "display_type": "Dynamic LTPO AMOLED 2X foldable inner + AMOLED cover",
         "display_size": "7.6 inches inner / 6.3 inches cover",
-        "resolution": "Inner: 2160 \u00d7 1856 / Cover: 968 \u00d7 2376",
+        "resolution": "Inner: 2160 × 1856 / Cover: 968 × 2376",
         "ppi": "~374 ppi inner / ~410 ppi cover",
-        "refresh_rate": "1\u2013120 Hz LTPO (both screens)",
+        "refresh_rate": "1–120 Hz LTPO (both screens)",
         "peak_brightness": "2,600 nits peak (both screens)",
         "hdr": "HDR10+",
         "screen_protection": "Ultra Thin Glass (inner) / Gorilla Glass Victus 2 (cover)",
@@ -1261,14 +1629,14 @@
         "os": "Android 14 with One UI 6.1.1",
         "os_updates": "7 major OS versions + 7 years security",
         "chipset": "Snapdragon 8 Gen 3 for Galaxy (4 nm)",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 5\u00d7 A720 + 2\u00d7 A520)",
+        "cpu": "8-core (1× Cortex-X4 + 5× A720 + 2× A520)",
         "gpu": "Adreno 750",
         "ram": "12 GB LPDDR5X",
         "storage": "512 GB UFS 4.0",
         "storage_options": "256 GB / 512 GB / 1 TB",
         "expandable_storage": "No",
-        "main_camera": "50 MP, f/1.8, 23 mm, 1.0\u00b5m, Dual Pixel PDAF, OIS",
-        "ultrawide_camera": "12 MP, f/2.2, 12 mm, 123\u00b0",
+        "main_camera": "50 MP, f/1.8, 23 mm, 1.0µm, Dual Pixel PDAF, OIS",
+        "ultrawide_camera": "12 MP, f/2.2, 12 mm, 123°",
         "telephoto_camera": "10 MP, f/2.4, 66 mm, 3x optical, PDAF, OIS",
         "optical_zoom": "3x optical (30x Space Zoom)",
         "ois": "OIS on main and 3x telephoto",
@@ -1291,7 +1659,35 @@
         "biometrics": "Capacitive side-mounted fingerprint + Face unlock",
         "extra_controls": "Side key with integrated fingerprint reader",
         "unique_features": "Dual-screen form factor, Flex Mode, App Continuity, Samsung DeX, Galaxy AI"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://www.samsung.com/uk/support/model/SM-F956BZSNEUB/"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box",
+        "sim"
+      ]
     },
     {
       "id": "iphone-16",
@@ -1312,7 +1708,7 @@
         "No dedicated optical telephoto camera lens"
       ],
       "specifications": {
-        "dimensions": "147.6 \u00d7 71.6 \u00d7 7.8 mm",
+        "dimensions": "147.6 × 71.6 × 7.8 mm",
         "weight": "170 g",
         "build": "Ceramic Shield front, color-infused glass back, aluminum frame",
         "ip_rating": "IP68 (6 m / 30 min)",
@@ -1320,7 +1716,7 @@
         "stylus": "No",
         "display_type": "Super Retina XDR OLED",
         "display_size": "6.1 inches",
-        "resolution": "1179 \u00d7 2556",
+        "resolution": "1179 × 2556",
         "ppi": "~460 ppi",
         "refresh_rate": "60 Hz",
         "peak_brightness": "2,000 nits outdoor / 1,000 nits typical",
@@ -1337,7 +1733,7 @@
         "storage_options": "128 GB / 256 GB / 512 GB",
         "expandable_storage": "No",
         "main_camera": "48 MP Fusion, f/1.6, 26 mm, sensor-shift OIS, 2x in-sensor zoom",
-        "ultrawide_camera": "12 MP with Macro photography, f/2.2, 13 mm, 120\u00b0",
+        "ultrawide_camera": "12 MP with Macro photography, f/2.2, 13 mm, 120°",
         "telephoto_camera": "None (2x optical-quality crop from main sensor)",
         "optical_zoom": "2x optical quality crop (10x digital)",
         "ois": "Sensor-shift OIS on main camera",
@@ -1345,7 +1741,7 @@
         "front_camera": "12 MP TrueDepth with autofocus, f/1.9",
         "front_video": "4K 60 fps Dolby Vision",
         "battery_capacity": "3,561 mAh",
-        "wired_charging": "~20\u201325 W USB-C",
+        "wired_charging": "~20–25 W USB-C",
         "wireless_charging": "MagSafe up to 25 W, Qi2",
         "reverse_charging": "No",
         "charger_in_box": "No",
@@ -1360,7 +1756,35 @@
         "biometrics": "Face ID",
         "extra_controls": "Action Button, Camera Control",
         "unique_features": "Dynamic Island, Apple Intelligence, Spatial audio and video capture"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)",
+            "sim": "Dual SIM (nano-SIM and eSIM)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://www.apple.com/uk/iphone-16/specs/"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box"
+      ]
     },
     {
       "id": "google-pixel-9",
@@ -1381,7 +1805,7 @@
         "Slower charging compared to Chinese brand rivals"
       ],
       "specifications": {
-        "dimensions": "152.8 \u00d7 72.0 \u00d7 8.5 mm",
+        "dimensions": "152.8 × 72.0 × 8.5 mm",
         "weight": "198 g",
         "build": "Gorilla Glass Victus 2 front and back, satin metal frame",
         "ip_rating": "IP68 (1.5 m / 30 min)",
@@ -1389,9 +1813,9 @@
         "stylus": "No",
         "display_type": "Actua OLED",
         "display_size": "6.3 inches",
-        "resolution": "1080 \u00d7 2424",
+        "resolution": "1080 × 2424",
         "ppi": "~422 ppi",
-        "refresh_rate": "60\u2013120 Hz Smooth Display",
+        "refresh_rate": "60–120 Hz Smooth Display",
         "peak_brightness": "2,700 nits peak / 1,800 nits HBM",
         "hdr": "HDR10, HDR10+, Ultra HDR",
         "screen_protection": "Corning Gorilla Glass Victus 2",
@@ -1399,14 +1823,14 @@
         "os": "Android 14 (upgradable)",
         "os_updates": "7 years of OS, security, and Feature Drops",
         "chipset": "Google Tensor G4 (4 nm)",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 3\u00d7 A720 + 4\u00d7 A520)",
+        "cpu": "8-core (1× Cortex-X4 + 3× A720 + 4× A520)",
         "gpu": "Mali-G715 MC7",
         "ram": "12 GB",
         "storage": "128 GB UFS 3.1",
         "storage_options": "128 GB / 256 GB",
         "expandable_storage": "No",
         "main_camera": "50 MP Octa PD, f/1.68, 25 mm, 1/1.31\", OIS",
-        "ultrawide_camera": "48 MP Quad PD with Macro Focus, f/1.7, 123\u00b0",
+        "ultrawide_camera": "48 MP Quad PD with Macro Focus, f/1.7, 123°",
         "telephoto_camera": "None (Super Res Zoom up to 8x)",
         "optical_zoom": "2x optical quality crop (8x digital)",
         "ois": "OIS on main wide lens",
@@ -1429,7 +1853,35 @@
         "biometrics": "Ultrasonic in-display fingerprint + Face Unlock",
         "extra_controls": "Power and Volume keys",
         "unique_features": "Gemini Live AI, Pixel Screenshots app, Add Me, Clear Calling"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://support.google.com/pixelphone/answer/7158570?hl=en-GB"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box",
+        "sim"
+      ]
     },
     {
       "id": "samsung-galaxy-s24",
@@ -1450,7 +1902,7 @@
         "Base model starts with 128GB UFS 3.1 storage"
       ],
       "specifications": {
-        "dimensions": "147.0 \u00d7 70.6 \u00d7 7.6 mm",
+        "dimensions": "147.0 × 70.6 × 7.6 mm",
         "weight": "167 g",
         "build": "Gorilla Glass Victus 2 front/back, Armor Aluminum 2 frame",
         "ip_rating": "IP68 (1.5 m / 30 min)",
@@ -1458,24 +1910,24 @@
         "stylus": "No",
         "display_type": "Dynamic LTPO AMOLED 2X",
         "display_size": "6.2 inches",
-        "resolution": "1080 \u00d7 2340 (FHD+)",
+        "resolution": "1080 × 2340 (FHD+)",
         "ppi": "~416 ppi",
-        "refresh_rate": "1\u2013120 Hz LTPO",
+        "refresh_rate": "1–120 Hz LTPO",
         "peak_brightness": "2,600 nits peak",
         "hdr": "HDR10+",
         "screen_protection": "Corning Gorilla Glass Victus 2",
         "always_on": "Yes",
         "os": "Android 14, One UI 6.1",
         "os_updates": "7 major OS updates + 7 years security patches",
-        "chipset": "Snapdragon 8 Gen 3 for Galaxy (US/CA) / Exynos 2400",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 5\u00d7 A720 + 2\u00d7 A520)",
-        "gpu": "Adreno 750 / Xclipse 940",
+        "chipset": "Snapdragon 8 Gen 3 for Galaxy (4 nm)",
+        "cpu": "8-core (1× Cortex-X4 + 5× A720 + 2× A520)",
+        "gpu": "Adreno 750",
         "ram": "8 GB",
         "storage": "128 GB UFS 3.1",
         "storage_options": "128 GB / 256 GB",
         "expandable_storage": "No",
         "main_camera": "50 MP, f/1.8, 24 mm, 1/1.56\", Dual Pixel PDAF, OIS",
-        "ultrawide_camera": "12 MP, f/2.2, 13 mm, 120\u00b0",
+        "ultrawide_camera": "12 MP, f/2.2, 13 mm, 120°",
         "telephoto_camera": "10 MP, f/2.4, 67 mm, 3x optical zoom, PDAF, OIS",
         "optical_zoom": "3x optical (30x digital Space Zoom)",
         "ois": "OIS on main and telephoto lenses",
@@ -1498,7 +1950,35 @@
         "biometrics": "Ultrasonic in-display fingerprint + Face unlock",
         "extra_controls": "Power and Volume keys",
         "unique_features": "Circle to Search, Live Translate, Note Assist, Samsung DeX"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "chipset": "Exynos 2400 (4 nm)",
+            "cpu": "10-core (1× Cortex-X4 + 2× A720 + 3× A720 + 4× A520)",
+            "gpu": "Xclipse 940",
+            "cellular": "5G (sub-6)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "manufacturer"
+          }
+        }
+      },
+      "sameAsUs": [
+        "charger_in_box",
+        "sim"
+      ]
     },
     {
       "id": "asus-zenfone-11-ultra",
@@ -1519,7 +1999,7 @@
         "Telephoto camera performance trails Samsung/Apple in low light"
       ],
       "specifications": {
-        "dimensions": "163.8 \u00d7 76.8 \u00d7 8.9 mm",
+        "dimensions": "163.8 × 76.8 × 8.9 mm",
         "weight": "224 g",
         "build": "Gorilla Glass Victus 2 front, matte glass back, aluminum frame",
         "ip_rating": "IP68 (1.5 m / 30 min)",
@@ -1527,9 +2007,9 @@
         "stylus": "No",
         "display_type": "LTPO AMOLED, 144Hz for gaming",
         "display_size": "6.78 inches",
-        "resolution": "1080 \u00d7 2400 (FHD+)",
+        "resolution": "1080 × 2400 (FHD+)",
         "ppi": "~388 ppi",
-        "refresh_rate": "1\u2013120 Hz LTPO (up to 144 Hz in Game Genie)",
+        "refresh_rate": "1–120 Hz LTPO (up to 144 Hz in Game Genie)",
         "peak_brightness": "2,500 nits peak / 1,600 nits HBM",
         "hdr": "HDR10",
         "screen_protection": "Corning Gorilla Glass Victus 2",
@@ -1537,14 +2017,14 @@
         "os": "Android 14 with ZenUI",
         "os_updates": "2 major OS updates + 4 years security patches",
         "chipset": "Snapdragon 8 Gen 3 (4 nm)",
-        "cpu": "8-core (1\u00d7 Cortex-X4 + 5\u00d7 A720 + 2\u00d7 A520)",
+        "cpu": "8-core (1× Cortex-X4 + 5× A720 + 2× A520)",
         "gpu": "Adreno 750",
         "ram": "16 GB LPDDR5X",
         "storage": "512 GB UFS 4.0",
         "storage_options": "256 GB / 512 GB",
         "expandable_storage": "No",
         "main_camera": "50 MP Sony IMX890, f/1.9, 24 mm, 6-Axis Gimbal OIS 3.0",
-        "ultrawide_camera": "13 MP, f/2.2, 120\u00b0 free-form lens",
+        "ultrawide_camera": "13 MP, f/2.2, 120° free-form lens",
         "telephoto_camera": "32 MP, f/2.4, 3x optical zoom, OIS",
         "optical_zoom": "3x optical (30x digital HyperClarity zoom)",
         "ois": "6-Axis Gimbal OIS on main + OIS on telephoto",
@@ -1567,7 +2047,25 @@
         "biometrics": "In-display fingerprint sensor + Face unlock",
         "extra_controls": "Game Genie gaming overlay toolbar",
         "unique_features": "6-Axis Hybrid Gimbal 3.0, 3.5mm jack, AI Call Translator, AI Transcript"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "cellular",
+        "charger_in_box",
+        "sim"
+      ]
     },
     {
       "id": "dyson-gen5detect",
@@ -1595,11 +2093,11 @@
         "floor_types": "Hardwood, tile, deep pile carpet, area rugs",
         "dust_sensing": "Piezo sensor with real-time LCD particle sizing bar graph",
         "max_runtime": "70 minutes (Eco mode without motorized head)",
-        "typical_runtime": "~35\u201345 minutes Auto mode on mixed floors",
+        "typical_runtime": "~35–45 minutes Auto mode on mixed floors",
         "charge_time": "~4.5 hours",
         "weight": "7.7 lb (3.5 kg) whole machine",
         "bin_capacity": "0.77 L",
-        "noise": "~74\u201379 dB",
+        "noise": "~74–79 dB",
         "display": "LCD: live particle count scientific breakdown, run time countdown",
         "filtration": "Whole-machine HEPA traps 99.99% of 0.1-micron particles",
         "sealed_system": "Yes (fully sealed HEPA system)",
@@ -1607,7 +2105,20 @@
         "docking_station": "Wall-mounted charging dock",
         "warranty": "2 years",
         "bagless": "Yes"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "tineco-pure-one-s15",
@@ -1635,11 +2146,11 @@
         "floor_types": "Hard floors, low/medium carpet, pet beds",
         "dust_sensing": "iLoop infrared dust sensor (red-to-blue loop)",
         "max_runtime": "40 minutes (Auto mode)",
-        "typical_runtime": "~20\u201325 minutes mixed floor cleaning",
+        "typical_runtime": "~20–25 minutes mixed floor cleaning",
         "charge_time": "~3.5 hours",
         "weight": "6.8 lb (3.1 kg)",
         "bin_capacity": "0.47 L",
-        "noise": "~72\u201376 dB",
+        "noise": "~72–76 dB",
         "display": "Full color animated LCD screen with iLoop status and voice alerts",
         "filtration": "5-stage fully sealed filtration system",
         "sealed_system": "Yes (99.9% filtration)",
@@ -1647,7 +2158,20 @@
         "docking_station": "Free-standing FreeStnd charging base",
         "warranty": "2 years",
         "bagless": "Yes (one-touch trigger scraper dust release)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "samsung-bespoke-jet-ai",
@@ -1675,11 +2199,11 @@
         "floor_types": "Hardwood, marble, dense carpet, stairs",
         "dust_sensing": "AI brush load sensing + motor load feedback",
         "max_runtime": "100 minutes (using included 2nd battery in Min mode)",
-        "typical_runtime": "~30\u201340 minutes AI mode per battery",
+        "typical_runtime": "~30–40 minutes AI mode per battery",
         "charge_time": "~3.5 hours per battery",
         "weight": "6.5 lb (2.95 kg) handheld body",
         "bin_capacity": "0.50 L",
-        "noise": "~76\u201380 dB",
+        "noise": "~76–80 dB",
         "display": "Digital LCD display with 28 language options and error diagnostics",
         "filtration": "99.999% multi-layered filtration system",
         "sealed_system": "Yes (Clean Station sealed anti-dust system)",
@@ -1687,7 +2211,20 @@
         "docking_station": "All-in-One Clean Station with automatic dust extraction",
         "warranty": "2 years",
         "bagless": "Yes (Clean station uses internal hygiene bag)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "dreame-z10-station",
@@ -1715,11 +2252,11 @@
         "floor_types": "Hard floors, rugs, medium pile carpet",
         "dust_sensing": "Infrared particle sensor with clean indicators",
         "max_runtime": "65 minutes (Eco mode)",
-        "typical_runtime": "~20\u201325 minutes Auto mode",
+        "typical_runtime": "~20–25 minutes Auto mode",
         "charge_time": "~3.5 hours",
         "weight": "6.1 lb (2.8 kg)",
         "bin_capacity": "0.60 L",
-        "noise": "~75\u201378 dB",
+        "noise": "~75–78 dB",
         "display": "Backlit LED screen showing battery percentage and power level",
         "filtration": "5-layer sealed filtration system (99.9%)",
         "sealed_system": "Yes",
@@ -1727,7 +2264,20 @@
         "docking_station": "Auto-emptying dust disposal base station (2.5L capacity)",
         "warranty": "2 years",
         "bagless": "Yes (with self-emptying base bag)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "shark-cordless-pro",
@@ -1755,11 +2305,11 @@
         "floor_types": "Hardwood, laminate, carpets",
         "dust_sensing": "Clean Sense IQ infrared sensor indicator",
         "max_runtime": "50 minutes (Eco mode)",
-        "typical_runtime": "~18\u201322 minutes Auto mode",
+        "typical_runtime": "~18–22 minutes Auto mode",
         "charge_time": "~3 hours",
         "weight": "7.2 lb (3.2 kg)",
         "bin_capacity": "0.65 L",
-        "noise": "~78\u201382 dB",
+        "noise": "~78–82 dB",
         "display": "LED display with Clean Sense IQ ring indicator",
         "filtration": "Anti-Allergen Complete Seal HEPA",
         "sealed_system": "Yes",
@@ -1767,7 +2317,10 @@
         "docking_station": "Direct wall plug charger",
         "warranty": "5 years",
         "bagless": "Yes"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "lg-cordzero-all-in-one",
@@ -1799,7 +2352,7 @@
         "charge_time": "~3.5 hours",
         "weight": "5.95 lb (2.7 kg)",
         "bin_capacity": "0.44 L (up to 1.0L with Kompressor lever)",
-        "noise": "~76\u201380 dB",
+        "noise": "~76–80 dB",
         "display": "One-touch control buttons with LED battery indicators",
         "filtration": "5-step filtration system with HEPA",
         "sealed_system": "Yes",
@@ -1807,7 +2360,10 @@
         "docking_station": "All-in-One Tower with automatic bin cleanout and accessory storage",
         "warranty": "2 years (10 years on smart inverter motor)",
         "bagless": "Yes (with Kompressor lever)"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "sony-wh-1000xm5",
@@ -1842,7 +2398,20 @@
         "foldable": "No (swivels flat into case)",
         "case": "Collapsible hard-shell zip travel case included",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "apple-airpods-max",
@@ -1877,7 +2446,20 @@
         "foldable": "No (swivels flat)",
         "case": "Smart Case included (low-power state trigger)",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "bose-quietcomfort-ultra",
@@ -1912,7 +2494,20 @@
         "foldable": "Yes (fully collapsible hinges)",
         "case": "Reinforced zippered hard carry case included",
         "warranty": "1 year"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "sennheiser-momentum-4",
@@ -1947,7 +2542,20 @@
         "foldable": "No (swivels flat)",
         "case": "Fabric-covered structured hard zip case included",
         "warranty": "2 years"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "bowers-wilkins-px7-s2e",
@@ -1982,7 +2590,20 @@
         "foldable": "No (swivel earcups)",
         "case": "Slim fabric hard-shell travel case included",
         "warranty": "2 years"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "focal-bathys",
@@ -2017,7 +2638,20 @@
         "foldable": "No (swivels flat)",
         "case": "Rigid black/silver carrying case included",
         "warranty": "2 years"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "coway-airmega-400",
@@ -2042,14 +2676,17 @@
         "room_size": "Large living rooms, open floor plans, offices",
         "filters": "Washable Pre-filter + Max2 Filter (True HEPA + Activated Carbon)",
         "filter_life": "12 months (Max2 filter) / Washable pre-filters",
-        "noise": "22 dB (Sleep mode) \u2013 52 dB (Max speed)",
+        "noise": "22 dB (Sleep mode) – 52 dB (Max speed)",
         "energy": "66 W max power consumption (Energy Star Certified)",
         "smart": "Smart Auto Mode + Eco Mode (no Wi-Fi app)",
         "sensors": "Real-time particle sensor with colorful LED ring indicator",
         "coverage": "1,560 sq ft (2 air changes/hr) / 780 sq ft (4 air changes/hr)",
         "weight": "24.7 lb (11.2 kg)",
         "warranty": "5 years limited motor / 1 year electronic parts"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "dyson-purifier-hot-cool-hp09",
@@ -2072,16 +2709,30 @@
       "specifications": {
         "cadr": "190 CFM class (Air Multiplier 77 gallons/sec circulation)",
         "room_size": "Medium to large bedrooms, living rooms up to 500 sq ft",
-        "filters": "360\u00b0 Glass HEPA H13 + Activated Carbon + Cryptomic Formaldehyde filter",
+        "filters": "360° Glass HEPA H13 + Activated Carbon + Cryptomic Formaldehyde filter",
         "filter_life": "12 months (HEPA/Carbon) / Permanent Formaldehyde catalyst",
-        "noise": "46 dB (Low) \u2013 62 dB (Max)",
+        "noise": "46 dB (Low) – 62 dB (Max)",
         "energy": "40 W (Purifier mode) / 1,575 W (Heating mode)",
         "smart": "MyDyson App, voice control via Alexa, Google Assistant, Siri Shortcuts",
         "sensors": "Solid-state formaldehyde sensor, PM2.5, PM10, VOC, NO2, Temperature, Humidity",
-        "coverage": "500 sq ft room size with 350\u00b0 oscillation",
+        "coverage": "500 sq ft room size with 350° oscillation",
         "weight": "12.6 lb (5.7 kg)",
         "warranty": "2 years"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "energy"
+      ]
     },
     {
       "id": "levoit-core-600s",
@@ -2105,15 +2756,39 @@
         "cadr": "410 CFM (Smoke), 400 CFM (Dust), 420 CFM (Pollen)",
         "room_size": "Extra-large spaces, open-concept homes, basements",
         "filters": "3-Stage True HEPA (Pre-filter + H13 True HEPA + High-efficiency Custom Carbon)",
-        "filter_life": "6\u201312 months depending on air quality",
-        "noise": "26 dB (QuietKeap Sleep mode) \u2013 55 dB (High)",
+        "filter_life": "6–12 months depending on air quality",
+        "noise": "26 dB (QuietKeap Sleep mode) – 55 dB (High)",
         "energy": "49 W max (Energy Star verified)",
         "smart": "VeSync App, Alexa & Google Assistant voice integration, custom schedules",
         "sensors": "AirSight Plus laser dust sensor (PM2.5 real-time numerical display)",
         "coverage": "1,588 sq ft (2 air changes/hr) / 635 sq ft (5 air changes/hr)",
         "weight": "13.7 lb (6.2 kg)",
         "warranty": "2 years"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "energy": "49 W max"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "manufacturer"
+          }
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "blueair-protect-7470i",
@@ -2137,15 +2812,39 @@
         "cadr": "270 CFM (Smoke), 275 CFM (Dust), 280 CFM (Pollen)",
         "room_size": "Master bedrooms, living areas up to 418 sq ft (5 ACH)",
         "filters": "SmartFilter with Smart RFID chip (HEPASilent Ultra + Activated Carbon)",
-        "filter_life": "6\u201312 months with real-time algorithm filter tracking",
-        "noise": "22 dB (Low) \u2013 45 dB (High)",
+        "filter_life": "6–12 months with real-time algorithm filter tracking",
+        "noise": "22 dB (Low) – 45 dB (High)",
         "energy": "43 W max power (Energy Star certified)",
         "smart": "Blueair App, Alexa, Google Home, GermShield 24/7 background mode",
         "sensors": "Laser particle sensor (PM1, PM2.5, PM10), TVOC, Temp, Humidity",
         "coverage": "1,035 sq ft (2 air changes/hr) / 418 sq ft (5 air changes/hr)",
         "weight": "27.6 lb (12.5 kg)",
         "warranty": "5 years (with product registration)"
-      }
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "energy": "43 W max power"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "manufacturer"
+          }
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
     },
     {
       "id": "winix-5500-2",
@@ -2170,14 +2869,17 @@
         "room_size": "Bedrooms, nurseries, home offices up to 360 sq ft",
         "filters": "Fine Mesh Pre-Filter + Washable AOC Carbon + True HEPA (99.97%)",
         "filter_life": "12 months (HEPA) / Washable carbon filter",
-        "noise": "27.8 dB (Silent) \u2013 54.8 dB (Turbo)",
+        "noise": "27.8 dB (Silent) – 54.8 dB (Turbo)",
         "energy": "70 W max (Energy Star)",
         "smart": "Auto Mode + Sleep Mode with Smart Light Sensor (No Wi-Fi)",
         "sensors": "Smart Optical Air Quality Sensor (3-color LED indicator)",
         "coverage": "360 sq ft (5 air changes/hr) / 880 sq ft (2 air changes/hr)",
         "weight": "14.7 lb (6.7 kg)",
         "warranty": "2 years"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "aleno-breathe-smart-75i",
@@ -2201,15 +2903,18 @@
         "cadr": "350 CFM across Smoke, Dust, Pollen",
         "room_size": "Large master suites, open living rooms, offices",
         "filters": "Medical-grade H13 True HEPA + Antimicrobial layer + Heavy Odor Carbon",
-        "filter_life": "12\u201315 months extra long filter life",
-        "noise": "25 dB (WhisperMax) \u2013 49 dB (Turbo speed)",
+        "filter_life": "12–15 months extra long filter life",
+        "noise": "25 dB (WhisperMax) – 49 dB (Turbo speed)",
         "energy": "45 W (Energy Star certified)",
         "smart": "Alen Air App (Wi-Fi), auto modes, color ring status",
         "sensors": "Laser air quality sensor detecting fine particle levels with 5 color rings",
         "coverage": "1,400 sq ft (2 air changes/hr) / 700 sq ft (4 air changes/hr)",
         "weight": "27.0 lb (12.2 kg)",
         "warranty": "Lifetime warranty (with active filter subscription)"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "american-express-gold-card",
@@ -2231,16 +2936,19 @@
       ],
       "specifications": {
         "annual_fee": "$325",
-        "apr": "Pay Over Time APR: 21.24% \u2013 29.24% Variable",
+        "apr": "Pay Over Time APR: 21.24% – 29.24% Variable",
         "rewards_rate": "4X dining & US supermarkets, 3X flights booked directly/AmexTravel, 1X other",
         "intro_offer": "0% intro APR on purchases for 0 months (Pay in full / Pay Over Time)",
         "foreign_tx": "None (0%)",
-        "credit_needed": "Good to Excellent (670\u2013850)",
+        "credit_needed": "Good to Excellent (670–850)",
         "lounge": "No (No airport lounge access)",
         "sign_up_bonus": "60,000 Membership Rewards points after $6,000 spend in first 6 months",
         "late_fee": "Up to $40",
         "network": "American Express"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "chase-sapphire-preferred",
@@ -2262,16 +2970,19 @@
       ],
       "specifications": {
         "annual_fee": "$95",
-        "apr": "21.49% \u2013 28.49% Variable APR",
+        "apr": "21.49% – 28.49% Variable APR",
         "rewards_rate": "5X travel via Chase, 3X dining/online grocery/select streaming, 2X other travel, 1X other",
         "intro_offer": "None (Variable APR applies from account opening)",
         "foreign_tx": "None (0%)",
-        "credit_needed": "Good to Excellent (690\u2013850)",
+        "credit_needed": "Good to Excellent (690–850)",
         "lounge": "No",
         "sign_up_bonus": "60,000 Ultimate Rewards points after $4,000 spend in first 3 months ($750 travel value)",
         "late_fee": "Up to $40",
         "network": "Visa Signature"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "capital-one-venture-x",
@@ -2293,16 +3004,19 @@
       ],
       "specifications": {
         "annual_fee": "$395",
-        "apr": "19.99% \u2013 29.99% Variable APR",
+        "apr": "19.99% – 29.99% Variable APR",
         "rewards_rate": "10X hotels & rental cars via Capital One Travel, 5X flights via portal, 2X all other purchases",
         "intro_offer": "None (standard variable APR applies)",
         "foreign_tx": "None (0%)",
-        "credit_needed": "Excellent (720\u2013850)",
+        "credit_needed": "Excellent (720–850)",
         "lounge": "Yes (Capital One Lounges, Plaza Premium, and Priority Pass Select unlimited)",
         "sign_up_bonus": "75,000 bonus miles after spending $4,000 on purchases in first 3 months",
         "late_fee": "Up to $40",
         "network": "Visa Infinite"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "citi-double-cash",
@@ -2324,16 +3038,19 @@
       ],
       "specifications": {
         "annual_fee": "$0 (No annual fee)",
-        "apr": "19.24% \u2013 29.24% Variable APR",
+        "apr": "19.24% – 29.24% Variable APR",
         "rewards_rate": "2% cash back (1% when you buy + 1% as you pay off purchases)",
         "intro_offer": "0% intro APR for 18 months on Balance Transfers (then standard variable APR)",
         "foreign_tx": "3% of each transaction in U.S. dollars",
-        "credit_needed": "Good to Excellent (670\u2013850)",
+        "credit_needed": "Good to Excellent (670–850)",
         "lounge": "No",
         "sign_up_bonus": "$200 cash back (20,000 ThankYou points) after spending $1,500 in first 6 months",
         "late_fee": "Up to $41",
         "network": "Mastercard"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "chase-freedom-unlimited",
@@ -2355,16 +3072,19 @@
       ],
       "specifications": {
         "annual_fee": "$0 (No annual fee)",
-        "apr": "20.49% \u2013 29.24% Variable APR",
+        "apr": "20.49% – 29.24% Variable APR",
         "rewards_rate": "5% travel via Chase, 3% dining & drugstores, 1.5% unlimited on all other purchases",
         "intro_offer": "0% Intro APR for 15 months from account opening on purchases and balance transfers",
         "foreign_tx": "3% of each transaction in U.S. dollars",
-        "credit_needed": "Good to Excellent (670\u2013850)",
+        "credit_needed": "Good to Excellent (670–850)",
         "lounge": "No",
         "sign_up_bonus": "$150 bonus (or extra 1.5% on all spend up to $20k in first year) after $500 spend",
         "late_fee": "Up to $40",
         "network": "Visa Signature"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     },
     {
       "id": "american-express-platinum",
@@ -2386,16 +3106,19 @@
       ],
       "specifications": {
         "annual_fee": "$695",
-        "apr": "Pay Over Time APR: 21.24% \u2013 29.24% Variable",
+        "apr": "Pay Over Time APR: 21.24% – 29.24% Variable",
         "rewards_rate": "5X flights booked directly with airlines or via AmexTravel (up to $500k/yr), 5X prepaid hotels, 1X other",
         "intro_offer": "None (Pay Over Time feature optional)",
         "foreign_tx": "None (0%)",
-        "credit_needed": "Good to Excellent (700\u2013850)",
+        "credit_needed": "Good to Excellent (700–850)",
         "lounge": "Yes (Centurion Lounges, Priority Pass Select, Delta Sky Club, Escape Lounges, Plaza Premium)",
         "sign_up_bonus": "80,000 Membership Rewards points after $8,000 spend in first 6 months",
         "late_fee": "Up to $40",
         "network": "American Express"
-      }
+      },
+      "markets": [
+        "us"
+      ]
     }
   ],
   "categories": [

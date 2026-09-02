@@ -2,33 +2,34 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCategories, getComparisons, getProducts, getProductsByCategory, type Product } from '@/lib/data'
+import type { MarketId } from '@/lib/markets'
+import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict } from '@/lib/verdict'
-import { compareHref, productHref, subLabel } from '@/lib/nav'
-import { priceCaption, priceShort } from '@/lib/nav'
+import { categoryHref, compareHref, homeHref, priceCaption, priceShort, productHref, subLabel } from '@/lib/nav'
 import { absUrl, SITE_NAME } from '@/lib/site'
 import { useCasesFor } from '@/data/use-cases'
 import { ProductMark } from '@/components/ProductMark'
 import { VsCard } from '@/components/VsCard'
 
-export async function generateStaticParams() {
-  const categories = await getCategories()
+export async function generateStaticParamsForMarket(market: MarketId) {
+  const categories = await getCategories(market)
   return categories.map((cat) => ({ slug: cat.id }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
+export async function generateMetadataForMarket(
+  { params }: { params: Promise<{ slug: string }> },
+  market: MarketId
+): Promise<Metadata> {
   const { slug } = await params
-  const [categories, products, comparisons] = await Promise.all([
-    getCategories(),
-    getProductsByCategory(slug),
-    getComparisons(),
+  const [categories, products, comparisons, ukCategories] = await Promise.all([
+    getCategories(market),
+    getProductsByCategory(slug, market),
+    getComparisons(market),
+    getCategories('uk'),
   ])
   const category = categories.find((c) => c.id === slug)
-  if (!category) return { title: 'Category not found' }
+  if (!category) notFound()
 
   const productIds = new Set(products.map((p) => p.id))
   const categoryComparisons = comparisons.filter(
@@ -37,18 +38,20 @@ export async function generateMetadata({
   const subcategoryLabels = [...new Set(products.map((p) => subLabel(p.subcategory)))]
   const description = `Compare ${products.length} ${category.name.toLowerCase()} head to head across ${subcategoryLabels.join(', ')}. ${categoryComparisons.length} published matchups with a spec-by-spec verdict.`
   const title = `${category.name} comparisons`
-  const canonical = `/category/${category.id}/`
+  const canonical = categoryHref(category.id)
+  const includeUk = ukCategories.some((candidate) => candidate.id === slug)
 
   return {
     title,
     description,
-    alternates: { canonical },
+    alternates: pageAlternates(canonical, market, includeUk),
     openGraph: {
       title,
       description,
-      url: canonical,
+      url: categoryHref(category.id, market),
       type: 'website',
       siteName: SITE_NAME,
+      locale: openGraphLocale(market),
     },
     twitter: {
       card: 'summary',
@@ -58,9 +61,15 @@ export async function generateMetadata({
   }
 }
 
-export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+export async function CategoryListing({
+  params,
+  market,
+}: {
+  params: Promise<{ slug: string }>
+  market: MarketId
+}) {
   const { slug } = await params
-  const categories = await getCategories()
+  const categories = await getCategories(market)
   const currentCategory = categories.find((c) => c.id === slug)
 
   if (!currentCategory) {
@@ -68,9 +77,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   }
 
   const [products, comparisons, allProducts] = await Promise.all([
-    getProductsByCategory(slug),
-    getComparisons(),
-    getProducts(),
+    getProductsByCategory(slug, market),
+    getComparisons(market),
+    getProducts(market),
   ])
 
   const byId = new Map(allProducts.map((product) => [product.id, product]))
@@ -92,7 +101,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             id: useCase.id,
             label: useCase.label,
             job: useCase.job,
-            href: `${compareHref(matchup)}#for=${useCase.id}`,
+            href: `${compareHref(matchup, market)}#for=${useCase.id}`,
           }))
         : [],
     }
@@ -135,7 +144,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     if (!comparison) return null
     const rivalId = comparison.productA === product.id ? comparison.productB : comparison.productA
     const rival = byId.get(rivalId)
-    return rival ? { href: compareHref(comparison), rival } : null
+    return rival ? { href: compareHref(comparison, market), rival } : null
   }
 
   return (
@@ -144,7 +153,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         aria-label="Breadcrumb"
         className="flex items-center gap-1.5 pt-6 text-[12.5px] text-ink-3"
       >
-        <Link href="/" className="hover:text-accent">
+        <Link href={homeHref(market)} className="hover:text-accent">
           Home
         </Link>
         <span aria-hidden>/</span>
@@ -189,7 +198,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             {otherCategories.length > 0 && (
               <div className="mt-6 flex flex-wrap justify-center gap-2">
                 {otherCategories.map((category) => (
-                  <Link key={category.id} href={`/category/${category.id}/`} className="btn btn-ghost">
+                  <Link key={category.id} href={categoryHref(category.id, market)} className="btn btn-ghost">
                     {category.name}
                   </Link>
                 ))}
@@ -241,7 +250,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                           <div className="min-w-0">
                             <p className="eyebrow">{product.brand}</p>
                             <h3 className="mt-0.5 text-[16px] font-semibold tracking-[-0.02em]">
-                              <Link href={productHref(product)} className="hover:text-accent">
+                              <Link href={productHref(product, market)} className="hover:text-accent">
                                 {product.name}
                               </Link>
                             </h3>
@@ -260,14 +269,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
                       <div className="flex shrink-0 items-center justify-between gap-3 sm:flex-col sm:items-end sm:gap-2.5">
                         <p className="num text-[20px] font-semibold tracking-[-0.03em]">
-                          {priceShort(product)}
+                          {priceShort(product, market)}
                         </p>
                         {matchup ? (
                           <Link href={matchup.href} className="btn btn-primary whitespace-nowrap text-[13px]">
                             Compare vs {matchup.rival.brand}
                           </Link>
                         ) : (
-                          <Link href={productHref(product)} className="btn btn-ghost text-[13px]">
+                          <Link href={productHref(product, market)} className="btn btn-ghost text-[13px]">
                             Spec sheet
                           </Link>
                         )}
@@ -289,7 +298,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                   ? `${featuredComparisons.length} of ${categoryComparisons.length} published matchups, one product type at a time.`
                   : 'Every published matchup in this category.'}
               </p>
-              <div className="mt-5 grid gap-3 md:grid-cols-2 md:gap-4">
+              <div className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-[repeat(2,minmax(0,1fr))] md:gap-4">
                 {featuredComparisons.map((comparison) => {
                   const productA = byId.get(comparison.productA)
                   const productB = byId.get(comparison.productB)
@@ -300,7 +309,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                       comparison={comparison}
                       productA={productA}
                       productB={productB}
-                      verdict={buildVerdict(productA, productB)}
+                      verdict={buildVerdict(productA, productB, market)}
+                      market={market}
                     />
                   )
                 })}
@@ -351,11 +361,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
             name: `${currentCategory.name} comparisons`,
-            url: absUrl(`/category/${currentCategory.id}/`),
+            url: absUrl(categoryHref(currentCategory.id, market)),
             hasPart: categoryComparisons.map((c) => ({
               '@type': 'WebPage',
               name: c.productName,
-              url: absUrl(compareHref(c)),
+              url: absUrl(compareHref(c, market)),
             })),
           }),
         }}

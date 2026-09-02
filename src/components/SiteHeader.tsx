@@ -11,9 +11,9 @@ const KIND_LABEL: Record<JumpEntry['kind'], string> = {
   category: 'Category',
 }
 
-function Wordmark() {
+function Wordmark({ href }: { href: string }) {
   return (
-    <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="Tiebreak home">
+    <Link href={href} className="flex items-center gap-2 shrink-0" aria-label="Tiebreak home">
       <span
         aria-hidden
         className="grid place-items-center rounded-md"
@@ -32,9 +32,11 @@ function Wordmark() {
 export function SiteHeader({
   index,
   nav,
+  homeHref = '/',
 }: {
   index: JumpEntry[]
   nav: { label: string; href: string }[]
+  homeHref?: string
 }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -110,7 +112,7 @@ export function SiteHeader({
       style={{ background: 'color-mix(in oklab, var(--bg) 88%, transparent)', backdropFilter: 'blur(10px)' }}
     >
       <div className="shell flex items-center gap-3" style={{ height: 'var(--header-h)' }}>
-        <Wordmark />
+        <Wordmark href={homeHref} />
 
         <nav className="ml-3 hidden items-center gap-1 md:flex" aria-label="Categories">
           {nav.map((item) => (

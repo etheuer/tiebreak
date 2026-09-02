@@ -1,16 +1,19 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
 import type { Product } from '@/lib/data'
 import type { ScoredGroup, ScoredRow, Side } from '@/lib/verdict'
 import { ProductMark } from '@/components/ProductMark'
 import { priceShort } from '@/lib/nav'
 import { shortName } from '@/lib/decision'
+import { displaySpec } from '@/lib/format'
+import type { MarketId } from '@/lib/markets'
 
 const STORAGE_KEY = 'tiebreak:hide-identical'
 
-function Cell({ row, side }: { row: ScoredRow; side: Side }) {
-  const value = side === 'a' ? row.a : row.b
+function Cell({ row, side, market }: { row: ScoredRow; side: Side; market: MarketId }) {
+  const raw = side === 'a' ? row.a : row.b
+  const value = displaySpec(raw, row.key, market)
   const won = row.winner === side
   const lost = row.winner !== null && !won
   const cls = won ? (side === 'a' ? 'val-win-a' : 'val-win-b') : row.differs || lost ? 'val-diff' : 'val-same'
@@ -49,12 +52,14 @@ export function SpecTables({
   groups,
   aWins,
   bWins,
+  market = 'us',
 }: {
   productA: Product
   productB: Product
   groups: ScoredGroup[]
   aWins: number
   bWins: number
+  market?: MarketId
 }) {
   const [hideSame, setHideSame] = useState(false)
   const [focus, setFocus] = useState<'both' | 'a' | 'b'>('both')
@@ -95,6 +100,7 @@ export function SpecTables({
     return { total, differing }
   }, [groups])
 
+  const pauseSpy = useRef(false)
   useEffect(() => {
     const headings = visible
       .map((group) => document.getElementById(group.id))
@@ -103,6 +109,7 @@ export function SpecTables({
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (pauseSpy.current) return
         const hit = entries.filter((entry) => entry.isIntersecting).sort((x, y) => x.boundingClientRect.top - y.boundingClientRect.top)[0]
         if (hit) setActive(hit.target.id)
       },
@@ -155,13 +162,13 @@ export function SpecTables({
                   <span className="block truncate text-[12.5px] font-semibold leading-tight sm:text-[13.5px]">
                     {shortName(product)}
                   </span>
-                  <span className="num block text-[11px] leading-tight text-ink-3">
-                    {priceShort(product)}
+                  <span className="num block text-[12px] leading-tight text-ink-3">
+                    {priceShort(product, market)}
                     <span
                       className="ml-1.5 font-semibold"
                       style={{ color: side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)' }}
                     >
-                      {wins} wins
+                      {wins} {wins === 1 ? 'win' : 'wins'}
                     </span>
                   </span>
                 </span>
@@ -175,6 +182,11 @@ export function SpecTables({
               <a
                 key={group.id}
                 href={`#${group.id}`}
+                onClick={() => {
+                  setActive(group.id)
+                  pauseSpy.current = true
+                  setTimeout(() => { pauseSpy.current = false }, 800)
+                }}
                 className="shrink-0 rounded-md px-2.5 py-1 text-[12.5px] font-medium transition-colors"
                 style={{
                   background: active === group.id ? 'var(--surface-3)' : 'transparent',
@@ -197,7 +209,7 @@ export function SpecTables({
                 key={mode}
                 type="button"
                 onClick={() => setFocus(mode)}
-                className="rounded-md px-2.5 py-1 font-medium transition-colors"
+                className="mobile-switch-btn rounded-md px-2.5 py-1 font-medium transition-colors"
                 style={{
                   background: focus === mode ? 'var(--surface-3)' : 'transparent',
                   color: focus === mode ? 'var(--ink)' : 'var(--ink-3)',
@@ -217,7 +229,12 @@ export function SpecTables({
             value=""
             onChange={(event) => {
               const id = event.target.value
-              if (id) document.getElementById(id)?.scrollIntoView({ block: 'start' })
+              if (id) {
+                setActive(id)
+                pauseSpy.current = true
+                setTimeout(() => { pauseSpy.current = false }, 800)
+                document.getElementById(id)?.scrollIntoView({ block: 'start' })
+              }
             }}
           >
             <option value="">Jump to…</option>
@@ -260,8 +277,8 @@ export function SpecTables({
                         </span>
                       )}
                     </th>
-                    <Cell row={row} side="a" />
-                    <Cell row={row} side="b" />
+                    <Cell row={row} side="a" market={market} />
+                    <Cell row={row} side="b" market={market} />
                   </tr>
                 ))}
               </tbody>

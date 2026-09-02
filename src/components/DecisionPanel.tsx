@@ -13,6 +13,8 @@ import {
   type LensRow,
 } from '@/lib/decision'
 
+import type { MarketId } from '@/lib/markets'
+
 const OVERALL = 'overall'
 const lensKey = (sub: string) => `tiebreak:for:${sub}`
 const mattersKey = (sub: string) => `tiebreak:deal-breakers:${sub}`
@@ -51,6 +53,7 @@ export function DecisionPanel({
   rows,
   useCases,
   checks,
+  market = 'us',
   children,
 }: {
   productA: Product
@@ -58,6 +61,7 @@ export function DecisionPanel({
   rows: LensRow[]
   useCases: UseCase[]
   checks: DealBreakerCheck[]
+  market?: MarketId
   children?: ReactNode
 }) {
   const sub = productA.subcategory
@@ -125,12 +129,11 @@ export function DecisionPanel({
   const focusDiffering = useMemo(() => focusRows.filter((row) => row.differs).length, [focusRows])
   const mattersSet = useMemo(() => new Set(matters), [matters])
   const answer = useMemo(
-    () => buildAnswer({ productA, productB, useCase, rows: scoreRows, checks, matters: mattersSet }),
-    [productA, productB, useCase, scoreRows, checks, mattersSet]
+    () => buildAnswer({ productA, productB, useCase, rows: scoreRows, checks, matters: mattersSet, market }),
+    [productA, productB, useCase, scoreRows, checks, mattersSet, market]
   )
 
   const names = { a: shortName(productA), b: shortName(productB) }
-  const pickTint = answer.pick === 'a' ? 'var(--accent)' : answer.pick === 'b' ? 'var(--rival)' : 'var(--line-2)'
   const thing = subLabel(sub).toLowerCase().replace(/s$/, '')
   const eliminated = new Set<'a' | 'b'>()
   for (const check of checks) {
@@ -147,7 +150,11 @@ export function DecisionPanel({
           <p id="decide" className="eyebrow shrink-0">
             Buying for
           </p>
-          <div className="scroll-x -mx-1 flex gap-1.5 px-1 py-0.5" role="radiogroup" aria-label="What are you buying this for">
+          <div
+            className="scroll-x -mx-1 flex gap-1.5 px-1 py-0.5 [mask-image:linear-gradient(to_right,black_calc(100%-28px),transparent_100%)] md:[mask-image:none]"
+            role="radiogroup"
+            aria-label="What are you buying this for"
+          >
             <button
               type="button"
               role="radio"
@@ -179,7 +186,7 @@ export function DecisionPanel({
 
         <div className="grid md:grid-cols-[1.15fr_1fr]">
           {/* Straight answer */}
-          <div className="p-4 sm:p-5" style={{ borderLeft: `3px solid ${pickTint}` }}>
+          <div className="p-4 sm:p-5">
             <div className="flex items-baseline justify-between gap-3">
               <p className="eyebrow">Straight answer</p>
               {score.scored > 0 ? (
@@ -263,7 +270,7 @@ export function DecisionPanel({
                             <label htmlFor={`db-${check.id}`} className="cursor-pointer text-[13.5px] font-semibold leading-snug">
                               {check.label}
                             </label>
-                            <a href={`#${check.group}`} className="link-underline shrink-0 text-[11px] text-ink-3">
+                            <a href={`#${check.group}`} className="link-underline shrink-0 text-[12px] text-ink-3">
                               row
                             </a>
                           </div>
@@ -346,7 +353,7 @@ export function DecisionPanel({
                         className={`${side === 'a' ? 'col-a' : 'col-b'} px-3.5 py-3 ${side === 'b' ? 'border-l border-line' : ''}`}
                       >
                         <p
-                          className="text-[10.5px] font-semibold uppercase tracking-[0.06em]"
+                          className="text-[12px] font-semibold uppercase tracking-[0.06em]"
                           style={{ color: side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)' }}
                         >
                           {side === 'a' ? productA.brand : productB.brand}

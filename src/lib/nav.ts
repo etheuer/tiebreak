@@ -1,4 +1,7 @@
 import type { Category, Comparison, Product } from '@/lib/data'
+import { priceOf } from '@/lib/pricing'
+import { formatMoney } from '@/lib/format'
+import { marketPath, type MarketId } from '@/lib/markets'
 
 export const SUBCATEGORY_LABEL: Record<string, string> = {
   tvs: 'TVs',
@@ -26,17 +29,31 @@ export function priceCaption(subcategory: string): string {
   return isFeeBased(subcategory) ? 'Annual fee' : 'List price'
 }
 
-export function priceShort(product: Product): string {
-  const amount = `$${product.price.toLocaleString('en-US')}`
+export function priceShort(product: Product, market: MarketId = 'us'): string {
+  const point = priceOf(product, market)
+  if (!point) return 'Price not listed'
+  const amount = formatMoney(point.amount, market)
   return isFeeBased(product.subcategory) ? `${amount}/yr` : amount
 }
 
-export function productHref(product: Product): string {
-  return `/product/${product.category}/${product.id}/`
+export function productHref(product: Product, market: MarketId = 'us'): string {
+  return marketPath(market, `/product/${product.category}/${product.id}/`)
 }
 
-export function compareHref(comparison: Comparison): string {
-  return `/compare/${comparison.productA}-vs-${comparison.productB}/`
+export function compareHref(comparison: Comparison, market: MarketId = 'us'): string {
+  return marketPath(market, `/compare/${comparison.productA}-vs-${comparison.productB}/`)
+}
+
+export function categoryHref(categoryId: string, market: MarketId = 'us'): string {
+  return marketPath(market, `/category/${categoryId}/`)
+}
+
+export function homeHref(market: MarketId = 'us'): string {
+  return marketPath(market, '/')
+}
+
+export function hubHref(market: MarketId = 'us'): string {
+  return marketPath(market, '/compare/')
 }
 
 /**
@@ -67,7 +84,8 @@ export type JumpEntry = {
 export function buildJumpIndex(
   products: Product[],
   comparisons: Comparison[],
-  categories: Category[]
+  categories: Category[],
+  market: MarketId = 'us'
 ): JumpEntry[] {
   const byId = new Map(products.map((p) => [p.id, p]))
 
@@ -78,7 +96,7 @@ export function buildJumpIndex(
       kind: 'compare',
       label: c.productName,
       meta: a ? subLabel(a.subcategory) : 'Comparison',
-      href: compareHref(c),
+      href: compareHref(c, market),
       terms: [c.productName, a?.name, b?.name, a?.brand, b?.brand, ...c.keywords]
         .filter(Boolean)
         .join(' ')
@@ -89,8 +107,8 @@ export function buildJumpIndex(
   const productEntries: JumpEntry[] = products.map((p) => ({
     kind: 'product',
     label: p.name,
-    meta: `${subLabel(p.subcategory)} · $${p.price.toLocaleString('en-US')}`,
-    href: productHref(p),
+    meta: `${subLabel(p.subcategory)} · ${priceShort(p, market)}`,
+    href: productHref(p, market),
     terms: `${p.name} ${p.brand} ${subLabel(p.subcategory)}`.toLowerCase(),
   }))
 
@@ -98,7 +116,7 @@ export function buildJumpIndex(
     kind: 'category',
     label: c.name,
     meta: `${products.filter((p) => p.category === c.id).length} products`,
-    href: `/category/${c.id}/`,
+    href: categoryHref(c.id, market),
     terms: `${c.name} ${c.subcategories.join(' ')}`.toLowerCase(),
   }))
 

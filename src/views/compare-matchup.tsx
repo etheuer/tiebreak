@@ -7,18 +7,24 @@ import {
   getComparisons,
   getProductById,
   getProducts,
+  inMarket,
+  priceOf,
   type Product,
 } from '@/lib/data'
 import { buildVerdict, leadAreas, priceLabel, verdictLine, type Side, type Verdict } from '@/lib/verdict'
 import {
+  categoryHref,
   compareHref,
   findComparison,
+  homeHref,
   isFeeBased,
   priceCaption,
   priceShort,
   productHref,
   subLabel,
 } from '@/lib/nav'
+import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
+import type { MarketId } from '@/lib/markets'
 import { buildAnswer, checkDealBreakers, flattenRows } from '@/lib/decision'
 import { buildCompareFaq, buildLensAnswers } from '@/lib/faq'
 import { absUrl, clip, SITE_NAME } from '@/lib/site'
@@ -26,31 +32,33 @@ import { useCasesFor } from '@/data/use-cases'
 import { SpecTables } from '@/components/SpecTables'
 import { ProductMark } from '@/components/ProductMark'
 import { DecisionPanel } from '@/components/DecisionPanel'
+import { ShareVerdict } from '@/components/ShareVerdict'
 
-export async function generateStaticParams() {
-  const comparisons = await getComparisons()
+export async function generateStaticParamsForMarket(market: MarketId) {
+  const comparisons = await getComparisons(market)
   return comparisons.map((comp) => ({
     slug: `${comp.productA}-vs-${comp.productB}`,
   }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
+export async function generateMetadataForMarket(
+  { params }: { params: Promise<{ slug: string }> },
+  market: MarketId
+): Promise<Metadata> {
   const { slug } = await params
-  const comparison = await getComparisonBySlug(slug)
+  const comparison = await getComparisonBySlug(slug, market)
   if (!comparison) return { title: 'Comparison not found' }
 
   const [productA, productB] = await Promise.all([
-    getProductById(comparison.productA),
-    getProductById(comparison.productB),
+    getProductById(comparison.productA, market),
+    getProductById(comparison.productB, market),
   ])
   if (!productA || !productB) return { title: comparison.productName }
 
-  const verdict = buildVerdict(productA, productB)
-  const answer = verdictLine(productA, productB, verdict)
+  if (!inMarket(productA, market) || !inMarket(productB, market)) return { title: 'Comparison not found' }
+  const includeUk = inMarket(productA, 'uk') && inMarket(productB, 'uk')
+  const verdict = buildVerdict(productA, productB, market)
+  const answer = verdictLine(productA, productB, verdict, market)
   const rawDesc = answer.length >= 120 ? answer : `${answer} ${comparison.description}`
   const description = clip(rawDesc, 158)
   const title =
@@ -61,13 +69,14 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: compareHref(comparison) },
+    alternates: pageAlternates(`/compare/${slug}/`, market, includeUk),
     openGraph: {
       title: comparison.productName,
       description,
-      url: compareHref(comparison),
+      url: compareHref(comparison, market),
       type: 'website',
       siteName: SITE_NAME,
+      locale: openGraphLocale(market),
     },
     twitter: {
       card: 'summary',
@@ -80,18 +89,18 @@ export async function generateMetadata({
 
 type SwapOption = { id: string; name: string; priceText: string; href: string | null }
 
-async function swapOptions(target: Product, keep: Product): Promise<SwapOption[]> {
-  const [products, comparisons] = await Promise.all([getProducts(), getComparisons()])
+async function swapOptions(target: Product, keep: Product, market: MarketId): Promise<SwapOption[]> {
+  const [products, comparisons] = await Promise.all([getProducts(market), getComparisons(market)])
   return products
     .filter((p) => p.subcategory === target.subcategory && p.id !== target.id && p.id !== keep.id)
-    .sort((x, y) => x.price - y.price)
+    .sort((x, y) => (priceOf(x, market)?.amount ?? x.price) - (priceOf(y, market)?.amount ?? y.price))
     .map((p) => {
       const match = findComparison(comparisons, p.id, keep.id)
       return {
         id: p.id,
         name: p.name,
-        priceText: priceShort(p),
-        href: match ? compareHref(match) : null,
+        priceText: priceShort(p, market),
+        href: match ? compareHref(match, market) : null,
       }
     })
 }
@@ -114,156 +123,140 @@ function ProductPanel({
   side,
   wins,
   swaps,
-  isLeader,
+  market,
 }: {
   product: Product
   side: Side
   wins: number
   swaps: SwapOption[]
   isLeader: boolean
+  market: MarketId
 }) {
-  const tint = side === 'a' ? 'var(--accent)' : 'var(--rival)'
-  const tintSoft = side === 'a' ? 'var(--accent-soft)' : 'var(--rival-soft)'
   const tintInk = side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)'
 
   return (
-    <div className="card relative flex flex-col p-5" style={{ borderTop: `3px solid ${tint}` }}>
-      {isLeader && (
-        <span
-          className="absolute right-4 top-4 rounded-full px-2 py-0.5 text-[10.5px] font-bold uppercase tracking-[0.08em]"
-          style={{ background: tintSoft, color: tintInk }}
-        >
-          Spec leader
+    <div className="card min-w-0 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-3 sm:p-4 h-[72px]" style={{ borderTop: `3px solid ${side === 'a' ? 'var(--accent)' : 'var(--rival)'}` }}>
+      <div className="flex items-center gap-3 min-w-0">
+        <ProductMark product={product} size="sm" tone={side} />
+        <div className="min-w-0 flex flex-col justify-center">
+          <p className="truncate text-[13.5px] font-semibold leading-tight">{product.name}</p>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
+            <span className="num text-[12.5px] text-ink-3">{priceShort(product, market)}</span>
+            <span className="num text-[12px] font-semibold" style={{ color: tintInk }}>
+              {wins} {wins === 1 ? 'spec win' : 'spec wins'}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {swaps.length > 0 ? (
+        <details className="swap-control relative shrink-0">
+          <summary className="chip cursor-pointer list-none">
+            Swap
+            <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden>
+              <path d="M1 3.2 5 7l4-3.8" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+            </svg>
+          </summary>
+          <div
+            className="absolute right-0 z-20 mt-1.5 max-h-72 w-60 overflow-y-auto overflow-x-hidden rounded-lg border border-line bg-surface p-1"
+            style={{ boxShadow: 'var(--shadow-2)' }}
+          >
+            <p className="px-2.5 py-1.5 text-[12px] text-ink-3">
+              Compare a different {subLabel(product.subcategory).toLowerCase().replace(/s$/, '')}
+            </p>
+            {swaps.map((option) =>
+              option.href ? (
+                <Link
+                  key={option.id}
+                  href={option.href}
+                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-[13px] hover:bg-surface-2"
+                >
+                  <span className="truncate">{option.name}</span>
+                  <span className="num shrink-0 text-[12px] text-ink-3">
+                    {option.priceText}
+                  </span>
+                </Link>
+              ) : (
+                <span
+                  key={option.id}
+                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-[13px] text-ink-3"
+                  title="No matchup published for that pair yet"
+                >
+                  <span className="truncate">{option.name}</span>
+                  <span className="text-[12px]">soon</span>
+                </span>
+              )
+            )}
+          </div>
+        </details>
+      ) : (
+        <span className="text-[12px] text-ink-3 hidden sm:inline">
+          Only two {subLabel(product.subcategory).toLowerCase()} so far
         </span>
       )}
-
-      <div className="flex items-start gap-3.5">
-        <ProductMark product={product} size="md" tone={side} />
-        <div className="min-w-0 pt-0.5">
-          <p className="eyebrow">{product.brand}</p>
-          <h2 className="display mt-1 text-[19px] sm:text-[21px]">{product.name}</h2>
-        </div>
-      </div>
-
-      <div className="mt-4">
-        <p className="eyebrow">{priceCaption(product.subcategory)}</p>
-        <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="num text-[26px] font-semibold tracking-[-0.03em]">
-            {priceShort(product)}
-          </span>
-          <span className="num text-[13px] font-semibold" style={{ color: tintInk }}>
-            {wins} spec wins
-          </span>
-        </div>
-      </div>
-
-      <p className="mt-3 text-[13.5px] leading-relaxed text-ink-2">{product.description}</p>
-
-      <ul className="mt-4 grid gap-1.5">
-        {product.pros.slice(0, 3).map((pro) => (
-          <li key={pro} className="flex gap-2 text-[13px] leading-snug text-ink">
-            <span aria-hidden style={{ color: tint }}>
-              +
-            </span>
-            {pro}
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-auto flex flex-wrap items-center gap-2 pt-5">
-        <Link href={productHref(product)} className="chip">
-          Full spec sheet
-        </Link>
-
-        {swaps.length > 0 ? (
-          <details className="relative">
-            <summary className="chip cursor-pointer list-none">
-              Swap
-              <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden>
-                <path d="M1 3.2 5 7l4-3.8" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" />
-              </svg>
-            </summary>
-            <div
-              className="absolute left-0 z-20 mt-1.5 max-h-72 w-60 overflow-y-auto overflow-x-hidden rounded-lg border border-line bg-surface p-1"
-              style={{ boxShadow: 'var(--shadow-2)' }}
-            >
-              <p className="px-2.5 py-1.5 text-[11px] text-ink-3">
-                Compare a different {subLabel(product.subcategory).toLowerCase().replace(/s$/, '')}
-              </p>
-              {swaps.map((option) =>
-                option.href ? (
-                  <Link
-                    key={option.id}
-                    href={option.href}
-                    className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-[13px] hover:bg-surface-2"
-                  >
-                    <span className="truncate">{option.name}</span>
-                    <span className="num shrink-0 text-[12px] text-ink-3">
-                      {option.priceText}
-                    </span>
-                  </Link>
-                ) : (
-                  <span
-                    key={option.id}
-                    className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-[13px] text-ink-3"
-                    title="No matchup published for that pair yet"
-                  >
-                    <span className="truncate">{option.name}</span>
-                    <span className="text-[11px]">soon</span>
-                  </span>
-                )
-              )}
-            </div>
-          </details>
-        ) : (
-          <span className="text-[12px] text-ink-3">
-            Only two {subLabel(product.subcategory).toLowerCase()} in the catalog so far
-          </span>
-        )}
-      </div>
+      <script dangerouslySetInnerHTML={{ __html: `
+        if (!window.__swapInit) {
+          window.__swapInit = true;
+          document.addEventListener('click', e => {
+            document.querySelectorAll('details.swap-control').forEach(d => {
+              if (!d.contains(e.target)) d.removeAttribute('open')
+            })
+          });
+          document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+              document.querySelectorAll('details.swap-control').forEach(d => d.removeAttribute('open'))
+            }
+          });
+        }
+      `}} />
     </div>
   )
 }
 
-export default async function ComparePage({ params }: { params: Promise<{ slug: string }> }) {
+export async function CompareMatchup({
+  params,
+  market,
+}: {
+  params: Promise<{ slug: string }>
+  market: MarketId
+}) {
   const { slug } = await params
-  const comparison = await getComparisonBySlug(slug)
+  const comparison = await getComparisonBySlug(slug, market)
 
   if (!comparison) {
     notFound()
   }
 
   const [productA, productB] = await Promise.all([
-    getProductById(comparison.productA),
-    getProductById(comparison.productB),
+    getProductById(comparison.productA, market),
+    getProductById(comparison.productB, market),
   ])
 
-  if (!productA || !productB) {
+  if (!productA || !productB || !inMarket(productA, market) || !inMarket(productB, market)) {
     notFound()
   }
 
   const [allComparisons, categories, swapsA, swapsB] = await Promise.all([
-    getComparisons(),
-    getCategories(),
-    swapOptions(productA, productB),
-    swapOptions(productB, productA),
+    getComparisons(market),
+    getCategories(market),
+    swapOptions(productA, productB, market),
+    swapOptions(productB, productA, market),
   ])
 
-  const verdict = buildVerdict(productA, productB)
+  const verdict = buildVerdict(productA, productB, market)
   const areas = leadAreas(verdict)
-  const answer = verdictLine(productA, productB, verdict)
+  const answer = verdictLine(productA, productB, verdict, market)
   const category = categories.find((c) => c.id === productA.category)
   const rows = flattenRows(verdict)
   const checks = checkDealBreakers(productA, productB)
   const useCases = useCasesFor(productA.subcategory)
 
-  const overall = buildAnswer({ productA, productB, useCase: null, rows, checks, matters: new Set() })
-  const lenses = buildLensAnswers(productA, productB, rows, checks, useCases)
-  const faq = buildCompareFaq(productA, productB, verdict, overall.headline, overall.reasons, lenses, checks)
+  const overall = buildAnswer({ productA, productB, useCase: null, rows, checks, matters: new Set(), market })
+  const lenses = buildLensAnswers(productA, productB, rows, checks, useCases, market)
+  const faq = buildCompareFaq(productA, productB, verdict, overall.headline, overall.reasons, lenses, checks, market)
 
-  // Prefer matchups in the same product type, since 100+ files load alphabetically.
   const sameType = new Set(
-    (await getProducts())
+    (await getProducts(market))
       .filter((p) => p.subcategory === productA.subcategory)
       .map((p) => p.id)
   )
@@ -282,13 +275,13 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
     <>
       <div className="shell shell-wide pt-6">
         <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-[12.5px] text-ink-3">
-          <Link href="/" className="hover:text-accent">
+          <Link href={homeHref(market)} className="hover:text-accent">
             Home
           </Link>
           <span aria-hidden>/</span>
           {category && (
             <>
-              <Link href={`/category/${category.id}/`} className="hover:text-accent">
+              <Link href={categoryHref(category.id, market)} className="hover:text-accent">
                 {category.name}
               </Link>
               <span aria-hidden>/</span>
@@ -301,17 +294,18 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
           <p className="eyebrow">Head to head</p>
           <h1 className="display mt-2 text-[30px] sm:text-[40px]">{comparison.productName}</h1>
           <p className="mt-4 text-[16px] leading-relaxed text-ink sm:text-[17.5px]">{answer}</p>
-          <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">{comparison.description}</p>
+
         </header>
 
         {/* Two column VS hero */}
-        <div className="relative mt-8 grid gap-3 md:grid-cols-2 md:gap-5">
+        <div className="relative mt-8 grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-[repeat(2,minmax(0,1fr))] md:gap-5">
           <ProductPanel
             product={productA}
             side="a"
             wins={verdict.aWins}
             swaps={swapsA}
             isLeader={verdict.leader === 'a'}
+            market={market}
           />
           <span
             aria-hidden
@@ -326,68 +320,12 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
             wins={verdict.bWins}
             swaps={swapsB}
             isLeader={verdict.leader === 'b'}
+            market={market}
           />
         </div>
 
-        {/* Decision aids: buying-for lens, straight answer, deal-breakers.
-            The overall win summary renders inside, between the card and the lens grid. */}
-        <DecisionPanel productA={productA} productB={productB} rows={rows} useCases={useCases} checks={checks}>
-        {/* Win summary */}
-        <section className="card mt-5 p-5" aria-label="Win summary">
-          <div className="grid gap-6 md:grid-cols-[1.15fr_1fr]">
-            <div>
-              <div className="flex items-baseline justify-between gap-4">
-                <p className="eyebrow">Measurable specs</p>
-                <p className="num text-[12.5px] text-ink-3">
-                  {verdict.scored} of {verdict.total} rankable
-                </p>
-              </div>
-              <div className="mt-3">
-                <WinBar verdict={verdict} />
-              </div>
-              <div className="mt-3 flex items-center justify-between gap-4 text-[13px]">
-                <span className="num font-semibold" style={{ color: 'var(--accent-2)' }}>
-                  {verdict.aWins} {productA.brand}
-                </span>
-                <span className="num font-semibold" style={{ color: 'var(--rival-2)' }}>
-                  {productB.brand} {verdict.bWins}
-                </span>
-              </div>
-            </div>
-
-            <dl className="grid gap-3 text-[13px] sm:grid-cols-2 md:border-l md:border-line md:pl-6">
-              <div>
-                <dt className="eyebrow mb-1.5">
-                  {productA.brand} leads
-                </dt>
-                <dd className="text-ink-2">{areas.a.length ? areas.a.join(', ') : 'No section outright'}</dd>
-              </div>
-              <div>
-                <dt className="eyebrow mb-1.5">{productB.brand} leads</dt>
-                <dd className="text-ink-2">{areas.b.length ? areas.b.join(', ') : 'No section outright'}</dd>
-              </div>
-              <div className="sm:col-span-2">
-                <dt className="eyebrow mb-1.5">{priceCaption(productA.subcategory)}</dt>
-                <dd className="text-ink-2">
-                  {cheaper ? (
-                    <>
-                      <span className="font-semibold text-ink">{cheaper.name}</span> saves{' '}
-                      <span className="num font-semibold text-ink">
-                        {priceLabel(verdict.priceGap)}
-                      </span>{' '}
-                      {isFeeBased(cheaper.subcategory) ? 'a year' : 'at list price'}
-                    </>
-                  ) : isFeeBased(productA.subcategory) ? (
-                    'Both charge the same annual fee'
-                  ) : (
-                    'Both list at the same price'
-                  )}
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </section>
-
+        {/* Decision aids: buying-for lens, straight answer, deal-breakers. */}
+        <DecisionPanel productA={productA} productB={productB} rows={rows} useCases={useCases} checks={checks} market={market}>
         </DecisionPanel>
       </div>
 
@@ -398,6 +336,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
           groups={verdict.groups}
           aWins={verdict.aWins}
           bWins={verdict.bWins}
+          market={market}
         />
       </div>
 
@@ -415,11 +354,11 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
               <div
                 key={product.id}
                 className="card p-5"
-                style={{ borderLeft: `3px solid ${side === 'a' ? 'var(--accent)' : 'var(--rival)'}` }}
               >
                 <p className="eyebrow">Pick this one if</p>
                 <h3 className="mt-1.5 text-[16px] font-semibold">{product.name}</h3>
-                <ul className="mt-3 grid gap-2">
+                <p className="mt-3 text-[14px] leading-relaxed text-ink-2">{product.description}</p>
+                <ul className="mt-4 grid gap-2">
                   {product.pros.map((pro) => (
                     <li key={pro} className="flex gap-2 text-[13.5px] leading-snug text-ink-2">
                       <span aria-hidden style={{ color: side === 'a' ? 'var(--accent)' : 'var(--rival)' }}>
@@ -470,16 +409,34 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
+        <section className="mt-14 card p-6 text-center" aria-labelledby="done">
+          <h2 id="done" className="display text-[20px] sm:text-[23px]">Done deciding?</h2>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={productHref(verdict.leader === 'a' ? productA : productB, market)}
+              className="btn rounded-full bg-ink px-5 py-2 text-[13px] font-semibold text-surface transition-transform motion-safe:hover:scale-[1.02]"
+            >
+              Full spec sheet
+            </Link>
+            <ShareVerdict />
+          </div>
+        </section>
+
         <section className="mt-14" aria-labelledby="faq">
-          <h2 id="faq" className="display text-[20px] sm:text-[23px]">
-            Frequently asked
+          <h2 id="faq" className="display text-[20px] sm:text-[23px] mb-4">
+            Common questions
           </h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="card divide-y divide-line">
             {faq.map(({ q, a }) => (
-              <div key={q} className="card p-5">
-                <h3 className="text-[15px] font-semibold text-ink">{q}</h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">{a}</p>
-              </div>
+              <details key={q} className="group p-4">
+                <summary className="cursor-pointer list-none font-semibold text-[14px] flex items-center justify-between gap-3 text-ink [&::-webkit-details-marker]:hidden">
+                  {q}
+                  <svg width="12" height="12" viewBox="0 0 12 12" className="shrink-0 text-ink-3 transition-transform group-open:rotate-180" aria-hidden>
+                    <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </summary>
+                <p className="mt-3 text-[13.5px] leading-relaxed text-ink-2">{a}</p>
+              </details>
             ))}
           </div>
         </section>
@@ -493,11 +450,11 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
               {otherComparisons.map((comp) => (
                 <Link
                   key={comp.productA + comp.productB}
-                  href={compareHref(comp)}
+                  href={compareHref(comp, market)}
                   className="card p-4 transition-colors hover:border-line-2"
                 >
                   <p className="text-[14px] font-semibold leading-snug">{comp.productName}</p>
-                  <p className="mt-1.5 line-clamp-2 text-[12.5px] text-ink-3">{comp.description}</p>
+
                 </Link>
               ))}
             </div>
@@ -512,9 +469,10 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
             '@context': 'https://schema.org',
             '@type': 'ItemList',
             name: comparison.productName,
-            url: absUrl(compareHref(comparison)),
+            url: absUrl(compareHref(comparison, market)),
             itemListElement: [productA, productB].map((product, index) => {
               const fee = isFeeBased(product.subcategory)
+              const point = priceOf(product, market)
               return {
                 '@type': 'ListItem',
                 position: index + 1,
@@ -526,26 +484,28 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
                     name: product.brand,
                   },
                   description: product.description,
-                  url: absUrl(productHref(product)),
+                  url: absUrl(productHref(product, market)),
                   ...(fee
                     ? {
                         additionalProperty: [
                           {
                             '@type': 'PropertyValue',
                             name: 'Annual fee',
-                            value: product.price,
-                            unitText: 'USD/year',
+                            value: point?.amount ?? product.price,
+                            unitText: `${point?.currency ?? 'USD'}/year`,
                           },
                         ],
                       }
-                    : {
-                        offers: {
-                          '@type': 'Offer',
-                          price: product.price,
-                          priceCurrency: 'USD',
-                          url: absUrl(productHref(product)),
-                        },
-                      }),
+                    : point
+                      ? {
+                          offers: {
+                            '@type': 'Offer',
+                            price: point.amount,
+                            priceCurrency: point.currency,
+                            url: absUrl(productHref(product, market)),
+                          },
+                        }
+                      : {}),
                 },
               }
             }),
@@ -564,7 +524,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: absUrl('/'),
+                item: absUrl(homeHref(market)),
               },
               ...(category
                 ? [
@@ -572,7 +532,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
                       '@type': 'ListItem',
                       position: 2,
                       name: category.name,
-                      item: absUrl(`/category/${category.id}/`),
+                      item: absUrl(categoryHref(category.id, market)),
                     },
                     {
                       '@type': 'ListItem',

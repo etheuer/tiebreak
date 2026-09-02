@@ -1,15 +1,18 @@
 import Link from 'next/link'
 import type { Category, Comparison, Product } from '@/lib/data'
-import { compareHref, SUBCATEGORY_LABEL } from '@/lib/nav'
+import { categoryHref, compareHref, hubHref, SUBCATEGORY_LABEL } from '@/lib/nav'
+import { MARKETS, type MarketId } from '@/lib/markets'
 
 export function SiteFooter({
   categories,
   comparisons,
   products = [],
+  market = 'us',
 }: {
   categories: Category[]
   comparisons: Comparison[]
   products?: Product[]
+  market?: MarketId
 }) {
   const byId = new Map(products.map((p) => [p.id, p]))
   const subcategories = Object.keys(SUBCATEGORY_LABEL)
@@ -50,7 +53,7 @@ export function SiteFooter({
             {categories.map((category) => (
               <li key={category.id}>
                 <Link
-                  href={`/category/${category.id}/`}
+                  href={categoryHref(category.id, market)}
                   className="text-[13.5px] text-ink-2 transition-colors hover:text-accent"
                 >
                   {category.name}
@@ -66,7 +69,7 @@ export function SiteFooter({
             {popular.map((comparison) => (
               <li key={comparison.productA + comparison.productB}>
                 <Link
-                  href={compareHref(comparison)}
+                  href={compareHref(comparison, market)}
                   className="text-[13.5px] text-ink-2 transition-colors hover:text-accent"
                 >
                   {comparison.productName}
@@ -75,7 +78,7 @@ export function SiteFooter({
             ))}
             <li>
               <Link
-                href="/compare/"
+                href={hubHref(market)}
                 className="text-[13.5px] font-semibold text-ink transition-colors hover:text-accent"
               >
                 All matchups &rarr;
@@ -88,7 +91,9 @@ export function SiteFooter({
       <div className="rule-top">
         <div className="shell flex flex-col gap-2 py-5 text-[12.5px] text-ink-3 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Tiebreak</p>
-          <p>Prices are manufacturer list prices in USD and change often.</p>
+          <p>
+            Prices are manufacturer list prices in {MARKETS[market].currency} and change often.
+          </p>
         </div>
       </div>
     </footer>
