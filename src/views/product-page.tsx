@@ -23,6 +23,7 @@ import { formatMoney } from '@/lib/format'
 import { ProductMark } from '@/components/ProductMark'
 import { ProductSpecs } from '@/components/ProductSpecs'
 import { VsCard } from '@/components/VsCard'
+import { FinanceDisclaimer, PriceNote } from '@/components/CatalogNotes'
 
 export async function generateStaticParamsForMarket(market: MarketId) {
   const products = await getProducts(market)
@@ -54,7 +55,7 @@ export async function generateMetadataForMarket(
       locale: openGraphLocale(market),
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title,
       description,
     },
@@ -146,6 +147,7 @@ export async function ProductDetail({
             {priceShort(product, market)}
           </p>
           <p className="num mt-1 text-[12px] text-ink-3">{attributeCount} attributes tracked</p>
+          <PriceNote subcategory={product.subcategory} />
         </div>
       </header>
 
@@ -259,6 +261,8 @@ export async function ProductDetail({
           </div>
         </section>
       )}
+
+      {isFeeBased(product.subcategory) ? <FinanceDisclaimer /> : null}
 
       <script
         type="application/ld+json"

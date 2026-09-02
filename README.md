@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tiebreak
 
-## Getting Started
+Head-to-head product comparisons. Pick two products, get a spec-by-spec verdict.
 
-First, run the development server:
+The public launch is the **United States** catalog. Pages are static HTML (`output: 'export'`).
+
+## Local
+
+This project uses a pinned port via `dev` (4100–4999). From the repo:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open the URL `dev` prints (do not use port 5000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run verify
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+runs lint, types, catalog checks, the i18n data checks, and a production build.
 
-## Learn More
+## Before you deploy
 
-To learn more about Next.js, take a look at the following resources:
+1. Set `NEXT_PUBLIC_SITE_URL` to the real `https://` origin (no trailing slash). Canonicals, sitemap, and share cards bake this in at **build** time.
+2. Optional: `NEXT_PUBLIC_SITE_EMAIL` for the contact and privacy pages. If unset, those pages point at GitHub issues.
+3. Optional: `NEXT_PUBLIC_POSTHOG_KEY` and `NEXT_PUBLIC_POSTHOG_HOST` to turn on page-view analytics.
+4. Host the contents of `.next-static/` (the `next build` export) behind HTTPS with trailing slashes. `vercel.json` already 301s `/us` and `/uk` to `/`, and sets basic security headers.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## What the pages are
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Manufacturer-published specifications, not lab tests. List prices, not live offers. Credit-card pages are not financial advice.
 
-## Deploy on Vercel
+## Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js 16 (App Router, static export), React 19, Tailwind 4, TypeScript.

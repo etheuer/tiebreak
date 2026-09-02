@@ -1,5 +1,12 @@
 export type MarketId = 'us' | 'uk'
 
+/** Phase-1 public launch is the US catalog only. UK routes stay in `src/app/_uk`. */
+export const PUBLISHED_MARKETS: readonly MarketId[] = ['us']
+
+export function isMarketPublished(market: MarketId): boolean {
+  return PUBLISHED_MARKETS.includes(market)
+}
+
 export type Market = {
   id: MarketId
   locale: 'en-US' | 'en-GB'

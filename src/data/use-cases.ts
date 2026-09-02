@@ -174,16 +174,16 @@ export const USE_CASES: Record<Subcategory, UseCase[]> = {
   ],
 }
 
-export function useCasesFor(subcategory: string): UseCase[] {
+export function casesFor(subcategory: string): UseCase[] {
   return isSubcategory(subcategory) ? USE_CASES[subcategory] : []
 }
 
 /** The lens most shoppers in this subcategory start from, used for entry links. */
 export function primaryUseCase(subcategory: string): UseCase | null {
-  return useCasesFor(subcategory)[0] ?? null
+  return casesFor(subcategory)[0] ?? null
 }
 
 export function findUseCase(subcategory: string, id: string | null | undefined): UseCase | null {
   if (!id) return null
-  return useCasesFor(subcategory).find((useCase) => useCase.id === id) ?? null
+  return casesFor(subcategory).find((useCase) => useCase.id === id) ?? null
 }

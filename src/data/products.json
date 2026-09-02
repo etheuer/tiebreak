@@ -3119,6 +3119,1147 @@
       "markets": [
         "us"
       ]
+    },
+    {
+      "id": "samsung-qn90d",
+      "name": "Samsung QN90D Neo QLED TV",
+      "brand": "Samsung",
+      "category": "electronics",
+      "subcategory": "tvs",
+      "price": 1899,
+      "image_url": "https://via.placeholder.com/300x200?text=Samsung+QN90D",
+      "description": "Premium 65-inch Mini-LED 4K TV with NQ4 AI Gen2 processor, 144Hz refresh rate, and anti-glare screen.",
+      "pros": [
+        "High peak brightness exceeding 2,000 nits for sunlit rooms",
+        "Four full-bandwidth HDMI 2.1 ports supporting up to 144Hz PC gaming",
+        "Ultra Viewing Angle layer and matte anti-glare finish"
+      ],
+      "cons": [
+        "No Dolby Vision format support",
+        "Slight blooming around bright subtitles on pitch-black backgrounds"
+      ],
+      "specifications": {
+        "panel_type": "Mini-LED QLED (VA)",
+        "screen_size": "65 inches",
+        "resolution": "3840 × 2160 (4K)",
+        "native_refresh": "120 Hz (up to 144 Hz PC)",
+        "peak_brightness": "~2,000 nits HDR",
+        "contrast": "Very high (local-dimmed LED, not infinite)",
+        "local_dimming": "Quantum Matrix with Mini LED",
+        "viewing_angle": "Wide (Ultra Viewing Angle)",
+        "screen_finish": "Matte anti-glare",
+        "hdr_formats": "HDR10, HDR10+, HLG (no Dolby Vision)",
+        "processor": "NQ4 AI Gen2 Processor",
+        "motion_handling": "Motion Xcelerator 144Hz",
+        "upscaling": "4K AI Upscaling Pro",
+        "hdmi_2_1_ports": "4",
+        "four_k_120": "Yes",
+        "vrr": "Yes (FreeSync Premium Pro)",
+        "allm": "Yes",
+        "input_lag": "~9.5 ms",
+        "gsync_freesync": "FreeSync Premium Pro, G-Sync Compatible",
+        "audio_system": "Object Tracking Sound+, 60W 4.2.2ch",
+        "dolby_atmos": "Yes",
+        "earc": "Yes",
+        "smart_os": "Tizen OS",
+        "voice_assistants": "Bixby, Alexa",
+        "thickness": "~27 mm",
+        "wall_mount": "Standard VESA",
+        "burn_in_risk": "None (LED)",
+        "warranty": "1 year"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
+    },
+    {
+      "id": "lg-b4-oled",
+      "name": "LG B4 OLED TV",
+      "brand": "LG",
+      "category": "electronics",
+      "subcategory": "tvs",
+      "price": 1299,
+      "image_url": "https://via.placeholder.com/300x200?text=LG+B4",
+      "description": "Value flagship 65-inch OLED TV featuring 4 full-bandwidth HDMI 2.1 ports, α8 AI processor, and Dolby Vision.",
+      "pros": [
+        "Four full-bandwidth HDMI 2.1 ports at an accessible OLED price point",
+        "Perfect blacks and infinite contrast with zero blooming",
+        "Ultra-low input lag and full VRR support for gaming"
+      ],
+      "cons": [
+        "Lower peak brightness than C4 and G4 series",
+        "Glossy screen reflects ambient light in bright rooms"
+      ],
+      "specifications": {
+        "panel_type": "WOLED",
+        "screen_size": "65 inches",
+        "resolution": "3840 × 2160 (4K)",
+        "native_refresh": "120 Hz",
+        "peak_brightness": "~650–700 nits HDR peak",
+        "contrast": "Infinite (per-pixel)",
+        "local_dimming": "Per-pixel (self-emissive)",
+        "viewing_angle": "Excellent",
+        "screen_finish": "Glossy",
+        "hdr_formats": "Dolby Vision, HDR10, HLG (no HDR10+)",
+        "processor": "α8 AI Processor 4K",
+        "motion_handling": "Excellent OLED response time",
+        "upscaling": "AI Super Upscaling 4K",
+        "hdmi_2_1_ports": "4",
+        "four_k_120": "Yes",
+        "vrr": "Yes",
+        "allm": "Yes",
+        "input_lag": "~5.5 ms",
+        "gsync_freesync": "NVIDIA G-Sync Compatible, AMD FreeSync Premium",
+        "audio_system": "2.0 channel, 20W",
+        "dolby_atmos": "Yes",
+        "earc": "Yes",
+        "smart_os": "webOS 24",
+        "voice_assistants": "LG ThinQ, Alexa, Apple Home",
+        "thickness": "~46 mm",
+        "wall_mount": "Standard VESA",
+        "burn_in_risk": "Yes (mitigated by pixel shift and screen care)",
+        "warranty": "1 year"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
+    },
+    {
+      "id": "sony-bravia-8",
+      "name": "Sony BRAVIA 8 OLED TV",
+      "brand": "Sony",
+      "category": "electronics",
+      "subcategory": "tvs",
+      "price": 1999,
+      "image_url": "https://via.placeholder.com/300x200?text=Sony+Bravia+8",
+      "description": "Refined 65-inch 4K OLED TV powered by XR Processor with Acoustic Surface Audio+ sound system.",
+      "pros": [
+        "Exceptional Sony XR color grading and motion clarity",
+        "Acoustic Surface Audio+ vibrates the screen directly for centered dialogue",
+        "Slim one-slate design with versatile 4-way stand"
+      ],
+      "cons": [
+        "Only two HDMI 2.1 ports (one shared with eARC)",
+        "Peak brightness trails Mini-LED models in sunlit rooms"
+      ],
+      "specifications": {
+        "panel_type": "WOLED",
+        "screen_size": "65 inches",
+        "resolution": "3840 × 2160 (4K)",
+        "native_refresh": "120 Hz",
+        "peak_brightness": "~900 nits HDR peak",
+        "contrast": "Infinite (per-pixel)",
+        "local_dimming": "Per-pixel (self-emissive)",
+        "viewing_angle": "Excellent",
+        "screen_finish": "Glossy",
+        "hdr_formats": "Dolby Vision, HDR10, HLG (no HDR10+)",
+        "processor": "XR Processor",
+        "motion_handling": "XR Motion Clarity",
+        "upscaling": "XR Clear Image 4K",
+        "hdmi_2_1_ports": "2 (of 4 HDMI total)",
+        "four_k_120": "Yes",
+        "vrr": "Yes",
+        "allm": "Yes",
+        "input_lag": "~8.5 ms",
+        "gsync_freesync": "FreeSync, HDMI VRR",
+        "audio_system": "Acoustic Surface Audio+, 50W 5-actuator",
+        "dolby_atmos": "Yes",
+        "earc": "Yes",
+        "smart_os": "Google TV",
+        "voice_assistants": "Google Assistant, Alexa, Apple Home",
+        "thickness": "~37 mm",
+        "wall_mount": "Standard VESA",
+        "burn_in_risk": "Yes (OLED; pixel shift / panel refresh)",
+        "warranty": "1 year"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "smart_os",
+        "voice_assistants"
+      ]
+    },
+    {
+      "id": "apple-macbook-pro-14",
+      "name": "MacBook Pro 14\" (M4 Pro)",
+      "brand": "Apple",
+      "category": "electronics",
+      "subcategory": "laptops",
+      "price": 1999,
+      "image_url": "https://via.placeholder.com/300x200?text=MacBook+Pro+14",
+      "description": "Compact pro laptop with Apple M4 Pro chip, 14.2-inch Liquid Retina XDR display, and up to 24 hours battery life.",
+      "pros": [
+        "Unmatched performance per watt with whisper-quiet cooling",
+        "120Hz ProMotion mini-LED screen reaching 1,600 nits HDR",
+        "Complete port selection including HDMI 2.1 and SDXC slot"
+      ],
+      "cons": [
+        "Memory and storage are soldered and non-upgradable",
+        "No touch screen or pencil support"
+      ],
+      "specifications": {
+        "display_size": "14.2 inches",
+        "display_type": "Liquid Retina XDR mini-LED",
+        "resolution": "3024 × 1964",
+        "refresh_rate": "120 Hz ProMotion",
+        "brightness": "1,000 nits SDR / 1,600 nits HDR peak",
+        "color_gamut": "P3 wide color, True Tone",
+        "touchscreen": "No",
+        "processor": "Apple M4 Pro (12-core CPU)",
+        "gpu": "16-core Apple GPU (unified)",
+        "ram": "24GB unified",
+        "ram_upgradable": "No (soldered)",
+        "storage": "512GB SSD",
+        "storage_upgradable": "No (soldered)",
+        "battery_life": "Up to 24 hours video playback",
+        "charger": "70W USB-C + MagSafe 3",
+        "weight": "3.5 lb (1.6 kg)",
+        "thickness": "15.5 mm",
+        "material": "Aluminum unibody",
+        "keyboard": "Magic Keyboard with Touch ID",
+        "trackpad": "Force Touch, large",
+        "webcam": "12MP Center Stage",
+        "speakers": "Six-speaker sound system with force-cancelling woofers",
+        "thunderbolt": "3× Thunderbolt 5",
+        "hdmi": "HDMI 2.1",
+        "sd_card": "SDXC",
+        "magsafe": "MagSafe 3",
+        "headphone_jack": "Yes (3.5 mm)",
+        "os": "macOS",
+        "repairability": "Low (soldered memory/storage)"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
+    },
+    {
+      "id": "lenovo-yoga-pro-9i",
+      "name": "Lenovo Yoga Pro 9i 16",
+      "brand": "Lenovo",
+      "category": "electronics",
+      "subcategory": "laptops",
+      "price": 1799,
+      "image_url": "https://via.placeholder.com/300x200?text=Yoga+Pro+9i",
+      "description": "Creator 16-inch laptop with 3.2K 165Hz Mini-LED touch display and dedicated NVIDIA RTX 4060 graphics.",
+      "pros": [
+        "Bright 3.2K 165Hz Mini-LED touchscreen hitting 1,200 nits HDR",
+        "Dedicated NVIDIA RTX 4060 GPU handles video editing and games",
+        "Dual M.2 NVMe SSD slots allow storage upgrades"
+      ],
+      "cons": [
+        "Short 6–8 hour battery life under mixed creator workloads",
+        "Relatively heavy at 4.9 lb with 170W power adapter"
+      ],
+      "specifications": {
+        "display_size": "16.0 inches",
+        "display_type": "3.2K PureSight Pro Mini-LED Touch",
+        "resolution": "3200 × 2000",
+        "refresh_rate": "165 Hz",
+        "brightness": "1,200 nits peak HDR / 600 nits SDR",
+        "color_gamut": "100% DCI-P3, 100% Adobe RGB",
+        "touchscreen": "Yes",
+        "processor": "Intel Core Ultra 9 185H",
+        "gpu": "NVIDIA GeForce RTX 4060 Laptop (8GB GDDR6)",
+        "ram": "32GB LPDDR5x",
+        "ram_upgradable": "No (soldered)",
+        "storage": "1TB SSD",
+        "storage_upgradable": "Yes (2× M.2 PCIe 4.0 slots)",
+        "battery_life": "~6–8 hours mixed use",
+        "charger": "170W Slim Tip",
+        "weight": "4.9 lb (2.23 kg)",
+        "thickness": "18.2 mm",
+        "material": "CNC aluminum chassis",
+        "keyboard": "Backlit Yoga keyboard with 1.5mm travel",
+        "trackpad": "Large glass precision trackpad",
+        "webcam": "5MP IR webcam with privacy e-shutter",
+        "speakers": "6-speaker sound system with Dolby Atmos",
+        "thunderbolt": "1× Thunderbolt 4 + 1× USB-C 3.2 Gen 2",
+        "hdmi": "HDMI 2.1",
+        "sd_card": "Full-size SD card slot",
+        "magsafe": "No",
+        "headphone_jack": "Yes (3.5 mm)",
+        "os": "Windows 11",
+        "repairability": "Medium (Dual SSD slots upgradable; RAM soldered)"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
+    },
+    {
+      "id": "razer-blade-16",
+      "name": "Razer Blade 16 (2024)",
+      "brand": "Razer",
+      "category": "electronics",
+      "subcategory": "laptops",
+      "price": 2999,
+      "image_url": "https://via.placeholder.com/300x200?text=Razer+Blade+16",
+      "description": "Ultra-premium gaming laptop featuring dual-mode Mini-LED display (4K 120Hz / FHD 240Hz) and RTX 4080 graphics.",
+      "pros": [
+        "Dual-mode Mini-LED panel switches between 4K 120Hz and FHD 240Hz",
+        "Powerful NVIDIA RTX 4080 in a slim CNC aluminum chassis",
+        "Dual SO-DIMM RAM slots and dual M.2 SSD slots are user-upgradable"
+      ],
+      "cons": [
+        "High price tag and short battery life",
+        "Chassis warms up noticeably under continuous gaming loads"
+      ],
+      "specifications": {
+        "display_size": "16.0 inches",
+        "display_type": "Dual-Mode Mini-LED (UHD+ / FHD+)",
+        "resolution": "3840 × 2400 (4K) / 1920 × 1200 (FHD)",
+        "refresh_rate": "120 Hz (4K) / 240 Hz (FHD)",
+        "brightness": "1,000 nits HDR peak / 600 nits SDR",
+        "color_gamut": "100% DCI-P3",
+        "touchscreen": "No",
+        "processor": "Intel Core i9-14900HX",
+        "gpu": "NVIDIA GeForce RTX 4080 (12GB GDDR6, 175W TGP)",
+        "ram": "32GB DDR5",
+        "ram_upgradable": "Yes (2× SO-DIMM slots up to 96GB)",
+        "storage": "1TB SSD",
+        "storage_upgradable": "Yes (2× M.2 slots up to 8TB)",
+        "battery_life": "~4–6 hours mixed use",
+        "charger": "280W GaN power adapter",
+        "weight": "5.4 lb (2.45 kg)",
+        "thickness": "21.9 mm",
+        "material": "T6 CNC anodized aluminum unibody",
+        "keyboard": "Per-key Razer Chroma RGB anti-ghosting",
+        "trackpad": "XL precision glass trackpad",
+        "webcam": "1080p FHD IR with Windows Hello",
+        "speakers": "4-speaker array with THX Spatial Audio",
+        "thunderbolt": "1× Thunderbolt 4 + 1× USB-C 3.2 Gen 2",
+        "hdmi": "HDMI 2.1",
+        "sd_card": "UHS-II SD card reader",
+        "magsafe": "No",
+        "headphone_jack": "Yes (3.5 mm)",
+        "os": "Windows 11",
+        "repairability": "High (Dual RAM and dual SSD slots upgradable)"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "gpu"
+      ]
+    },
+    {
+      "id": "iphone-16-pro-max",
+      "name": "iPhone 16 Pro Max",
+      "brand": "Apple",
+      "category": "electronics",
+      "subcategory": "smartphones",
+      "price": 1199,
+      "image_url": "https://via.placeholder.com/300x200?text=iPhone+16+Pro+Max",
+      "description": "Apple's top-tier 6.9-inch smartphone with A18 Pro chip, 5x optical telephoto camera, and Camera Control button.",
+      "pros": [
+        "Massive 6.9-inch Super Retina XDR display with ultra-thin borders",
+        "Longest battery life ever on an iPhone with up to 33 hours video",
+        "4K 120 fps ProRes video capture and dedicated Camera Control button"
+      ],
+      "cons": [
+        "Large and heavy in one-handed use",
+        "Wired fast charging capped around 25W"
+      ],
+      "specifications": {
+        "dimensions": "163 × 77.6 × 8.25 mm",
+        "weight": "227 g (8.0 oz)",
+        "build": "Grade 5 titanium frame, Ceramic Shield front, textured matte glass back",
+        "ip_rating": "IP68 (6 m up to 30 min)",
+        "colors": "Black Titanium, White Titanium, Natural Titanium, Desert Titanium",
+        "stylus": "No",
+        "display_type": "LTPO Super Retina XDR OLED",
+        "display_size": "6.9 inches",
+        "resolution": "2868 × 1320",
+        "ppi": "460 ppi",
+        "refresh_rate": "120 Hz ProMotion",
+        "peak_brightness": "2,000 nits peak (outdoor)",
+        "hdr": "HDR10, Dolby Vision",
+        "screen_protection": "Latest-generation Ceramic Shield",
+        "always_on": "Yes",
+        "os": "iOS 18",
+        "os_updates": "7 years (estimated based on Apple track record)",
+        "chipset": "Apple A18 Pro (3 nm)",
+        "cpu": "6-core CPU (2 performance + 4 efficiency)",
+        "gpu": "6-core Apple GPU with ray tracing",
+        "ram": "8GB",
+        "storage": "256 GB",
+        "storage_options": "256 GB / 512 GB / 1 TB",
+        "expandable_storage": "No",
+        "main_camera": "48 MP Fusion, f/1.78, 24 mm, sensor-shift OIS",
+        "ultrawide_camera": "48 MP, f/2.2, 13 mm, 120° FOV, autofocus macro",
+        "telephoto_camera": "12 MP, f/2.8, 120 mm, 5x optical zoom, 3D sensor-shift OIS",
+        "optical_zoom": "5x optical (25x digital)",
+        "ois": "3D Sensor-shift OIS on main and telephoto",
+        "rear_video": "4K at 24/25/30/60/120 fps Dolby Vision, ProRes, Log, spatial video",
+        "front_camera": "12 MP TrueDepth, f/1.9, autofocus",
+        "front_video": "4K 60 fps, Cinematic mode 4K 30 fps",
+        "battery_capacity": "4,685 mAh (typical)",
+        "wired_charging": "~25 W USB-C (no charger in box)",
+        "wireless_charging": "MagSafe up to 25 W, Qi2 up to 15 W",
+        "reverse_charging": "4.5 W wired reverse charging",
+        "charger_in_box": "No",
+        "speakers": "Stereo (bottom + earpiece)",
+        "headphone_jack": "No",
+        "cellular": "5G (sub-6 + mmWave, region-dependent)",
+        "wifi": "Wi-Fi 7",
+        "bluetooth": "Bluetooth 5.3",
+        "nfc": "Yes (Apple Pay)",
+        "usb": "USB-C 3 (up to 10 Gbps)",
+        "sim": "eSIM (US) / dual nano + eSIM (many other regions)",
+        "biometrics": "Face ID",
+        "extra_controls": "Action Button, Camera Control",
+        "unique_features": "Dynamic Island, Apple Intelligence, MagSafe, Emergency SOS via satellite"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)",
+            "sim": "Dual SIM (nano-SIM and eSIM)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://support.apple.com/en-gb/121031"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box"
+      ]
+    },
+    {
+      "id": "samsung-galaxy-z-flip-6",
+      "name": "Samsung Galaxy Z Flip 6",
+      "brand": "Samsung",
+      "category": "electronics",
+      "subcategory": "smartphones",
+      "price": 1099,
+      "image_url": "https://via.placeholder.com/300x200?text=Galaxy+Z+Flip+6",
+      "description": "Pocketable clamshell foldable phone with 3.4-inch outer screen, 50MP camera, and Galaxy AI.",
+      "pros": [
+        "Compact folding design with useful 3.4-inch FlexWindow outer display",
+        "Upgraded 50MP main sensor and Snapdragon 8 Gen 3 for Galaxy",
+        "7 years of Android OS and security upgrades"
+      ],
+      "cons": [
+        "Display crease is visible and felt along the fold",
+        "No dedicated telephoto lens (2x crop zoom only)"
+      ],
+      "specifications": {
+        "dimensions": "Unfolded: 165.1 × 71.9 × 6.9 mm / Folded: 85.1 × 71.9 × 14.9 mm",
+        "weight": "187 g (6.6 oz)",
+        "build": "Armor Aluminum frame, Gorilla Glass Victus 2, plastic inner screen",
+        "ip_rating": "IP48 water & particle resistant",
+        "colors": "Silver Shadow, Yellow, Blue, Mint, Crafted Black",
+        "stylus": "No",
+        "display_type": "Dynamic LTPO AMOLED 2X inner / Super AMOLED cover",
+        "display_size": "6.7 inches inner / 3.4 inches cover",
+        "resolution": "2640 × 1080 inner / 720 × 748 cover",
+        "ppi": "426 ppi inner / 306 ppi cover",
+        "refresh_rate": "120 Hz inner (1–120Hz) / 60 Hz cover",
+        "peak_brightness": "2,600 nits inner / 1,600 nits cover",
+        "hdr": "HDR10+",
+        "screen_protection": "Gorilla Glass Victus 2 (outer) / UTG (inner)",
+        "always_on": "Yes",
+        "os": "Android 14 (One UI 6.1.1)",
+        "os_updates": "7 years of OS and security upgrades",
+        "chipset": "Snapdragon 8 Gen 3 for Galaxy (4 nm)",
+        "cpu": "8-core (1× 3.39GHz Cortex-X4 + 5× Cortex-A720 + 2× Cortex-A520)",
+        "gpu": "Adreno 750 (1 GHz)",
+        "ram": "12GB",
+        "storage": "256 GB",
+        "storage_options": "256 GB / 512 GB",
+        "expandable_storage": "No",
+        "main_camera": "50 MP, f/1.8, 23 mm, dual pixel PDAF, OIS",
+        "ultrawide_camera": "12 MP, f/2.2, 123° FOV",
+        "telephoto_camera": "No dedicated telephoto (2x in-sensor crop)",
+        "optical_zoom": "2x in-sensor zoom (10x digital)",
+        "ois": "Yes (OIS on main camera)",
+        "rear_video": "4K 30/60 fps, 1080p 60/120/240 fps, HDR10+",
+        "front_camera": "10 MP inner selfie, f/2.2, 23 mm",
+        "front_video": "4K 30/60 fps",
+        "battery_capacity": "4,000 mAh",
+        "wired_charging": "25 W wired fast charging",
+        "wireless_charging": "15 W Fast Wireless Charging 2.0",
+        "reverse_charging": "4.5 W Wireless PowerShare",
+        "charger_in_box": "No",
+        "speakers": "Stereo speakers tuned by AKG",
+        "headphone_jack": "No",
+        "cellular": "5G (sub-6 + mmWave, region-dependent)",
+        "wifi": "Wi-Fi 6E",
+        "bluetooth": "Bluetooth 5.3",
+        "nfc": "Yes (Samsung Pay / Google Wallet)",
+        "usb": "USB-C 3.2 Gen 1",
+        "sim": "Nano-SIM and eSIM",
+        "biometrics": "Side-mounted fingerprint scanner, 2D face recognition",
+        "extra_controls": "FlexMode half-fold camera & app controls",
+        "unique_features": "Galaxy AI (Live Translate, Interpreter, Photo Assist, Circle to Search), FlexWindow widgets"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://www.samsung.com/uk/smartphones/galaxy-z-flip6/specs/"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box",
+        "sim"
+      ]
+    },
+    {
+      "id": "google-pixel-9-pro-xl",
+      "name": "Google Pixel 9 Pro XL",
+      "brand": "Google",
+      "category": "electronics",
+      "subcategory": "smartphones",
+      "price": 1099,
+      "image_url": "https://via.placeholder.com/300x200?text=Pixel+9+Pro+XL",
+      "description": "Google's 6.8-inch flagship with Tensor G4, Super Actua 3,000-nit display, 5x telephoto, and Gemini Live AI.",
+      "pros": [
+        "Bright 6.8-inch Super Actua LTPO display reaching 3,000 nits",
+        "Class-leading camera pipeline with 5x optical zoom and 8K Video Boost",
+        "7 years of OS, security updates, and Pixel Feature Drops"
+      ],
+      "cons": [
+        "Tensor G4 gaming graphics benchmarks trail Snapdragon 8 Gen 3",
+        "No charger adapter in the box"
+      ],
+      "specifications": {
+        "dimensions": "162.8 × 76.6 × 8.5 mm",
+        "weight": "221 g (7.8 oz)",
+        "build": "Aerospace aluminum frame, Gorilla Glass Victus 2 front and back",
+        "ip_rating": "IP68 water and dust resistance",
+        "colors": "Obsidian, Porcelain, Hazel, Rose Quartz",
+        "stylus": "No",
+        "display_type": "Super Actua LTPO OLED",
+        "display_size": "6.8 inches",
+        "resolution": "2992 × 1344",
+        "ppi": "486 ppi",
+        "refresh_rate": "120 Hz (1–120Hz Smooth Display)",
+        "peak_brightness": "3,000 nits peak (2,000 nits HDR)",
+        "hdr": "HDR10+, Ultra HDR",
+        "screen_protection": "Corning Gorilla Glass Victus 2",
+        "always_on": "Yes",
+        "os": "Android 14 (with Gemini Nano)",
+        "os_updates": "7 years of OS, security, and Pixel Feature Drops",
+        "chipset": "Google Tensor G4 (4 nm) + Titan M2 security coprocessor",
+        "cpu": "8-core (1× 3.1 GHz Cortex-X4 + 3× Cortex-A720 + 4× Cortex-A520)",
+        "gpu": "Mali-G715 MC7",
+        "ram": "16GB",
+        "storage": "128 GB",
+        "storage_options": "128 GB / 256 GB / 512 GB / 1 TB",
+        "expandable_storage": "No",
+        "main_camera": "50 MP Octa PD, f/1.68, 1/1.31\" sensor, OIS",
+        "ultrawide_camera": "48 MP Quad PD, f/1.7, 123° FOV, Macro Focus",
+        "telephoto_camera": "48 MP Quad PD, f/2.8, 5x optical zoom, OIS",
+        "optical_zoom": "5x optical (up to 30x Super Res Zoom, 20x Video Boost)",
+        "ois": "Dual OIS on wide and telephoto lenses",
+        "rear_video": "4K 24/30/60 fps, 8K 30 fps (via Video Boost cloud processing)",
+        "front_camera": "42 MP Dual PD, f/2.2, 103° ultrawide, autofocus",
+        "front_video": "4K 60 fps",
+        "battery_capacity": "5,060 mAh",
+        "wired_charging": "37 W wired fast charging",
+        "wireless_charging": "Fast wireless charging up to 23 W (Pixel Stand), Qi certified",
+        "reverse_charging": "Battery Share (reverse wireless)",
+        "charger_in_box": "No",
+        "speakers": "Stereo speakers, 3 microphones with spatial audio recording",
+        "headphone_jack": "No",
+        "cellular": "5G (sub-6 + mmWave, region-dependent)",
+        "wifi": "Wi-Fi 7",
+        "bluetooth": "Bluetooth 5.3",
+        "nfc": "Yes (Google Wallet)",
+        "usb": "USB-C 3.2",
+        "sim": "Dual SIM (Single Nano-SIM and eSIM)",
+        "biometrics": "Ultrasonic under-display fingerprint sensor, Face Unlock",
+        "extra_controls": "Gemini Live activation, Power button shortcut",
+        "unique_features": "Gemini Live, Add Me, Pixel Studio, Call Screen, Magic Editor, Thermometer sensor, Satellite SOS"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "variants": {
+        "uk": {
+          "specifications": {
+            "cellular": "5G (sub-6)"
+          },
+          "verified": {
+            "asOf": "2026-09-01",
+            "source": "https://store.google.com/gb/product/pixel_9_pro_specs"
+          }
+        }
+      },
+      "sameAsUs": [
+        "chipset",
+        "cpu",
+        "gpu",
+        "charger_in_box",
+        "sim"
+      ]
+    },
+    {
+      "id": "dyson-v12-detect-slim",
+      "name": "Dyson V12 Detect Slim",
+      "brand": "Dyson",
+      "category": "appliances",
+      "subcategory": "cordless-vacuums",
+      "price": 649,
+      "image_url": "https://via.placeholder.com/300x200?text=Dyson+V12",
+      "description": "Lightweight 5.2 lb cordless stick vacuum with push-button power, Fluffy Optic laser head, and piezo dust sensor.",
+      "pros": [
+        "Lightweight 5.2 lb chassis with comfortable push-button power (no trigger to hold)",
+        "Fluffy Optic green illumination highlights microscopic dust on bare floors",
+        "Acoustic piezo sensor automatically increases suction in heavy dirt"
+      ],
+      "cons": [
+        "Smaller 0.35 L dustbin capacity requires more frequent emptying",
+        "Max boost runtime limited to ~7 minutes"
+      ],
+      "specifications": {
+        "suction": "150 AW",
+        "auto_suction": "Yes (auto mode adapts to dust levels)",
+        "floor_illumination": "Fluffy Optic laser on soft roller head",
+        "anti_tangle": "Hair screw tool and Motorbar de-tangling vanes",
+        "floor_types": "Hard floors, tiles, low/medium pile carpets",
+        "dust_sensing": "Piezo acoustic sensor with LCD scientific dust breakdown",
+        "max_runtime": "60 minutes (Eco mode on hard floors)",
+        "typical_runtime": "~25–35 minutes on auto mode",
+        "charge_time": "~4.0 hours",
+        "weight": "5.2 lb (2.4 kg)",
+        "bin_capacity": "0.35 L",
+        "noise": "~74 dB (high)",
+        "display": "LCD screen shows run time countdown, power mode, particle counts",
+        "filtration": "Whole-machine filtration capturing 99.99% of microscopic particles",
+        "sealed_system": "Yes (fully-sealed filtration)",
+        "attachments": "Fluffy Optic cleaner head, Motorbar head, Hair screw tool, Combination tool, Crevice tool",
+        "docking_station": "Wall dock with accessory storage and charger",
+        "warranty": "2 years",
+        "bagless": "Yes"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
+    },
+    {
+      "id": "shark-powerdetect-cordless",
+      "name": "Shark PowerDetect Clean & Empty Cordless",
+      "brand": "Shark",
+      "category": "appliances",
+      "subcategory": "cordless-vacuums",
+      "price": 499,
+      "image_url": "https://via.placeholder.com/300x200?text=Shark+PowerDetect",
+      "description": "Multi-surface cordless vacuum with auto-emptying charging dock and forward/reverse cleaning detection.",
+      "pros": [
+        "Auto-empty charging dock stores up to 30 days of dust and allergens",
+        "PowerDetect technology optimizes cleaning in forward and reverse strokes",
+        "MultiFLEX folding wand bends to clean under low furniture effortlessly"
+      ],
+      "cons": [
+        "Auto-empty charging base takes up dedicated floor space",
+        "Heavier 7.7 lb (3.5 kg) weight with wand attached"
+      ],
+      "specifications": {
+        "suction": "180 AW",
+        "auto_suction": "Yes (DirtDetect, EdgeDetect, FloorDetect auto adjust)",
+        "floor_illumination": "LED headlights on main cleaner head",
+        "anti_tangle": "Self-cleaning brushroll with anti-hair wrap technology",
+        "floor_types": "Hardwood, tile, area rugs, deep pile carpet",
+        "dust_sensing": "DirtDetect sensor detects hidden debris and increases power",
+        "max_runtime": "70 minutes (Eco mode handheld)",
+        "typical_runtime": "~30–40 minutes in Auto mode",
+        "charge_time": "~4.0 hours",
+        "weight": "7.7 lb (3.5 kg) whole machine",
+        "bin_capacity": "0.70 L (stick) / 2.0 L (docking station)",
+        "noise": "~76 dB (vacuum) / ~82 dB (dock emptying cycle)",
+        "display": "Smart LED indicator rings with battery percentage",
+        "filtration": "Anti-Allergen Complete Seal with HEPA filter",
+        "sealed_system": "Yes",
+        "attachments": "DuoClean Detect nozzle, Duster Crevice tool, Pet Multi-Tool, Auto-Empty dock",
+        "docking_station": "Auto-Empty charging base station (holds 30+ days debris)",
+        "warranty": "5 years",
+        "bagless": "Yes"
+      },
+      "markets": [
+        "us"
+      ]
+    },
+    {
+      "id": "sonos-ace",
+      "name": "Sonos Ace",
+      "brand": "Sonos",
+      "category": "electronics",
+      "subcategory": "headphones",
+      "price": 449,
+      "image_url": "https://via.placeholder.com/300x200?text=Sonos+Ace",
+      "description": "Premium wireless ANC headphones featuring instant TV Audio Swap with Sonos soundbars and lossless USB-C audio.",
+      "pros": [
+        "Seamless one-button TV Audio Swap from Sonos Arc soundbars",
+        "Lossless audio via USB-C and Qualcomm Snapdragon Sound aptX Lossless",
+        "Plush magnetic memory foam cushions with tactile physical buttons"
+      ],
+      "cons": [
+        "TV Audio Swap feature is limited to Sonos soundbar owners",
+        "No passive 3.5mm analog listening when battery is depleted"
+      ],
+      "specifications": {
+        "type": "Over-ear, closed-back",
+        "driver": "Custom 40 mm dynamic neodymium driver",
+        "anc": "Yes (Active Noise Cancellation with 8 exterior and interior mics)",
+        "transparency": "Yes (Aware Mode with natural voice passthrough)",
+        "battery": "30 hours (ANC or Aware Mode enabled)",
+        "charge": "3 hours full charge (3 min rapid charge provides 3 hours)",
+        "weight": "312 g (11.0 oz)",
+        "ip": "No official IP rating",
+        "codec": "aptX Lossless, aptX Adaptive, AAC, SBC",
+        "mic": "8 microphones with beamforming and noise suppression",
+        "multipoint": "Yes (Bluetooth 5.4 multipoint pairing with 2 devices)",
+        "foldable": "No (swivels flat into slim magnetic felt case)",
+        "case": "Slim recycled felt travel case with magnetic cable pouch",
+        "warranty": "1 year"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
+    },
+    {
+      "id": "bose-quietcomfort-headphones",
+      "name": "Bose QuietComfort Headphones",
+      "brand": "Bose",
+      "category": "electronics",
+      "subcategory": "headphones",
+      "price": 349,
+      "image_url": "https://via.placeholder.com/300x200?text=Bose+QC",
+      "description": "Ultra-comfortable folding ANC headphones with classic Bose noise cancellation and 24-hour battery life.",
+      "pros": [
+        "Foldable design collapses neatly into an ultra-compact travel case",
+        "Legendary lightweight 240g comfort ideal for long flights",
+        "Tactile physical buttons and reliable multi-point Bluetooth switching"
+      ],
+      "cons": [
+        "Lacks spatial audio head tracking found on QC Ultra",
+        "No high-resolution LDAC or aptX codec support"
+      ],
+      "specifications": {
+        "type": "Over-ear, closed-back",
+        "driver": "Custom 40 mm dynamic transducers",
+        "anc": "Yes (Quiet Mode with adjustable noise cancellation levels)",
+        "transparency": "Yes (Aware Mode with adjustable environment blend)",
+        "battery": "24 hours on a single charge",
+        "charge": "2.5 hours full charge (15 min quick charge gives 2.5 hours)",
+        "weight": "240 g (8.5 oz)",
+        "ip": "No official IP rating",
+        "codec": "AAC, SBC",
+        "mic": "4-mic beamforming voice pickup array",
+        "multipoint": "Yes (Bluetooth 5.1 multipoint pairing)",
+        "foldable": "Yes (collapses and folds inward into compact case)",
+        "case": "Hardshell zip travel case included",
+        "warranty": "1 year"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
+    },
+    {
+      "id": "sony-wh-1000xm4",
+      "name": "Sony WH-1000XM4",
+      "brand": "Sony",
+      "category": "electronics",
+      "subcategory": "headphones",
+      "price": 348,
+      "image_url": "https://via.placeholder.com/300x200?text=Sony+XM4",
+      "description": "Popular folding noise-cancelling headphones with LDAC high-resolution audio, DSEE Extreme, and 30-hour battery.",
+      "pros": [
+        "Folding headband hinges collapse smaller than the newer XM5",
+        "Supports high-res LDAC streaming and DSEE Extreme upscaling",
+        "Superb value with industry-tested noise cancellation"
+      ],
+      "cons": [
+        "Microphone voice isolation trails newer XM5 in windy conditions",
+        "Cannot use LDAC while 2-device Bluetooth multipoint is enabled"
+      ],
+      "specifications": {
+        "type": "Over-ear, closed-back",
+        "driver": "40 mm dome type (CCAW Voice coil)",
+        "anc": "Yes (HD Noise Cancelling Processor QN1 with Dual Noise Sensor)",
+        "transparency": "Yes (Ambient Sound Control with Quick Attention)",
+        "battery": "30 hours (ANC on) / 38 hours (ANC off)",
+        "charge": "3 hours full charge (10 min quick charge gives 5 hours)",
+        "weight": "254 g (8.95 oz)",
+        "ip": "No official IP rating",
+        "codec": "LDAC, AAC, SBC",
+        "mic": "Precise Voice Pickup Technology with 5 microphones",
+        "multipoint": "Yes (Bluetooth 5.0 multipoint for 2 devices)",
+        "foldable": "Yes (collapsible foldable headband)",
+        "case": "Compact hard-shell zippered carrying case included",
+        "warranty": "1 year"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty"
+      ]
+    },
+    {
+      "id": "levoit-core-400s",
+      "name": "Levoit Core 400S",
+      "brand": "Levoit",
+      "category": "appliances",
+      "subcategory": "air-purifiers",
+      "price": 219,
+      "image_url": "https://via.placeholder.com/300x200?text=Levoit+400S",
+      "description": "Smart air purifier with H13 True HEPA filtration, AirSight Plus laser dust sensor, and VeSync app control.",
+      "pros": [
+        "Whisper-quiet 24 dB sleep mode with completely dimmable light display",
+        "AirSight Plus laser sensor provides real-time PM2.5 numerical readings",
+        "VeSync smartphone app with scheduling, filter life tracking, and voice control"
+      ],
+      "cons": [
+        "Coverage is sized for medium bedrooms and living rooms (under 1,000 sq ft)",
+        "Activated carbon layer is a coated sheet rather than heavy pellet bed"
+      ],
+      "specifications": {
+        "cadr": "260 CFM / 442 m³/h (Smoke), 260 CFM (Dust), 260 CFM (Pollen)",
+        "room_size": "Bedrooms, apartments, mid-size living spaces",
+        "filters": "3-Stage: Nylon Pre-filter + H13 True HEPA + High-Efficiency Activated Carbon",
+        "filter_life": "6–12 months",
+        "noise": "24 dB (Sleep mode) – 52 dB (High mode)",
+        "energy": "38 W max power consumption",
+        "smart": "VeSync Wi-Fi App, Amazon Alexa, Google Assistant voice control",
+        "sensors": "AirSight Plus Laser Dust Sensor with PM2.5 numerical display and 4-color ring",
+        "coverage": "403 sq ft (5 air changes/hr) / 990 sq ft (2 air changes/hr)",
+        "weight": "14.1 lb (6.4 kg)",
+        "warranty": "2 years limited warranty"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "energy"
+      ]
+    },
+    {
+      "id": "coway-airmega-ap-1512hh",
+      "name": "Coway Airmega AP-1512HH Mighty",
+      "brand": "Coway",
+      "category": "appliances",
+      "subcategory": "air-purifiers",
+      "price": 229,
+      "image_url": "https://via.placeholder.com/300x200?text=Coway+Mighty",
+      "description": "Award-winning compact 4-stage True HEPA air purifier with Vital Ionizer and energy-saving Eco mode.",
+      "pros": [
+        "High smoke and particulate filtration efficiency in a compact footprint",
+        "Eco Mode powers off fan automatically after 30 minutes of clean air",
+        "Washable pre-filter extends the life of internal carbon and HEPA filters"
+      ],
+      "cons": [
+        "No Wi-Fi connectivity or mobile smartphone app",
+        "Ionizer feature produces trace ozone if left enabled"
+      ],
+      "specifications": {
+        "cadr": "233 CFM (Smoke), 246 CFM (Dust), 240 CFM (Pollen)",
+        "room_size": "Bedrooms, home offices, medium living rooms",
+        "filters": "4-Stage: Washable Pre-filter + Deodorization Carbon + True HEPA + Vital Ion",
+        "filter_life": "12 months (True HEPA) / 6 months (Carbon)",
+        "noise": "24 dB (Low) – 53 dB (Turbo high)",
+        "energy": "77 W max (Energy Star verified, 4.9W in Eco mode)",
+        "smart": "Smart Auto Mode + Eco Mode (no Wi-Fi app)",
+        "sensors": "Air quality particle sensor with 3-color real-time LED indicator",
+        "coverage": "361 sq ft (4.8 air changes/hr) / 874 sq ft (2 air changes/hr)",
+        "weight": "12.3 lb (5.6 kg)",
+        "warranty": "3 years limited manufacturer warranty"
+      },
+      "markets": [
+        "us"
+      ]
+    },
+    {
+      "id": "blueair-blue-pure-211-plus-auto",
+      "name": "Blueair Blue Pure 211+ Auto",
+      "brand": "Blueair",
+      "category": "appliances",
+      "subcategory": "air-purifiers",
+      "price": 339,
+      "image_url": "https://via.placeholder.com/300x200?text=Blueair+211+Auto",
+      "description": "High-capacity large-room air purifier with 360-degree HEPASilent filtration and machine-washable fabric pre-filters.",
+      "pros": [
+        "High 353 CFM CADR cleans a 550 sq ft living room in just 12.5 minutes",
+        "HEPASilent electrostatic + mechanical filtration maximizes airflow and efficiency",
+        "Interchangeable washable fabric pre-filters in multiple designer colors"
+      ],
+      "cons": [
+        "No mobile app or Wi-Fi schedule controls (one-button operation)",
+        "Reaches 56 dB at highest turbo fan setting"
+      ],
+      "specifications": {
+        "cadr": "353 CFM (Smoke), 347 CFM (Dust), 380 CFM (Pollen)",
+        "room_size": "Large living rooms, open floor plans, master suites",
+        "filters": "Washable fabric pre-filter + HEPASilent main filter (Particle + Carbon)",
+        "filter_life": "6 months",
+        "noise": "23 dB (Low) – 56 dB (Turbo high)",
+        "energy": "38 W max power consumption",
+        "smart": "One-touch Auto Mode (no Wi-Fi app)",
+        "sensors": "Integrated particle sensor with 3-color air quality LED indicator",
+        "coverage": "550 sq ft (4.8 air changes/hr) / 1,320 sq ft (2 air changes/hr)",
+        "weight": "12.5 lb (5.7 kg)",
+        "warranty": "2 years (with product registration)"
+      },
+      "markets": [
+        "us",
+        "uk"
+      ],
+      "availability": {
+        "uk": {
+          "asOf": "2026-09-01",
+          "source": "manufacturer"
+        }
+      },
+      "sameAsUs": [
+        "warranty",
+        "energy"
+      ]
+    },
+    {
+      "id": "chase-sapphire-reserve",
+      "name": "Chase Sapphire Reserve",
+      "brand": "Chase",
+      "category": "finance",
+      "subcategory": "credit-cards",
+      "price": 550,
+      "image_url": "https://via.placeholder.com/300x200?text=Sapphire+Reserve",
+      "description": "Premier travel card with $300 annual travel statement credit, Priority Pass lounge access, and 3X points on travel and dining.",
+      "pros": [
+        "$300 automatic annual travel statement credit offsets base annual fee",
+        "Complimentary Priority Pass Select lounge access and Sapphire Lounge entry",
+        "50% bonus point value when redeeming points for travel through Chase Travel (1.5¢ each)"
+      ],
+      "cons": [
+        "$550 annual fee plus $75 per authorized user",
+        "Requires Excellent credit (720+) to qualify"
+      ],
+      "specifications": {
+        "annual_fee": "$550",
+        "apr": "21.49% – 28.49% Variable APR",
+        "rewards_rate": "10X hotels/cars & 5X flights via Chase Travel, 3X general travel & dining, 1X other",
+        "intro_offer": "0% intro APR for 0 months (Pay Over Time APR applies)",
+        "foreign_tx": "None (0%)",
+        "credit_needed": "Excellent (720–850)",
+        "lounge": "Yes (Priority Pass Select + Sapphire Lounge by The Club)",
+        "sign_up_bonus": "60,000 Ultimate Rewards points after $4,000 spend in first 3 months",
+        "late_fee": "Up to $40",
+        "network": "Visa Infinite"
+      },
+      "markets": [
+        "us"
+      ]
+    },
+    {
+      "id": "capital-one-savorone",
+      "name": "Capital One SavorOne Cash Rewards",
+      "brand": "Capital One",
+      "category": "finance",
+      "subcategory": "credit-cards",
+      "price": 0,
+      "image_url": "https://via.placeholder.com/300x200?text=SavorOne",
+      "description": "No-annual-fee cash back credit card offering unlimited 3% cash back on dining, entertainment, grocery stores, and streaming.",
+      "pros": [
+        "$0 annual fee and no foreign transaction fees",
+        "Unlimited 3% cash back on dining, entertainment, grocery stores, and popular streaming",
+        "0% intro APR on purchases and balance transfers for 15 months"
+      ],
+      "cons": [
+        "No airport lounge access or luxury travel perks",
+        "Requires Good to Excellent credit score"
+      ],
+      "specifications": {
+        "annual_fee": "$0",
+        "apr": "19.24% – 29.24% Variable APR",
+        "rewards_rate": "3% dining, entertainment, popular streaming & grocery stores; 1% all other purchases",
+        "intro_offer": "0% intro APR on purchases and balance transfers for 15 months",
+        "foreign_tx": "None (0%)",
+        "credit_needed": "Good to Excellent (670–850)",
+        "lounge": "No (No airport lounge access)",
+        "sign_up_bonus": "$200 cash bonus after spending $500 in first 3 months",
+        "late_fee": "Up to $40",
+        "network": "Mastercard"
+      },
+      "markets": [
+        "us"
+      ]
+    },
+    {
+      "id": "bilt-mastercard",
+      "name": "Bilt World Elite Mastercard",
+      "brand": "Bilt",
+      "category": "finance",
+      "subcategory": "credit-cards",
+      "price": 0,
+      "image_url": "https://via.placeholder.com/300x200?text=Bilt+Card",
+      "description": "Revolutionary $0 annual fee rewards card that earns points on rent with no transaction fee, plus 3X on dining and 2X on travel.",
+      "pros": [
+        "Earn 1X points on rent payments up to 100,000 points per calendar year with $0 transaction fees",
+        "$0 annual fee and no foreign transaction fees",
+        "Valuable 1:1 transfer partners including Hyatt, United Airlines, and Air France/KLM"
+      ],
+      "cons": [
+        "Must make at least 5 transactions each billing cycle to earn points",
+        "No traditional upfront sign-up welcome bonus"
+      ],
+      "specifications": {
+        "annual_fee": "$0",
+        "apr": "20.74% – 28.74% Variable APR",
+        "rewards_rate": "3X dining, 2X travel, 1X rent (up to 100k pts/yr), 1X other (double on Rent Day 1st of month)",
+        "intro_offer": "0% intro APR for 0 months (none)",
+        "foreign_tx": "None (0%)",
+        "credit_needed": "Good to Excellent (670–850)",
+        "lounge": "No (No airport lounge access)",
+        "sign_up_bonus": "None (earn points on monthly rent with no fee)",
+        "late_fee": "Up to $40",
+        "network": "Mastercard World Elite"
+      },
+      "markets": [
+        "us"
+      ]
     }
   ],
   "categories": [
@@ -3142,27 +4283,21 @@
       "name": "Home Appliances",
       "subcategories": [
         "Vacuums",
-        "Air Purifiers",
-        "Coffee Makers"
+        "Air Purifiers"
       ],
       "popular_searches": [
         "Best Cordless Vacuum",
-        "Best Air Purifier",
-        "Best Espresso Machine"
+        "Best Air Purifier"
       ]
     },
     {
       "id": "finance",
       "name": "Finance",
       "subcategories": [
-        "Credit Cards",
-        "Loans",
-        "Investment Apps"
+        "Credit Cards"
       ],
       "popular_searches": [
-        "Best Credit Card 2026",
-        "Best Savings Account",
-        "Best Investment App"
+        "Best Credit Card 2026"
       ]
     }
   ]

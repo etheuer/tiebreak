@@ -1,7 +1,10 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import type { MarketId } from '@/lib/markets'
-import { inMarket, resolveProduct, type MarketAttestation, type PricePoint, type Product, type ProductVariant } from '@/lib/pricing'
+import { inMarket, resolveProduct, type Product } from '@/lib/pricing'
+import { buildVerdict } from '@/lib/verdict'
+import { formatMoney } from '@/lib/format'
+import { sentenceCase, shortName } from '@/lib/decision'
 
 export type { MarketAttestation, PricePoint, Product, ProductVariant } from '@/lib/pricing'
 export { inMarket, marketsOf, priceOf, resolveProduct } from '@/lib/pricing'
@@ -25,6 +28,9 @@ export interface Comparison {
 let productsCache: Product[] | null = null
 let categoriesCache: Category[] | null = null
 let comparisonsCache: Comparison[] | null = null
+const marketProductsCache = new Map<MarketId, Product[]>()
+const marketCategoriesCache = new Map<MarketId, Category[]>()
+const marketComparisonsCache = new Map<MarketId, Comparison[]>()
 
 export async function getAllProducts(): Promise<Product[]> {
   if (productsCache) return productsCache
@@ -35,10 +41,14 @@ export async function getAllProducts(): Promise<Product[]> {
 }
 
 export async function getProducts(market: MarketId = 'us'): Promise<Product[]> {
+  const cached = marketProductsCache.get(market)
+  if (cached) return cached
   const products = await getAllProducts()
-  return products
+  const result = products
     .filter((product) => inMarket(product, market))
     .map((product) => resolveProduct(product, market))
+  marketProductsCache.set(market, result)
+  return result
 }
 
 export async function getAllCategories(): Promise<Category[]> {
@@ -50,29 +60,33 @@ export async function getAllCategories(): Promise<Category[]> {
 }
 
 export async function getCategories(market: MarketId = 'us'): Promise<Category[]> {
+  const cached = marketCategoriesCache.get(market)
+  if (cached) return cached
   const [categories, products] = await Promise.all([getAllCategories(), getProducts(market)])
   const present = new Set(products.map((product) => product.category))
-  return categories.filter((category) => present.has(category.id))
+  const result = categories.filter((category) => present.has(category.id))
+  marketCategoriesCache.set(market, result)
+  return result
 }
 
 export async function getAllComparisons(): Promise<Comparison[]> {
   if (comparisonsCache) return comparisonsCache
   const dir = path.join(process.cwd(), 'src/data/comparisons')
   const files = await fs.readdir(dir)
-  const comparisons: Comparison[] = []
-  for (const file of files) {
-    if (file.endsWith('.json')) {
+  const jsonFiles = files.filter((f) => f.endsWith('.json'))
+  const comparisons = await Promise.all(
+    jsonFiles.map(async (file) => {
       const data = await fs.readFile(path.join(dir, file), 'utf-8')
-      comparisons.push(JSON.parse(data))
-    }
-  }
+      return JSON.parse(data) as Comparison
+    })
+  )
   comparisonsCache = comparisons
   return comparisons
 }
 
-import { buildVerdict } from '@/lib/verdict'
-import { formatMoney } from '@/lib/format'
-import { sentenceCase, shortName } from '@/lib/decision'
+function pairKey(productA: string, productB: string): string {
+  return [productA, productB].sort().join('\0')
+}
 
 function buildComparisonDescription(a: Product, b: Product, market: MarketId): string {
   const verdict = buildVerdict(a, b, market)
@@ -89,34 +103,35 @@ function buildComparisonDescription(a: Product, b: Product, market: MarketId): s
 }
 
 export async function getComparisons(market: MarketId = 'us'): Promise<Comparison[]> {
+  const cached = marketComparisonsCache.get(market)
+  if (cached) return cached
   const [comparisons, products] = await Promise.all([getAllComparisons(), getProducts(market)])
   const byId = new Map(products.map((product) => [product.id, product]))
-  return comparisons
-    .filter((comparison) => byId.has(comparison.productA) && byId.has(comparison.productB))
+  const seen = new Set<string>()
+  const result = comparisons
+    .filter((comparison) => {
+      if (!byId.has(comparison.productA) || !byId.has(comparison.productB)) return false
+      const key = pairKey(comparison.productA, comparison.productB)
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
     .map((comparison) => ({
       ...comparison,
       description: buildComparisonDescription(byId.get(comparison.productA)!, byId.get(comparison.productB)!, market)
     }))
+  marketComparisonsCache.set(market, result)
+  return result
 }
 
 export async function getComparisonBySlug(slug: string, market: MarketId = 'us'): Promise<Comparison | null> {
-  const comparisons = await getAllComparisons()
-  const comparison = comparisons.find((c) => `${c.productA}-vs-${c.productB}` === slug) || null
-  if (!comparison) return null
-  const productA = await getProductById(comparison.productA, market)
-  const productB = await getProductById(comparison.productB, market)
-  if (!productA || !productB) return comparison
-  return {
-    ...comparison,
-    description: buildComparisonDescription(productA, productB, market)
-  }
+  const comparisons = await getComparisons(market)
+  return comparisons.find((c) => `${c.productA}-vs-${c.productB}` === slug) || null
 }
 
 export async function getProductById(id: string, market: MarketId = 'us'): Promise<Product | null> {
-  const products = await getAllProducts()
-  const found = products.find((p) => p.id === id)
-  if (!found) return null
-  return resolveProduct(found, market)
+  const products = await getProducts(market)
+  return products.find((p) => p.id === id) ?? null
 }
 
 export async function getProductsByCategory(category: string, market: MarketId = 'us'): Promise<Product[]> {

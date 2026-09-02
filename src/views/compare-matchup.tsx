@@ -11,14 +11,13 @@ import {
   priceOf,
   type Product,
 } from '@/lib/data'
-import { buildVerdict, leadAreas, priceLabel, verdictLine, type Side, type Verdict } from '@/lib/verdict'
+import { buildVerdict, verdictLine, type Side } from '@/lib/verdict'
 import {
   categoryHref,
   compareHref,
   findComparison,
   homeHref,
   isFeeBased,
-  priceCaption,
   priceShort,
   productHref,
   subLabel,
@@ -28,11 +27,12 @@ import type { MarketId } from '@/lib/markets'
 import { buildAnswer, checkDealBreakers, flattenRows } from '@/lib/decision'
 import { buildCompareFaq, buildLensAnswers } from '@/lib/faq'
 import { absUrl, clip, SITE_NAME } from '@/lib/site'
-import { useCasesFor } from '@/data/use-cases'
+import { casesFor } from '@/data/use-cases'
 import { SpecTables } from '@/components/SpecTables'
 import { ProductMark } from '@/components/ProductMark'
 import { DecisionPanel } from '@/components/DecisionPanel'
 import { ShareVerdict } from '@/components/ShareVerdict'
+import { FinanceDisclaimer, PriceNote } from '@/components/CatalogNotes'
 
 export async function generateStaticParamsForMarket(market: MarketId) {
   const comparisons = await getComparisons(market)
@@ -79,7 +79,7 @@ export async function generateMetadataForMarket(
       locale: openGraphLocale(market),
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title: comparison.productName,
       description,
     },
@@ -103,19 +103,6 @@ async function swapOptions(target: Product, keep: Product, market: MarketId): Pr
         href: match ? compareHref(match, market) : null,
       }
     })
-}
-
-function WinBar({ verdict }: { verdict: Verdict }) {
-  const { aWins, bWins, scored } = verdict
-  const ties = Math.max(0, scored - aWins - bWins)
-  const total = Math.max(1, aWins + bWins + ties)
-  return (
-    <div className="flex h-2 overflow-hidden rounded-full bg-surface-2" role="img"
-      aria-label={`${aWins} specs to ${bWins}`}>
-      <span style={{ width: `${(aWins / total) * 100}%`, background: 'var(--accent)' }} />
-      <span style={{ width: `${(bWins / total) * 100}%`, background: 'var(--rival)' }} />
-    </div>
-  )
 }
 
 function ProductPanel({
@@ -244,12 +231,11 @@ export async function CompareMatchup({
   ])
 
   const verdict = buildVerdict(productA, productB, market)
-  const areas = leadAreas(verdict)
   const answer = verdictLine(productA, productB, verdict, market)
   const category = categories.find((c) => c.id === productA.category)
   const rows = flattenRows(verdict)
   const checks = checkDealBreakers(productA, productB)
-  const useCases = useCasesFor(productA.subcategory)
+  const useCases = casesFor(productA.subcategory)
 
   const overall = buildAnswer({ productA, productB, useCase: null, rows, checks, matters: new Set(), market })
   const lenses = buildLensAnswers(productA, productB, rows, checks, useCases, market)
@@ -268,8 +254,6 @@ export async function CompareMatchup({
       return yScore - xScore
     })
     .slice(0, 3)
-
-  const cheaper = verdict.priceLeader === 'a' ? productA : verdict.priceLeader === 'b' ? productB : null
 
   return (
     <>
@@ -294,7 +278,7 @@ export async function CompareMatchup({
           <p className="eyebrow">Head to head</p>
           <h1 className="display mt-2 text-[30px] sm:text-[40px]">{comparison.productName}</h1>
           <p className="mt-4 text-[16px] leading-relaxed text-ink sm:text-[17.5px]">{answer}</p>
-
+          <PriceNote subcategory={productA.subcategory} />
         </header>
 
         {/* Two column VS hero */}
@@ -460,6 +444,7 @@ export async function CompareMatchup({
             </div>
           </section>
         )}
+        {isFeeBased(productA.subcategory) ? <FinanceDisclaimer /> : null}
       </div>
 
       <script

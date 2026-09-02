@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { Category, Comparison, Product } from '@/lib/data'
-import { categoryHref, compareHref, hubHref, SUBCATEGORY_LABEL } from '@/lib/nav'
+import { categoryHref, compareHref, hubHref, LEGAL_LINKS, SUBCATEGORY_LABEL } from '@/lib/nav'
 import { MARKETS, type MarketId } from '@/lib/markets'
 
 export function SiteFooter({
@@ -89,10 +89,18 @@ export function SiteFooter({
       </div>
 
       <div className="rule-top">
-        <div className="shell flex flex-col gap-2 py-5 text-[12.5px] text-ink-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="shell flex flex-col gap-2 py-5 text-[12.5px] text-ink-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Tiebreak</p>
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-1">
+            {LEGAL_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} className="hover:text-accent">
+                {link.label}
+              </Link>
+            ))}
+          </nav>
           <p>
-            Prices are manufacturer list prices in {MARKETS[market].currency} and change often.
+            US list prices in {MARKETS[market].currency}. Figures are manufacturer-published and
+            change often.
           </p>
         </div>
       </div>

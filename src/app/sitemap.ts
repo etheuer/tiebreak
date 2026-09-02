@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { getCategories, getComparisons, getProducts } from '@/lib/data'
 import { categoryHref, compareHref, hubHref, productHref } from '@/lib/nav'
-import { marketPath } from '@/lib/markets'
-import { absUrl } from '@/lib/site'
+import { isMarketPublished, marketPath } from '@/lib/markets'
+import { absUrl, CATALOG_AS_OF } from '@/lib/site'
 
 export const dynamic = 'force-static'
 
@@ -15,25 +15,28 @@ function languages(usPath: string, includeUk: boolean): MetadataRoute.Sitemap[nu
   return { languages: langs }
 }
 
+const LEGAL_PATHS = ['/about/', '/privacy/', '/terms/', '/contact/'] as const
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const publishUk = isMarketPublished('uk')
   const [usProducts, ukProducts, usComparisons, ukComparisons, usCategories, ukCategories] =
     await Promise.all([
       getProducts('us'),
-      getProducts('uk'),
+      publishUk ? getProducts('uk') : Promise.resolve([]),
       getComparisons('us'),
-      getComparisons('uk'),
+      publishUk ? getComparisons('uk') : Promise.resolve([]),
       getCategories('us'),
-      getCategories('uk'),
+      publishUk ? getCategories('uk') : Promise.resolve([]),
     ])
-  const lastModified = new Date()
+  const lastModified = new Date(`${CATALOG_AS_OF}T00:00:00Z`)
   const ukProductIds = new Set(ukProducts.map((product) => product.id))
   const ukCompareSlugs = new Set(
     ukComparisons.map((comparison) => `${comparison.productA}-vs-${comparison.productB}`)
   )
   const ukCategoryIds = new Set(ukCategories.map((category) => category.id))
 
-  const hasUkHome = ukProductIds.size > 0
-  const hasUkHub = ukCompareSlugs.size > 0
+  const hasUkHome = publishUk && ukProductIds.size > 0
+  const hasUkHub = publishUk && ukCompareSlugs.size > 0
 
   const entries: MetadataRoute.Sitemap = [
     {
@@ -122,6 +125,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: languages(usPath, true),
       })
     }
+  }
+
+  for (const path of LEGAL_PATHS) {
+    entries.push({
+      url: absUrl(path),
+      lastModified,
+      priority: 0.3,
+    })
   }
 
   return entries

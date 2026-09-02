@@ -75,6 +75,14 @@ export async function buildLlmsText(market: MarketId): Promise<string> {
   }
   lines.push('')
 
+  lines.push('## About this site')
+  lines.push('')
+  lines.push('- US catalog only on this launch. Figures are manufacturer-published specifications, not lab tests.')
+  lines.push('- Prices are list snapshots, not live offers. Credit-card pages are not financial advice.')
+  lines.push(`- [How Tiebreak works](${absUrl('/about/')})`)
+  lines.push(`- [Privacy](${absUrl('/privacy/')}) · [Terms](${absUrl('/terms/')}) · [Contact](${absUrl('/contact/')})`)
+  lines.push('')
+
   lines.push('## Machine-readable')
   lines.push('')
   lines.push(`- [Sitemap](${absUrl('/sitemap.xml')})`)

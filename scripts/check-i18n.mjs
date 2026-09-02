@@ -114,7 +114,8 @@ const projectRoot = fileURLToPath(new URL('../', import.meta.url))
 const staticRoot = path.join(projectRoot, '.next-static')
 const staticUkRoot = path.join(staticRoot, 'uk')
 
-if (existsSync(path.join(staticRoot, 'index.html'))) {
+if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index.html'))) {
+  const ukPublished = existsSync(path.join(staticUkRoot, 'index.html'))
   const ukS24Path = path.join(staticUkRoot, 'product', 'electronics', 'samsung-galaxy-s24', 'index.html')
   const usS24Path = path.join(staticRoot, 'product', 'electronics', 'samsung-galaxy-s24', 'index.html')
   const ukS24Html = existsSync(ukS24Path) ? readFileSync(ukS24Path, 'utf8') : ''
@@ -131,18 +132,25 @@ if (existsSync(path.join(staticRoot, 'index.html'))) {
   const hasSourcedUkPrice = uk.some((product) => Boolean(product.prices?.uk))
 
   checks.push(
-    ['static export omits the six US-only UK product pages', DROPPED.every((id) =>
-      !existsSync(path.join(staticUkRoot, 'product', 'electronics', id, 'index.html'))
-      && !existsSync(path.join(staticUkRoot, 'product', 'appliances', id, 'index.html'))
-    ), true],
-    ['static UK S24 contains Exynos and not Snapdragon', ukS24Html.includes('Exynos') && !ukS24Html.includes('Snapdragon'), true],
     ['static US S24 contains Snapdragon and not Exynos 2400', usS24Html.includes('Snapdragon') && !usS24Html.includes('Exynos 2400'), true],
-    ['static UK home exists and contains product links', ukHomeHtml.includes('/uk/product/'), true],
-    ['static UK export omits finance', !existsSync(path.join(staticUkRoot, 'category', 'finance', 'index.html'))
-      && !existsSync(path.join(staticUkRoot, 'product', 'finance')), true],
-    ['static UK pages do not show invented GBP amounts', hasSourcedUkPrice || ukHtml.every(({ html }) => !/£\s?\d/.test(html)), true],
-    ['static UK meta descriptions do not contain USD amounts', ukDescriptionTags.every((tag) => !/\$\s?\d/.test(tag)), true],
   )
+
+  if (ukPublished) {
+    checks.push(
+      ['static export omits the six US-only UK product pages', DROPPED.every((id) =>
+        !existsSync(path.join(staticUkRoot, 'product', 'electronics', id, 'index.html'))
+        && !existsSync(path.join(staticUkRoot, 'product', 'appliances', id, 'index.html'))
+      ), true],
+      ['static UK S24 contains Exynos and not Snapdragon', ukS24Html.includes('Exynos') && !ukS24Html.includes('Snapdragon'), true],
+      ['static UK home exists and contains product links', ukHomeHtml.includes('/uk/product/'), true],
+      ['static UK export omits finance', !existsSync(path.join(staticUkRoot, 'category', 'finance', 'index.html'))
+        && !existsSync(path.join(staticUkRoot, 'product', 'finance')), true],
+      ['static UK pages do not show invented GBP amounts', hasSourcedUkPrice || ukHtml.every(({ html }) => !/£\s?\d/.test(html)), true],
+      ['static UK meta descriptions do not contain USD amounts', ukDescriptionTags.every((tag) => !/\$\s?\d/.test(tag)), true],
+    )
+  } else {
+    checks.push(['US-only export does not emit /uk/', !existsSync(staticUkRoot), true])
+  }
 }
 
 let failed = 0

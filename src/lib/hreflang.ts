@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
-import { marketPath, MARKETS, type MarketId } from '@/lib/markets'
+import { isMarketPublished, marketPath, MARKETS, type MarketId } from '@/lib/markets'
 
 export function pageAlternates(
   usPath: string,
   market: MarketId,
   includeUk: boolean
 ): NonNullable<Metadata['alternates']> {
+  const withUk = includeUk && isMarketPublished('uk')
   const canonical = marketPath(market, usPath)
-  if (!includeUk && market === 'uk') {
+  if (!withUk && market === 'uk') {
     return {
       canonical,
       languages: {
@@ -20,7 +21,7 @@ export function pageAlternates(
     'en-US': marketPath('us', usPath),
     'x-default': marketPath('us', usPath),
   }
-  if (includeUk) languages['en-GB'] = marketPath('uk', usPath)
+  if (withUk) languages['en-GB'] = marketPath('uk', usPath)
   return {
     canonical,
     languages,

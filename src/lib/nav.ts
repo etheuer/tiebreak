@@ -56,6 +56,13 @@ export function hubHref(market: MarketId = 'us'): string {
   return marketPath(market, '/compare/')
 }
 
+export const LEGAL_LINKS = [
+  { label: 'About', href: '/about/' },
+  { label: 'Privacy', href: '/privacy/' },
+  { label: 'Terms', href: '/terms/' },
+  { label: 'Contact', href: '/contact/' },
+] as const
+
 /**
  * Compare pages only exist for pairs that ship a comparison file, so every
  * "compare these two" affordance resolves through here and links nowhere else.

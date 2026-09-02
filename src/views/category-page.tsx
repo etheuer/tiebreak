@@ -6,11 +6,12 @@ import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict } from '@/lib/verdict'
-import { categoryHref, compareHref, homeHref, priceCaption, priceShort, productHref, subLabel } from '@/lib/nav'
+import { categoryHref, compareHref, homeHref, isFeeBased, priceCaption, priceShort, productHref, subLabel } from '@/lib/nav'
 import { absUrl, SITE_NAME } from '@/lib/site'
-import { useCasesFor } from '@/data/use-cases'
+import { casesFor } from '@/data/use-cases'
 import { ProductMark } from '@/components/ProductMark'
 import { VsCard } from '@/components/VsCard'
+import { FinanceDisclaimer } from '@/components/CatalogNotes'
 
 export async function generateStaticParamsForMarket(market: MarketId) {
   const categories = await getCategories(market)
@@ -54,7 +55,7 @@ export async function generateMetadataForMarket(
       locale: openGraphLocale(market),
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title,
       description,
     },
@@ -97,7 +98,7 @@ export async function CategoryListing({
       attributes: catalogFor(sub).reduce((sum, group) => sum + group.fields.length, 0),
       items: products.filter((product) => product.subcategory === sub).sort((x, y) => x.price - y.price),
       lenses: matchup
-        ? useCasesFor(sub).map((useCase) => ({
+        ? casesFor(sub).map((useCase) => ({
             id: useCase.id,
             label: useCase.label,
             job: useCase.job,
@@ -172,6 +173,7 @@ export async function CategoryListing({
               }.`
             : `We track ${currentCategory.subcategories.join(', ').toLowerCase()} here, but nothing is in the catalog yet.`}
         </p>
+        {products.some((product) => isFeeBased(product.subcategory)) ? <FinanceDisclaimer /> : null}
       </header>
 
       {products.length === 0 ? (
