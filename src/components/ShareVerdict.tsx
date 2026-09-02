@@ -26,7 +26,7 @@ export function ShareVerdict() {
     <button
       type="button"
       onClick={handleShare}
-      className="btn rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-semibold text-ink transition-colors hover:bg-surface-2"
+      className="btn rounded-full border border-line bg-surface px-4 py-2 text-meta font-semibold text-ink transition-colors hover:bg-surface-2"
     >
       {status === 'copied' ? (
         <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden className="text-accent shrink-0">

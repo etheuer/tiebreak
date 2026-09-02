@@ -129,14 +129,14 @@ function ProductPanel({
         <div className="min-w-0 flex flex-col justify-center">
           <Link
             href={productHref(product, market)}
-            className="truncate text-[13.5px] font-semibold leading-tight hover:underline"
+            className="truncate text-cell font-semibold leading-tight hover:underline"
             title={`View ${product.name} spec sheet`}
           >
             {product.name}
           </Link>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
-            <span className="num text-[12.5px] text-ink-3">{priceShort(product, market)}</span>
-            <span className="num text-[12px] font-semibold" style={{ color: tintInk }}>
+            <span className="num text-meta text-ink-3">{priceShort(product, market)}</span>
+            <span className="num text-label font-semibold" style={{ color: tintInk }}>
               {wins} {wins === 1 ? 'spec win' : 'spec wins'}
             </span>
           </div>
@@ -155,7 +155,7 @@ function ProductPanel({
             className="absolute right-0 z-20 mt-1.5 max-h-72 w-60 overflow-y-auto overflow-x-hidden rounded-lg border border-line bg-surface p-1"
             style={{ boxShadow: 'var(--shadow-2)' }}
           >
-            <p className="px-2.5 py-1.5 text-[12px] text-ink-3">
+            <p className="px-2.5 py-1.5 text-label text-ink-3">
               Compare a different {subLabel(product.subcategory).toLowerCase().replace(/s$/, '')}
             </p>
             {swaps.map((option) =>
@@ -163,28 +163,28 @@ function ProductPanel({
                 <Link
                   key={option.id}
                   href={option.href}
-                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-[13px] hover:bg-surface-2"
+                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-meta hover:bg-surface-2"
                 >
                   <span className="truncate">{option.name}</span>
-                  <span className="num shrink-0 text-[12px] text-ink-3">
+                  <span className="num shrink-0 text-label text-ink-3">
                     {option.priceText}
                   </span>
                 </Link>
               ) : (
                 <span
                   key={option.id}
-                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-[13px] text-ink-3"
+                  className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-meta text-ink-3"
                   title="No matchup published for that pair yet"
                 >
                   <span className="truncate">{option.name}</span>
-                  <span className="text-[12px]">soon</span>
+                  <span className="text-label">soon</span>
                 </span>
               )
             )}
           </div>
         </details>
       ) : (
-        <span className="text-[12px] text-ink-3 hidden sm:inline">
+        <span className="text-label text-ink-3 hidden sm:inline">
           Only two {subLabel(product.subcategory).toLowerCase()} so far
         </span>
       )}
@@ -265,7 +265,7 @@ export async function CompareMatchup({
   return (
     <>
       <div className="shell shell-wide pt-6">
-        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-[12.5px] text-ink-3">
+        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-meta text-ink-3">
           <Link href={homeHref(market)} className="hover:text-accent">
             Home
           </Link>
@@ -283,8 +283,8 @@ export async function CompareMatchup({
 
         <header className="mt-5 max-w-3xl">
           <p className="eyebrow">Head to head</p>
-          <h1 className="display mt-2 text-[30px] sm:text-[40px]">{comparison.productName}</h1>
-          <p className="mt-4 text-[16px] leading-relaxed text-ink sm:text-[17.5px]">{answer}</p>
+          <h1 className="display mt-2 text-h1">{comparison.productName}</h1>
+          <p className="mt-4 text-lead leading-relaxed text-ink">{answer}</p>
           <PriceNote subcategory={productA.subcategory} />
         </header>
 
@@ -300,7 +300,7 @@ export async function CompareMatchup({
           />
           <span
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-line bg-surface text-[12px] font-bold tracking-[-0.02em] text-ink-3 md:grid"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-line bg-surface text-label font-bold tracking-[-0.02em] text-ink-3 md:grid"
             style={{ width: 38, height: 38 }}
           >
             VS
@@ -334,7 +334,7 @@ export async function CompareMatchup({
             <FinanceDisclaimer products={[productA, productB]} />
           </div>
         ) : (
-          <div className="shell shell-wide mt-4 flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-ink-3">
+          <div className="shell shell-wide mt-4 flex flex-wrap items-center justify-between gap-2 text-meta text-ink-3">
             <span>
               Most rows are from the official spec sheet. Marked rows are other published figures or
               our summary, not lab tests we ran.
@@ -376,7 +376,7 @@ export async function CompareMatchup({
       {/* Who should buy which */}
       <div className="shell shell-wide">
         <section className="mt-6" aria-labelledby="verdict">
-          <h2 id="verdict" className="display text-[20px] sm:text-[23px]">
+          <h2 id="verdict" className="display text-h4">
             Which one should you buy
           </h2>
           <div className="mt-4 grid gap-3 md:grid-cols-2 md:gap-5">
@@ -389,11 +389,11 @@ export async function CompareMatchup({
                 className="card flex flex-col p-5"
               >
                 <p className="eyebrow">Pick this one if</p>
-                <h3 className="mt-1.5 text-[16px] font-semibold">{product.name}</h3>
-                <p className="mt-3 text-[14px] leading-relaxed text-ink-2">{product.description}</p>
+                <h3 className="mt-1.5 text-subhead font-semibold">{product.name}</h3>
+                <p className="mt-3 text-body leading-relaxed text-ink-2">{product.description}</p>
                 <ul className="mt-4 grid gap-2">
                   {product.pros.map((pro) => (
-                    <li key={pro} className="flex gap-2 text-[13.5px] leading-snug text-ink-2">
+                    <li key={pro} className="flex gap-2 text-cell leading-snug text-ink-2">
                       <span aria-hidden style={{ color: side === 'a' ? 'var(--accent)' : 'var(--rival)' }}>
                         +
                       </span>
@@ -404,7 +404,7 @@ export async function CompareMatchup({
                 <p className="eyebrow mt-5 mb-2">What you give up</p>
                 <ul className="grid gap-2">
                   {product.cons.map((con) => (
-                    <li key={con} className="flex gap-2 text-[13.5px] leading-snug text-ink-3">
+                    <li key={con} className="flex gap-2 text-cell leading-snug text-ink-3">
                       <span aria-hidden>−</span>
                       {con}
                     </li>
@@ -425,16 +425,16 @@ export async function CompareMatchup({
 
         {lenses.length > 0 && (
           <section className="mt-14" aria-labelledby="best-for">
-            <h2 id="best-for" className="display text-[20px] sm:text-[23px]">
+            <h2 id="best-for" className="display text-h4">
               Best for each use
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {lenses.map((lens) => (
                 <div key={lens.id} className="card flex flex-col p-5">
-                  <h3 className="text-[16px] font-semibold text-ink">{lens.label}</h3>
-                  <p className="mt-1 text-[12.5px] text-ink-3">{lens.job}</p>
-                  <p className="mt-3 text-[14px] font-semibold text-ink">{lens.headline}</p>
-                  <ul className="mt-2 grid gap-1.5 text-[13px] text-ink-2">
+                  <h3 className="text-subhead font-semibold text-ink">{lens.label}</h3>
+                  <p className="mt-1 text-meta text-ink-3">{lens.job}</p>
+                  <p className="mt-3 text-body font-semibold text-ink">{lens.headline}</p>
+                  <ul className="mt-2 grid gap-1.5 text-meta text-ink-2">
                     {lens.reasons.map((reason) => (
                       <li key={reason} className="leading-snug">
                         {reason}
@@ -444,7 +444,7 @@ export async function CompareMatchup({
                 </div>
               ))}
             </div>
-            <p className="mt-4 max-w-2xl text-[13px] leading-relaxed text-ink-3">
+            <p className="mt-4 max-w-2xl text-meta leading-relaxed text-ink-3">
               Every answer above is scored from published figures. A lens uses only the rows that
               matter for that use, including marked rows that are not on the official sheet. Switch
               lenses interactively in the panel above.
@@ -453,27 +453,27 @@ export async function CompareMatchup({
         )}
 
         <section className="mt-14 card p-6 text-center" aria-labelledby="done">
-          <h2 id="done" className="display text-[20px] sm:text-[23px]">Done deciding?</h2>
-          <p className="mt-1.5 text-[13.5px] text-ink-3">
+          <h2 id="done" className="display text-h4">Done deciding?</h2>
+          <p className="mt-1.5 text-cell text-ink-3">
             Open the full standalone spec sheet for either device.
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <Link
               href={productHref(productA, market)}
-              className="btn rounded-full bg-ink px-5 py-2 text-[13px] font-semibold text-surface transition-transform motion-safe:hover:scale-[1.02]"
+              className="btn rounded-full bg-ink px-5 py-2 text-meta font-semibold text-surface transition-transform motion-safe:hover:scale-[1.02]"
             >
               {productA.name} spec sheet
             </Link>
             <Link
               href={productHref(productB, market)}
-              className="btn rounded-full bg-ink px-5 py-2 text-[13px] font-semibold text-surface transition-transform motion-safe:hover:scale-[1.02]"
+              className="btn rounded-full bg-ink px-5 py-2 text-meta font-semibold text-surface transition-transform motion-safe:hover:scale-[1.02]"
             >
               {productB.name} spec sheet
             </Link>
             <ShareVerdict />
           </div>
           {(productA.officialSource?.url || productB.officialSource?.url) && (
-            <p className="mt-4 text-[12px] text-ink-3">
+            <p className="mt-4 text-label text-ink-3">
               Manufacturer pages:{' '}
               {productA.officialSource?.url && (
                 <a
@@ -501,19 +501,19 @@ export async function CompareMatchup({
         </section>
 
         <section className="mt-14" aria-labelledby="faq">
-          <h2 id="faq" className="display text-[20px] sm:text-[23px] mb-4">
+          <h2 id="faq" className="display text-h4 mb-4">
             Common questions
           </h2>
           <div className="card divide-y divide-line">
             {faq.map(({ q, a }) => (
               <details key={q} className="group p-4">
-                <summary className="cursor-pointer list-none font-semibold text-[14px] flex items-center justify-between gap-3 text-ink [&::-webkit-details-marker]:hidden">
+                <summary className="cursor-pointer list-none font-semibold text-body flex items-center justify-between gap-3 text-ink [&::-webkit-details-marker]:hidden">
                   {q}
                   <svg width="12" height="12" viewBox="0 0 12 12" className="shrink-0 text-ink-3 transition-transform group-open:rotate-180" aria-hidden>
                     <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </summary>
-                <p className="mt-3 text-[13.5px] leading-relaxed text-ink-2">{a}</p>
+                <p className="mt-3 text-cell leading-relaxed text-ink-2">{a}</p>
               </details>
             ))}
           </div>
@@ -521,7 +521,7 @@ export async function CompareMatchup({
 
         {otherComparisons.length > 0 && (
           <section className="mt-14" aria-labelledby="others">
-            <h2 id="others" className="display text-[20px] sm:text-[23px]">
+            <h2 id="others" className="display text-h4">
               Other matchups
             </h2>
             <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
@@ -531,7 +531,7 @@ export async function CompareMatchup({
                   href={compareHref(comp, market)}
                   className="card p-4 transition-colors hover:border-line-2"
                 >
-                  <p className="text-[14px] font-semibold leading-snug">{comp.productName}</p>
+                  <p className="text-body font-semibold leading-snug">{comp.productName}</p>
 
                 </Link>
               ))}

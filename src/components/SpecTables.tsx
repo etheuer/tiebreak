@@ -37,12 +37,12 @@ function Cell({ row, side, market }: { row: ScoredRow; side: Side; market: Marke
 
 function LeadBadge({ group }: { group: ScoredGroup }) {
   if (!group.leader) {
-    return <span className="text-[12px] text-ink-3">{group.diffCount} differences</span>
+    return <span className="text-label text-ink-3">{group.diffCount} differences</span>
   }
   const tone = group.leader === 'a' ? 'var(--accent-2)' : 'var(--rival-2)'
   const score = group.leader === 'a' ? `${group.aWins}-${group.bWins}` : `${group.bWins}-${group.aWins}`
   return (
-    <span className="num text-[12px] font-semibold" style={{ color: tone }}>
+    <span className="num text-label font-semibold" style={{ color: tone }}>
       leads {score}
     </span>
   )
@@ -163,12 +163,12 @@ export function SpecTables({
                 <span className="min-w-0">
                   <Link
                     href={productHref(product, market)}
-                    className="block truncate text-[12.5px] font-semibold leading-tight sm:text-[13.5px] hover:underline"
+                    className="block truncate text-cell font-semibold leading-tight hover:underline"
                     title={`View ${product.name} spec sheet`}
                   >
                     {shortName(product)}
                   </Link>
-                  <span className="num block text-[12px] leading-tight text-ink-3">
+                  <span className="num block text-label leading-tight text-ink-3">
                     {priceShort(product, market)}
                     <span
                       className="ml-1.5 font-semibold"
@@ -193,7 +193,7 @@ export function SpecTables({
                   pauseSpy.current = true
                   setTimeout(() => { pauseSpy.current = false }, 800)
                 }}
-                className="shrink-0 rounded-md px-2.5 py-1 text-[12.5px] font-medium transition-colors"
+                className="shrink-0 rounded-md px-2.5 py-1 text-meta font-medium transition-colors"
                 style={{
                   background: active === group.id ? 'var(--surface-3)' : 'transparent',
                   color: active === group.id ? 'var(--ink)' : 'var(--ink-3)',
@@ -209,13 +209,13 @@ export function SpecTables({
       <div className="shell shell-wide">
         {/* Controls, mobile */}
         <div className="flex items-center gap-2 py-3 md:hidden">
-          <div className="flex rounded-lg border border-line p-0.5 text-[12px]">
+          <div className="flex min-w-0 rounded-lg border border-line p-0.5 text-label">
             {(['a', 'both', 'b'] as const).map((mode) => (
               <button
                 key={mode}
                 type="button"
                 onClick={() => setFocus(mode)}
-                className="mobile-switch-btn rounded-md px-2.5 py-1 font-medium transition-colors"
+                className="mobile-switch-btn truncate rounded-md px-2.5 py-1 font-medium transition-colors"
                 style={{
                   background: focus === mode ? 'var(--surface-3)' : 'transparent',
                   color: focus === mode ? 'var(--ink)' : 'var(--ink-3)',
@@ -231,7 +231,7 @@ export function SpecTables({
           </label>
           <select
             id="jump-select"
-            className="ml-auto rounded-lg border border-line bg-surface px-2 py-1.5 text-[12.5px] text-ink-2"
+            className="ml-auto min-w-0 shrink rounded-lg border border-line bg-surface px-2 py-1.5 text-meta text-ink-2"
             value=""
             onChange={(event) => {
               const id = event.target.value
@@ -252,7 +252,7 @@ export function SpecTables({
           </select>
         </div>
 
-        <p className="hidden py-3 text-[12.5px] text-ink-3 md:block">
+        <p className="hidden py-3 text-meta text-ink-3 md:block">
           <span className="num">{totals.differing}</span> of{' '}
           <span className="num">{totals.total}</span> attributes differ.
           {hideSame ? ' Showing differences only.' : ' Identical rows are dimmed.'}
@@ -261,7 +261,7 @@ export function SpecTables({
         {visible.map((group) => (
           <div key={group.id} className="mb-8 scroll-mt-[168px]" id={group.id}>
             <div className="flex items-baseline justify-between gap-3 border-b-2 border-line pb-2">
-              <h3 className="text-[15px] font-semibold tracking-[-0.01em]">{group.label}</h3>
+              <h3 className="text-body font-semibold tracking-[-0.01em]">{group.label}</h3>
               <LeadBadge group={group} />
             </div>
             <table className="spec-table">
@@ -278,7 +278,7 @@ export function SpecTables({
                     <th scope="row" className="row-label">
                       {row.label}
                       {originNote(row.origin) ? (
-                        <span className="mt-0.5 block text-[11px] font-normal normal-case tracking-normal text-ink-3">
+                        <span className="mt-0.5 block text-micro font-normal normal-case tracking-normal text-ink-3">
                           {originNote(row.origin)}
                         </span>
                       ) : null}
@@ -298,7 +298,7 @@ export function SpecTables({
         ))}
 
         {visible.length === 0 && (
-          <p className="card p-8 text-center text-[14px] text-ink-2">
+          <p className="card p-8 text-center text-body text-ink-2">
             These two match on every attribute we track. Turn off differences only to see the full
             sheet.
           </p>

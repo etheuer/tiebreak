@@ -75,7 +75,7 @@ export async function AppShell({
       <SiteHeader index={index} nav={nav} homeHref={homeHref(market)} />
       <main id="main">{children}</main>
       {market === 'uk' ? (
-        <p className="shell pb-2 text-[12px] leading-relaxed text-ink-3">
+        <p className="shell pb-2 text-meta leading-relaxed text-ink-3">
           UK buyers also have rights under the Consumer Rights Act 2015; this sheet is manufacturer
           warranty, not legal advice.
         </p>

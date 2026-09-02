@@ -62,7 +62,7 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
 
   return (
     <div className="shell">
-      <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 pt-6 text-[12.5px] text-ink-3">
+      <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 pt-6 text-meta text-ink-3">
         <Link href={homeHref(market)} className="hover:text-accent">
           Home
         </Link>
@@ -72,8 +72,8 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
 
       <header className="mt-5 border-b border-line pb-8">
         <p className="eyebrow">Directory</p>
-        <h1 className="display mt-2 text-[32px] sm:text-[44px]">All matchups</h1>
-        <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-ink-2">
+        <h1 className="display mt-2 text-h1">All matchups</h1>
+        <p className="mt-3 max-w-xl text-body leading-relaxed text-ink-2">
           Every head-to-head comparison published on Tiebreak, scored from published specifications with a verdict for every pair.
         </p>
       </header>
@@ -81,7 +81,7 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
       <div className="py-8 grid gap-10">
         {grouped.map((group) => (
           <section key={group.sub} id={group.sub} className="scroll-mt-20">
-            <h2 className="display text-[21px] sm:text-[25px] border-b-2 border-line pb-2">
+            <h2 className="display text-h3 border-b-2 border-line pb-2">
               {group.label}
             </h2>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -96,11 +96,11 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
                   <li key={c.productA + c.productB} className="card p-4">
                     <Link
                       href={compareHref(c, market)}
-                      className="text-[15px] font-semibold text-ink hover:text-accent"
+                      className="text-body font-semibold text-ink hover:text-accent"
                     >
                       {c.productName}
                     </Link>
-                    <p className="mt-1.5 text-[13px] leading-relaxed text-ink-3">{claim}</p>
+                    <p className="mt-1.5 text-meta leading-relaxed text-ink-3">{claim}</p>
                   </li>
                 )
               })}

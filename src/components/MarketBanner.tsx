@@ -81,7 +81,7 @@ export function MarketBanner({
 
   return (
     <div className="border-b border-line bg-surface-2">
-      <div className="shell flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-[12.5px] text-ink-2">
+      <div className="shell flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-meta text-ink-2">
         <p>
           You are on the {here} site.
           {otherHref ? (

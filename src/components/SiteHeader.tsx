@@ -24,7 +24,7 @@ function Wordmark({ href }: { href: string }) {
           <path d="M7.4 12.6 13 3.4" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" opacity="0.55" />
         </svg>
       </span>
-      <span className="text-[17px] font-bold tracking-[-0.03em] text-ink">Tiebreak</span>
+      <span className="text-title font-bold tracking-[-0.03em] text-ink">Tiebreak</span>
     </Link>
   )
 }
@@ -119,7 +119,7 @@ export function SiteHeader({
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-2.5 py-1.5 text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
+              className="rounded-md px-2.5 py-1.5 text-cell font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
             >
               {item.label}
             </Link>
@@ -130,15 +130,16 @@ export function SiteHeader({
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="flex items-center gap-2 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-[13px] text-ink-3 transition-colors hover:border-line-2 hover:text-ink-2 sm:w-[248px]"
+            className="flex items-center gap-2 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-meta text-ink-3 transition-colors hover:border-line-2 hover:text-ink-2 sm:w-[248px] md:w-auto lg:w-[292px]"
             aria-label="Search products and matchups"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
               <circle cx="7" cy="7" r="4.4" stroke="currentColor" strokeWidth="1.5" />
               <path d="m10.4 10.4 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            <span className="hidden sm:inline">Search products or matchups</span>
-            <kbd className="num ml-auto hidden rounded border border-line px-1.5 py-0.5 text-[10px] sm:inline">
+            <span className="hidden whitespace-nowrap sm:inline md:hidden">Search products</span>
+            <span className="hidden whitespace-nowrap lg:inline">Search products or matchups</span>
+            <kbd className="num ml-auto hidden rounded border border-line px-1.5 py-0.5 text-badge sm:inline md:hidden lg:inline">
               /
             </kbd>
           </button>
@@ -170,7 +171,7 @@ export function SiteHeader({
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenu(false)}
-                className="rounded-lg px-3 py-2.5 text-[15px] font-medium text-ink hover:bg-surface-2"
+                className="rounded-lg px-3 py-2.5 text-body font-medium text-ink hover:bg-surface-2"
               >
                 {item.label}
               </Link>
@@ -185,7 +186,7 @@ export function SiteHeader({
                     key={entry.href}
                     href={entry.href}
                     onClick={() => setMenu(false)}
-                    className="block rounded-lg px-3 py-2 text-[14px] text-ink-2 hover:bg-surface-2 hover:text-ink"
+                    className="block rounded-lg px-3 py-2 text-body text-ink-2 hover:bg-surface-2 hover:text-ink"
                   >
                     {entry.label}
                   </Link>
@@ -220,12 +221,12 @@ export function SiteHeader({
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={onSearchKey}
                   placeholder="Try iPhone, OLED, vacuum"
-                  className="w-full bg-transparent py-3.5 text-[15px] text-ink outline-none placeholder:text-ink-3"
+                  className="w-full bg-transparent py-3.5 text-body text-ink outline-none placeholder:text-ink-3"
                 />
               </div>
               <ul className="max-h-[52vh] overflow-y-auto py-1.5">
                 {results.length === 0 && (
-                  <li className="px-4 py-6 text-center text-[13.5px] text-ink-3">
+                  <li className="px-4 py-6 text-center text-cell text-ink-3">
                     Nothing matches that yet.
                   </li>
                 )}
@@ -239,8 +240,8 @@ export function SiteHeader({
                       style={{ background: i === cursor ? 'var(--surface-2)' : 'transparent' }}
                     >
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-medium text-ink">{entry.label}</span>
-                        <span className="block truncate text-[12px] text-ink-3">{entry.meta}</span>
+                        <span className="block truncate text-body font-medium text-ink">{entry.label}</span>
+                        <span className="block truncate text-label text-ink-3">{entry.meta}</span>
                       </span>
                       <span className="eyebrow shrink-0">{KIND_LABEL[entry.kind]}</span>
                     </button>

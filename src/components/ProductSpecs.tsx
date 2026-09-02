@@ -9,7 +9,7 @@ export function ProductSpecs({ product }: { product: Product }) {
   return (
     <section aria-labelledby="specs-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h2 id="specs-heading" className="display text-[20px] sm:text-[23px]">
+        <h2 id="specs-heading" className="display text-h4">
           Full specifications
         </h2>
         <nav className="scroll-x flex gap-1.5" aria-label="Specification sections">
@@ -32,21 +32,21 @@ export function ProductSpecs({ product }: { product: Product }) {
             id={`spec-${group.id}`}
             className="card mb-4 break-inside-avoid overflow-hidden scroll-mt-24"
           >
-            <h3 className="border-b border-line bg-surface-2 px-4 py-2.5 text-[13px] font-semibold uppercase tracking-[0.06em]">
+            <h3 className="border-b border-line bg-surface-2 px-4 py-2.5 text-meta font-semibold uppercase tracking-[0.06em]">
               {group.label}
             </h3>
             <dl className="divide-y divide-line">
               {group.rows.map((row) => (
                 <div key={row.key} className="grid grid-cols-[38%_1fr] gap-3 px-4 py-2.5">
-                  <dt className="text-[12.5px] leading-snug text-ink-3">
+                  <dt className="text-meta leading-snug text-ink-3">
                     {row.label}
                     {originNote(row.origin) ? (
-                      <span className="mt-0.5 block text-[11px] font-normal text-ink-3">
+                      <span className="mt-0.5 block text-micro font-normal text-ink-3">
                         {originNote(row.origin)}
                       </span>
                     ) : null}
                   </dt>
-                  <dd className="text-[13px] leading-snug">{row.a}</dd>
+                  <dd className="text-meta leading-snug">{row.a}</dd>
                 </div>
               ))}
             </dl>
@@ -55,7 +55,7 @@ export function ProductSpecs({ product }: { product: Product }) {
       </div>
 
       {product.officialSource?.url ? (
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-ink-3">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-meta text-ink-3">
           <span>
             {product.officialSource.kind === 'issuer-terms'
               ? 'Card figures are from issuer materials and go stale. Credit-needed bands are our summary.'

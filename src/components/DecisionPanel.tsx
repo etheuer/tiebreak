@@ -179,7 +179,7 @@ export function DecisionPanel({
               </button>
             ))}
           </div>
-          <p className="text-[12.5px] leading-snug text-ink-3 md:ml-auto md:max-w-[38%] md:text-right">
+          <p className="text-meta leading-snug text-ink-3 md:ml-auto md:max-w-[38%] md:text-right">
             {useCase ? useCase.job : `Every rankable spec counts once. Pick a lens to score only what matters for your ${thing}.`}
           </p>
         </div>
@@ -190,17 +190,17 @@ export function DecisionPanel({
             <div className="flex items-baseline justify-between gap-3">
               <p className="eyebrow">Straight answer</p>
               {score.scored > 0 ? (
-                <p className="num text-[12px] text-ink-3">
+                <p className="num text-label text-ink-3">
                   {useCase ? useCase.label : 'Overall'}: {score.aWins} to {score.bWins}
                 </p>
               ) : null}
             </div>
-            <p className="mt-2 text-[17px] font-semibold leading-snug tracking-[-0.01em] sm:text-[18.5px]" aria-live="polite">
+            <p className="mt-2 text-lead font-semibold leading-snug tracking-[-0.01em]" aria-live="polite">
               {answer.headline}
             </p>
             <ul className="mt-3 grid gap-1.5">
               {answer.reasons.map((reason) => (
-                <li key={reason} className="flex gap-2 text-[13.5px] leading-snug text-ink-2">
+                <li key={reason} className="flex gap-2 text-cell leading-snug text-ink-2">
                   <span aria-hidden className="text-ink-3">
                     –
                   </span>
@@ -209,14 +209,14 @@ export function DecisionPanel({
               ))}
             </ul>
             {answer.caveat && (
-              <p className="mt-3 rounded-md bg-surface-2 px-3 py-2 text-[12.5px] leading-snug text-ink-2">
+              <p className="mt-3 rounded-md bg-surface-2 px-3 py-2 text-meta leading-snug text-ink-2">
                 {answer.caveat}
               </p>
             )}
 
             <div className="mt-4">
               <LensBar aWins={score.aWins} bWins={score.bWins} />
-              <div className="mt-1.5 flex items-center justify-between gap-3 text-[12px]">
+              <div className="mt-1.5 flex items-center justify-between gap-3 text-label">
                 <span className="num font-semibold" style={{ color: 'var(--accent-2)' }}>
                   {score.aWins} {names.a}
                 </span>
@@ -237,12 +237,12 @@ export function DecisionPanel({
             <div className="flex items-baseline justify-between gap-3">
               <p className="eyebrow">Deal-breakers</p>
               {checks.length > 0 && (
-                <p className="text-[11.5px] text-ink-3">tick what would make you walk away</p>
+                <p className="text-label text-ink-3">tick what would make you walk away</p>
               )}
             </div>
 
             {checks.length === 0 ? (
-              <p className="mt-2 text-[13px] leading-relaxed text-ink-2">
+              <p className="mt-2 text-meta leading-relaxed text-ink-2">
                 Nothing on either sheet trips a common {thing} deal-breaker. The decision is about degree, not
                 missing features.
               </p>
@@ -267,17 +267,17 @@ export function DecisionPanel({
                         />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-baseline justify-between gap-2">
-                            <label htmlFor={`db-${check.id}`} className="cursor-pointer text-[13.5px] font-semibold leading-snug">
+                            <label htmlFor={`db-${check.id}`} className="cursor-pointer text-cell font-semibold leading-snug">
                               {check.label}
                             </label>
-                            <a href={`#${check.group}`} className="link-underline shrink-0 text-[12px] text-ink-3">
+                            <a href={`#${check.group}`} className="link-underline shrink-0 text-label text-ink-3">
                               row
                             </a>
                           </div>
-                          <p id={`db-${check.id}-why`} className="text-[12px] leading-snug text-ink-3">
+                          <p id={`db-${check.id}-why`} className="text-meta leading-snug text-ink-3">
                             {check.why}
                           </p>
-                          <div className="mt-1.5 grid grid-cols-2 gap-x-3 gap-y-1 text-[12px]">
+                          <div className="mt-1.5 grid grid-cols-2 gap-x-3 gap-y-1 text-label">
                             {(['a', 'b'] as const).map((side) => {
                               const trips = check[side] === 'trips'
                               const value = side === 'a' ? check.aValue : check.bValue
@@ -320,21 +320,21 @@ export function DecisionPanel({
         <section className="mt-10" aria-labelledby="glance">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 id="glance" className="display text-[20px] sm:text-[23px]">
+              <h2 id="glance" className="display text-h4">
                 {useCase ? `${useCase.label}: the specs that decide it` : 'At a glance'}
               </h2>
-              <p className="mt-1.5 text-[13.5px] text-ink-2">
+              <p className="mt-1.5 text-cell text-ink-2">
                 {useCase ? useCase.job : 'The handful of numbers that decide most purchases in this category.'}
               </p>
             </div>
-            <p className="num text-[12.5px] text-ink-3">
+            <p className="num text-meta text-ink-3">
               {focusDiffering} of {focusRows.length} differ
             </p>
           </div>
           <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {focusRows.map((row) => (
               <div key={row.key} className="card overflow-hidden">
-                <p className="flex items-baseline justify-between gap-2 border-b border-line px-3.5 py-2 text-[12px] font-semibold uppercase tracking-[0.06em] text-ink-3">
+                <p className="flex items-baseline justify-between gap-2 border-b border-line px-3.5 py-2 text-label font-semibold uppercase tracking-[0.06em] text-ink-3">
                   <span>{row.label}</span>
                   {row.differs && !row.winner && (
                     <span className="num normal-case tracking-normal" title="Differs, but cannot be ranked honestly" aria-label="differs">
@@ -353,13 +353,13 @@ export function DecisionPanel({
                         className={`${side === 'a' ? 'col-a' : 'col-b'} px-3.5 py-3 ${side === 'b' ? 'border-l border-line' : ''}`}
                       >
                         <p
-                          className="text-[12px] font-semibold uppercase tracking-[0.06em]"
+                          className="text-label font-semibold uppercase tracking-[0.06em]"
                           style={{ color: side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)' }}
                         >
                           {side === 'a' ? productA.brand : productB.brand}
                         </p>
                         <p
-                          className={`mt-1 text-[13.5px] leading-snug ${
+                          className={`mt-1 text-cell leading-snug ${
                             won ? (side === 'a' ? 'val-win-a' : 'val-win-b') : row.differs ? 'text-ink-2' : 'text-ink-3'
                           }`}
                         >

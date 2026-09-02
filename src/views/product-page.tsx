@@ -114,7 +114,7 @@ export async function ProductDetail({
 
   return (
     <div className="shell">
-      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 pt-6 text-[12.5px] text-ink-3">
+      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 pt-6 text-meta text-ink-3">
         <Link href={homeHref(market)} className="hover:text-accent">
           Home
         </Link>
@@ -136,17 +136,17 @@ export async function ProductDetail({
           <p className="eyebrow">
             {product.brand} · {subLabel(product.subcategory)}
           </p>
-          <h1 className="display mt-2 text-[30px] sm:text-[42px]">{product.name}</h1>
-          <p className="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-ink-2">
+          <h1 className="display mt-2 text-h1">{product.name}</h1>
+          <p className="mt-3 max-w-2xl text-body leading-relaxed text-ink-2">
             {product.description}
           </p>
         </div>
         <div className="shrink-0 sm:text-right">
           <p className="eyebrow">{priceCaption(product.subcategory)}</p>
-          <p className="num mt-1 text-[30px] font-semibold tracking-[-0.03em]">
+          <p className="num mt-1 text-stat font-semibold tracking-[-0.03em]">
             {priceShort(product, market)}
           </p>
-          <p className="num mt-1 text-[12px] text-ink-3">{attributeCount} attributes tracked</p>
+          <p className="num mt-1 text-label text-ink-3">{attributeCount} attributes tracked</p>
           <PriceNote subcategory={product.subcategory} />
         </div>
       </header>
@@ -157,7 +157,7 @@ export async function ProductDetail({
             {keyNumbers.map((item) => (
               <div key={item.key} className="border-t-2 border-line pt-3">
                 <p className="eyebrow">{item.label}</p>
-                <p className="mt-1.5 text-[15px] font-medium leading-snug">{item.value}</p>
+                <p className="mt-1.5 text-body font-medium leading-snug">{item.value}</p>
               </div>
             ))}
           </div>
@@ -166,10 +166,10 @@ export async function ProductDetail({
 
       <section className="grid gap-3 border-t border-line py-10 md:grid-cols-2 md:gap-5">
         <div className="card p-5">
-          <h2 className="text-[15px] font-semibold">What it does well</h2>
+          <h2 className="text-body font-semibold">What it does well</h2>
           <ul className="mt-3 grid gap-2">
             {product.pros.map((pro) => (
-              <li key={pro} className="flex gap-2 text-[13.5px] leading-snug text-ink-2">
+              <li key={pro} className="flex gap-2 text-cell leading-snug text-ink-2">
                 <span aria-hidden style={{ color: 'var(--accent)' }}>
                   +
                 </span>
@@ -179,10 +179,10 @@ export async function ProductDetail({
           </ul>
         </div>
         <div className="card p-5">
-          <h2 className="text-[15px] font-semibold">Where it gives ground</h2>
+          <h2 className="text-body font-semibold">Where it gives ground</h2>
           <ul className="mt-3 grid gap-2">
             {product.cons.map((con) => (
-              <li key={con} className="flex gap-2 text-[13.5px] leading-snug text-ink-3">
+              <li key={con} className="flex gap-2 text-cell leading-snug text-ink-3">
                 <span aria-hidden>−</span>
                 {con}
               </li>
@@ -193,10 +193,10 @@ export async function ProductDetail({
 
       {matchups.length > 0 && (
         <section className="border-t border-line py-10" aria-labelledby="matchups">
-          <h2 id="matchups" className="display text-[20px] sm:text-[24px]">
+          <h2 id="matchups" className="display text-h4">
             Compare it head to head
           </h2>
-          <p className="mt-2 text-[13.5px] text-ink-2">
+          <p className="mt-2 text-cell text-ink-2">
             The fastest way to decide is against the product you are actually cross shopping.
             {allMatchups.length > matchups.length &&
               ` Showing ${matchups.length} of ${allMatchups.length} published matchups.`}
@@ -228,7 +228,7 @@ export async function ProductDetail({
 
       {alternatives.length > 0 && (
         <section className="border-t border-line py-10" aria-labelledby="alternatives">
-          <h2 id="alternatives" className="display text-[20px] sm:text-[24px]">
+          <h2 id="alternatives" className="display text-h4">
             Other {subLabel(product.subcategory).toLowerCase()} we track
           </h2>
           <div className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
@@ -240,9 +240,9 @@ export async function ProductDetail({
                     <ProductMark product={alternative} size="sm" />
                     <div className="min-w-0">
                       <p className="eyebrow">{alternative.brand}</p>
-                      <p className="mt-0.5 truncate text-[14px] font-semibold">{alternative.name}</p>
+                      <p className="mt-0.5 truncate text-body font-semibold">{alternative.name}</p>
                     </div>
-                    <p className="num ml-auto shrink-0 text-[13px] text-ink-3">
+                    <p className="num ml-auto shrink-0 text-meta text-ink-3">
                       {priceShort(alternative, market)}
                     </p>
                   </div>

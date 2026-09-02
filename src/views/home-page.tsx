@@ -98,12 +98,12 @@ export async function HomePage({ market }: { market: MarketId }) {
         <div className="hairline-grid pointer-events-none absolute inset-0 opacity-[0.55]" aria-hidden />
         <div className="shell relative py-14 sm:py-20">
 
-          <h1 className="display mt-4 max-w-3xl text-[38px] sm:text-[58px] lg:text-[68px]">
+          <h1 className="display mt-4 max-w-3xl text-hero">
             Two products.
             <br />
             <span style={{ color: 'var(--accent)' }}>One answer.</span>
           </h1>
-          <p className="mt-6 max-w-xl text-[16px] leading-relaxed text-ink-2 sm:text-[18px]">
+          <p className="mt-6 max-w-xl text-lead leading-relaxed text-ink-2">
             You already narrowed it down. Tiebreak puts the pair side by side, marks every
             difference, and says which one wins on the numbers that matter.
           </p>
@@ -113,12 +113,12 @@ export async function HomePage({ market }: { market: MarketId }) {
               entry.href ? (
                 <Link key={entry.sub} href={entry.href} className="chip">
                   {entry.label}
-                  <span className="num text-[11px] text-ink-3">{entry.attributes} specs</span>
+                  <span className="num text-micro text-ink-3">{entry.attributes} specs</span>
                 </Link>
               ) : null
             )}
-            <span className="ml-1 hidden text-[12.5px] text-ink-3 sm:inline">
-              or press <kbd className="num rounded border border-line px-1.5 py-0.5 text-[12px]">/</kbd> to
+            <span className="ml-1 hidden text-meta text-ink-3 sm:inline">
+              or press <kbd className="num rounded border border-line px-1.5 py-0.5 text-label">/</kbd> to
               search
             </span>
           </div>
@@ -142,12 +142,12 @@ export async function HomePage({ market }: { market: MarketId }) {
         <section id="comparisons" className="scroll-mt-24 py-14">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 className="display text-[24px] sm:text-[30px]">Popular matchups</h2>
-              <p className="mt-2 text-[14px] text-ink-2">
+              <h2 className="display text-h2">Popular matchups</h2>
+              <p className="mt-2 text-body text-ink-2">
                 Every matchup is scored from published specs, not opinion.
               </p>
             </div>
-            <p className="num text-[12.5px] text-ink-3">{pairs.length} published</p>
+            <p className="num text-meta text-ink-3">{pairs.length} published</p>
           </div>
 
           <div className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-[repeat(2,minmax(0,1fr))] md:gap-4">
@@ -165,7 +165,7 @@ export async function HomePage({ market }: { market: MarketId }) {
         </section>
 
         <section id="categories" className="scroll-mt-24 border-t border-line py-14">
-          <h2 className="display text-[24px] sm:text-[30px]">Browse by category</h2>
+          <h2 className="display text-h2">Browse by category</h2>
           <div className="mt-6 flex flex-col divide-y divide-line border-y border-line">
             {categories.map((category) => {
               const categoryProducts = products.filter((product) => product.category === category.id)
@@ -174,7 +174,7 @@ export async function HomePage({ market }: { market: MarketId }) {
               if (activeSubs.length === 0) return null
               return (
                 <div key={category.id} className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-6">
-                  <h3 className="w-32 shrink-0 text-[15px] font-semibold">{category.name}</h3>
+                  <h3 className="w-32 shrink-0 text-body font-semibold">{category.name}</h3>
                   <div className="flex flex-wrap gap-2">
                     {activeSubs.map((sub) => (
                       <Link

@@ -32,8 +32,8 @@
   --shadow-1: 0 1px 2px rgb(20 22 20 / 0.05);
   --shadow-2: 0 6px 24px -12px rgb(20 22 20 / 0.28);
 
-  --header-h: 56px;
-  --label-col: 108px;
+  --header-h: 60px;
+  --label-col: 118px;
   --radius: 12px;
 }
 
@@ -45,7 +45,7 @@
 
 @media (min-width: 1024px) {
   :root {
-    --header-h: 60px;
+    --header-h: 64px;
     --label-col: 260px;
   }
 }
@@ -104,6 +104,52 @@
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
 }
 
+/*
+  Type scale.
+  Every step is rem, so text follows the reader's browser font-size setting;
+  px sizes ignore it. Prose starts at --text-body (16px). The three steps
+  below --text-meta are interface chrome only -- badges, keycaps, unit
+  suffixes -- and never carry a sentence.
+  Headings interpolate with clamp() instead of jumping at a breakpoint; each
+  curve is tuned so no viewport renders a heading smaller than the fixed
+  sizes it replaced.
+*/
+@theme {
+  --text-badge: 0.6875rem;
+  --text-badge--line-height: 1.35;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.4;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.45;
+  --text-meta: 0.875rem;
+  --text-meta--line-height: 1.5;
+  --text-cell: 0.9375rem;
+  --text-cell--line-height: 1.5;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-subhead: 1.0625rem;
+  --text-subhead--line-height: 1.45;
+  --text-title: 1.125rem;
+  --text-title--line-height: 1.4;
+  --text-lead: 1.1875rem;
+  --text-lead--line-height: 1.5;
+  --text-lead-lg: 1.25rem;
+  --text-lead-lg--line-height: 1.45;
+  --text-stat: 1.875rem;
+  --text-stat--line-height: 1.1;
+
+  --text-h4: clamp(1.3125rem, 1.15rem + 0.8vw, 1.5rem);
+  --text-h4--line-height: 1.25;
+  --text-h3: clamp(1.375rem, 1.19rem + 0.9vw, 1.625rem);
+  --text-h3--line-height: 1.2;
+  --text-h2: clamp(1.5rem, 1.05rem + 2.2vw, 1.9375rem);
+  --text-h2--line-height: 1.15;
+  --text-h1: clamp(1.9375rem, 1.15rem + 4.2vw, 2.75rem);
+  --text-h1--line-height: 1.1;
+  --text-hero: clamp(2.5rem, 1.3rem + 6.4vw, 4.5rem);
+  --text-hero--line-height: 1.02;
+}
+
 * {
   border-color: var(--line);
 }
@@ -116,6 +162,8 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.6;
   font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   font-synthesis-weight: none;
   text-rendering: optimizeLegibility;
@@ -183,7 +231,8 @@ body {
 }
 
 .eyebrow {
-  font-size: 11px;
+  font-size: var(--text-micro);
+  line-height: 1.4;
   font-weight: 600;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -227,21 +276,21 @@ body {
 
 .spec-table th,
 .spec-table td {
-  padding: 9px 10px;
+  padding: 10px 10px;
   vertical-align: top;
   text-align: left;
   border-top: 1px solid var(--line);
-  font-size: 12.5px;
-  line-height: 1.4;
+  font-size: var(--text-meta);
+  line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
 @media (min-width: 640px) {
   .spec-table th,
   .spec-table td {
-    padding: 11px 16px;
-    font-size: 13.5px;
-    line-height: 1.45;
+    padding: 12px 16px;
+    font-size: var(--text-cell);
+    line-height: 1.5;
   }
 }
 
@@ -295,7 +344,7 @@ body {
 
 .win-flag {
   display: inline-block;
-  font-size: 11px;
+  font-size: var(--text-micro);
   line-height: 1;
   transform: translateY(-1px);
   margin-right: 4px;
@@ -324,8 +373,9 @@ body {
   background: var(--surface);
   color: var(--ink-2);
   border-radius: 999px;
-  padding: 5px 11px;
-  font-size: 12.5px;
+  padding: 6px 12px;
+  font-size: var(--text-meta);
+  line-height: 1.3;
   font-weight: 500;
   transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
@@ -348,7 +398,8 @@ body {
   gap: 8px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--text-body);
+  line-height: 1.25;
   padding: 10px 16px;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
@@ -391,8 +442,8 @@ body {
 /* ---------- decision panel ---------- */
 
 .db-check {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   flex: none;
   accent-color: var(--accent);
   cursor: pointer;
@@ -430,7 +481,7 @@ body {
 
 .db-out {
   text-decoration: none;
-  font-size: 10px;
+  font-size: var(--text-badge);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
