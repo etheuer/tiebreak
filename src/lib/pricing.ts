@@ -8,6 +8,13 @@ export type PricePoint = {
 }
 export type MarketAttestation = { asOf: string; source: string }
 
+export type OfficialSourceKind = 'issuer-terms' | 'spec-sheet'
+export type OfficialSource = {
+  url: string
+  asOf: string
+  kind: OfficialSourceKind
+}
+
 export type ProductVariant = {
   name?: string
   description?: string
@@ -32,6 +39,7 @@ export type Product = {
   prices?: Partial<Record<MarketId, PricePoint>>
   variants?: Partial<Record<MarketId, ProductVariant>>
   sameAsUs?: string[]
+  officialSource?: OfficialSource
 }
 
 export type PricedProduct = {
@@ -55,6 +63,11 @@ export function priceOf(product: PricedProduct, market: MarketId): PricePoint | 
     return { amount: product.price, currency: 'USD', asOf: '1970-01-01', source: 'legacy-price' }
   }
   return null
+}
+
+export function officialSourceUrl(product: Product): string | undefined {
+  const url = product.officialSource?.url
+  return url && url.startsWith('https://') ? url : undefined
 }
 
 export function resolveProduct(product: Product, market: MarketId = 'us'): Product {

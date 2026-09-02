@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getCategories, getComparisons, getProductById, getProducts, inMarket, priceOf } from '@/lib/data'
+import { getCategories, getComparisons, getProductById, getProducts, inMarket, officialSourceUrl, priceOf } from '@/lib/data'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { catalogFor } from '@/data/spec-catalog'
@@ -223,6 +223,7 @@ export async function ProductDetail({
 
       <div className="border-t border-line py-10">
         <ProductSpecs product={product} />
+        {isFeeBased(product.subcategory) ? <FinanceDisclaimer products={[product]} /> : null}
       </div>
 
       {alternatives.length > 0 && (
@@ -262,13 +263,12 @@ export async function ProductDetail({
         </section>
       )}
 
-      {isFeeBased(product.subcategory) ? <FinanceDisclaimer /> : null}
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify((() => {
             const point = priceOf(product, market)
+            const sameAs = officialSourceUrl(product)
             if (isFeeBased(product.subcategory)) {
               return {
                 '@context': 'https://schema.org',
@@ -276,6 +276,7 @@ export async function ProductDetail({
                 name: product.name,
                 description: product.description,
                 url: absUrl(productHref(product, market)),
+                ...(sameAs ? { sameAs } : {}),
                 provider: {
                   '@type': 'Organization',
                   name: product.brand,
@@ -296,6 +297,7 @@ export async function ProductDetail({
               description: product.description,
               category: subLabel(product.subcategory),
               url: absUrl(productHref(product, market)),
+              ...(sameAs ? { sameAs } : {}),
               ...(point
                 ? {
                     offers: {

@@ -8,6 +8,7 @@ import {
   getProductById,
   getProducts,
   inMarket,
+  officialSourceUrl,
   priceOf,
   type Product,
 } from '@/lib/data'
@@ -322,6 +323,11 @@ export async function CompareMatchup({
           bWins={verdict.bWins}
           market={market}
         />
+        {isFeeBased(productA.subcategory) ? (
+          <div className="shell shell-wide">
+            <FinanceDisclaimer products={[productA, productB]} />
+          </div>
+        ) : null}
       </div>
 
       {/* Who should buy which */}
@@ -444,7 +450,6 @@ export async function CompareMatchup({
             </div>
           </section>
         )}
-        {isFeeBased(productA.subcategory) ? <FinanceDisclaimer /> : null}
       </div>
 
       <script
@@ -458,6 +463,7 @@ export async function CompareMatchup({
             itemListElement: [productA, productB].map((product, index) => {
               const fee = isFeeBased(product.subcategory)
               const point = priceOf(product, market)
+              const sameAs = officialSourceUrl(product)
               return {
                 '@type': 'ListItem',
                 position: index + 1,
@@ -470,6 +476,7 @@ export async function CompareMatchup({
                   },
                   description: product.description,
                   url: absUrl(productHref(product, market)),
+                  ...(sameAs ? { sameAs } : {}),
                   ...(fee
                     ? {
                         additionalProperty: [

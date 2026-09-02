@@ -6,8 +6,8 @@ import { buildVerdict } from '@/lib/verdict'
 import { formatMoney } from '@/lib/format'
 import { sentenceCase, shortName } from '@/lib/decision'
 
-export type { MarketAttestation, PricePoint, Product, ProductVariant } from '@/lib/pricing'
-export { inMarket, marketsOf, priceOf, resolveProduct } from '@/lib/pricing'
+export type { MarketAttestation, OfficialSource, PricePoint, Product, ProductVariant } from '@/lib/pricing'
+export { inMarket, marketsOf, officialSourceUrl, priceOf, resolveProduct } from '@/lib/pricing'
 
 
 export interface Category {

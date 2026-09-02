@@ -68,6 +68,18 @@ const badSearches = categories.flatMap((category) =>
   (category.popular_searches ?? []).filter((term) => forbiddenSearch.test(term)).map((term) => `${category.id}:${term}`)
 )
 
+const cards = products.filter((product) => product.subcategory === 'credit-cards')
+const dateStamp = /^\d{4}-\d{2}-\d{2}$/
+const badCardSources = cards.filter((product) => {
+  const source = product.officialSource
+  return !(
+    source
+    && source.kind === 'issuer-terms'
+    && dateStamp.test(source.asOf)
+    && /^https:\/\//.test(source.url)
+  )
+})
+
 const checkExport = process.argv.includes('--export')
 const staticRoot = path.join(root, '.next-static')
 const checks = [
@@ -82,6 +94,7 @@ const checks = [
   ['category lists do not promise empty types', emptyCategoryPromises.length, 0],
   ['popular searches match the catalog', badSearches.length, 0],
   ['all subcategories are known', [...presentSubs].every((sub) => sub in SUB_LABEL), true],
+  ['credit cards have issuer-terms URLs', badCardSources.length, 0],
 ]
 
 if (checkExport) {
@@ -97,6 +110,15 @@ if (checkExport) {
       return readFileSync(path.join(staticRoot, 'sitemap.xml'), 'utf8').includes(`/${name}/`)
     }), true],
   )
+  const goldPage = path.join(staticRoot, 'product', 'finance', 'american-express-gold-card', 'index.html')
+  const goldHtml = existsSync(goldPage) ? readFileSync(goldPage, 'utf8') : ''
+  const goldVsReserve = path.join(staticRoot, 'compare', 'american-express-gold-card-vs-chase-sapphire-reserve', 'index.html')
+  const matchupHtml = existsSync(goldVsReserve) ? readFileSync(goldVsReserve, 'utf8') : ''
+  checks.push(
+    ['gold card page links issuer terms', goldHtml.includes('https://www.americanexpress.com/us/credit-cards/card/gold-card/'), true],
+    ['gold card JSON-LD includes sameAs issuer URL', goldHtml.includes('"sameAs":"https://www.americanexpress.com/us/credit-cards/card/gold-card/"'), true],
+    ['card matchup links both issuer terms', matchupHtml.includes('americanexpress.com/us/credit-cards/card/gold-card/') && matchupHtml.includes('creditcards.chase.com/rewards-credit-cards/sapphire/reserve'), true],
+  )
 }
 
 let failed = 0
@@ -110,6 +132,7 @@ for (const [name, got, want] of checks) {
     if (name.includes('empty types')) console.error(emptyCategoryPromises)
     if (name.includes('popular searches')) console.error(badSearches)
     if (name.includes('zero') || name.includes('at least one')) console.error(zeroMatchups)
+    if (name.includes('issuer-terms')) console.error(badCardSources.map((product) => product.id))
   }
   console.log(`${ok ? 'ok' : 'FAIL'}  ${name}  got=${got} want=${want}`)
 }
