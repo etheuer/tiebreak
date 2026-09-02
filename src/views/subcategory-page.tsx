@@ -24,7 +24,7 @@ import {
 import { absUrl, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
 import { formatCatalogDate } from '@/lib/format'
 import { casesFor } from '@/data/use-cases'
-import { buildAnswer, checkDealBreakers, flattenRows, shortName } from '@/lib/decision'
+import { buildAnswer, checkDealBreakers, flattenRows, lensRows, shortName } from '@/lib/decision'
 import { ProductMark } from '@/components/ProductMark'
 import { FinanceDisclaimer } from '@/components/CatalogNotes'
 
@@ -138,7 +138,7 @@ export async function SubcategoryListing({
         productA: a,
         productB: b,
         useCase: uc,
-        rows,
+        rows: lensRows(rows, uc),
         checks,
         matters: new Set(),
         market,

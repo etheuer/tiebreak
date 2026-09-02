@@ -8,7 +8,26 @@ import { checkDealBreakers, flattenRows, sentenceCase } from '@/lib/decision'
 import { casesFor } from '@/data/use-cases'
 import { buildLensAnswers } from '@/lib/faq'
 
-const FLAGSHIP_PATTERN = /(?:iPhone|Galaxy|MacBook|OLED|Bravia|A95|Dyson|Amex|WH-1000|Bose)/i
+const FLAGSHIP_TERMS = [
+  'iPhone',
+  'Galaxy',
+  'MacBook',
+  'OLED',
+  'Bravia',
+  'A95',
+  'Dyson',
+  'Amex',
+  'WH-1000',
+  'Bose',
+] as const
+
+function compareMarkdownHref(comparison: Comparison, market: MarketId): string {
+  return compareHref(comparison, market).replace(/\/$/, '/index.md')
+}
+
+function flagshipTerm(name: string): (typeof FLAGSHIP_TERMS)[number] | null {
+  return FLAGSHIP_TERMS.find((term) => name.includes(term)) ?? null
+}
 
 export async function buildLlmsText(market: MarketId = 'us'): Promise<string> {
   const [products, comparisons, categories] = await Promise.all([
@@ -35,16 +54,33 @@ export async function buildLlmsText(market: MarketId = 'us'): Promise<string> {
     }
   }
 
-  let flagshipCount = 0
+  const buckets = new Map<string, Comparison[]>()
+  for (const term of FLAGSHIP_TERMS) buckets.set(term, [])
   for (const c of comparisons) {
-    if (flagshipCount >= 20) break
     const slug = `${c.productA}-vs-${c.productB}`
     if (seenSlugs.has(slug)) continue
-    if (FLAGSHIP_PATTERN.test(c.productName)) {
-      selectedComps.push(c)
+    const term = flagshipTerm(c.productName)
+    if (!term) continue
+    buckets.get(term)!.push(c)
+  }
+  let added = 0
+  let round = 0
+  while (added < 20) {
+    let progressed = false
+    for (const term of FLAGSHIP_TERMS) {
+      const bucket = buckets.get(term)!
+      const next = bucket[round]
+      if (!next) continue
+      const slug = `${next.productA}-vs-${next.productB}`
+      if (seenSlugs.has(slug)) continue
+      selectedComps.push(next)
       seenSlugs.add(slug)
-      flagshipCount += 1
+      added += 1
+      progressed = true
+      if (added >= 20) break
     }
+    if (!progressed) break
+    round += 1
   }
 
   const lines: string[] = []
@@ -61,7 +97,9 @@ export async function buildLlmsText(market: MarketId = 'us'): Promise<string> {
     const a = byId.get(c.productA)
     const b = byId.get(c.productB)
     const claim = a && b ? verdictLine(a, b, buildVerdict(a, b, market), market) : c.description
-    lines.push(`- [${c.productName}](${absUrl(compareHref(c, market))}): ${claim}`)
+    const html = absUrl(compareHref(c, market))
+    const md = absUrl(compareMarkdownHref(c, market))
+    lines.push(`- [${c.productName}](${html}): ${claim} — [Markdown](${md})`)
   }
 
   lines.push('')
