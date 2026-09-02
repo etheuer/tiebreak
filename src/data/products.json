@@ -62,7 +62,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/televisions-home-theater/tvs/neo-qled-4k/65-class-qn90c-samsung-neo-qled-4k-smart-tv-2023-qn65qn90cafxza/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "lg-g3-oled",
@@ -126,7 +131,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.lg.com/us/tvs/lg-oled65g3pua-oled-4k-tv",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "sony-a95l",
@@ -191,7 +201,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://electronics.sony.com/tv-video/televisions/all-tvs/p/xr65a95l",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "macbook-pro-16",
@@ -255,7 +270,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/macbook-pro/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "dell-xps-16",
@@ -319,7 +339,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.dell.com/en-us/shop/dell-laptops/xps-16-laptop/spd/xps-16-9640-laptop",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "iphone-16-pro",
@@ -417,7 +442,12 @@
         "cpu",
         "gpu",
         "charger_in_box"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/iphone-16-pro/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "galaxy-s24-ultra",
@@ -515,7 +545,12 @@
         "cpu",
         "gpu",
         "charger_in_box"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/smartphones/galaxy-s24-ultra/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "dyson-v15-detect",
@@ -569,7 +604,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.dyson.com/vacuum-cleaners/cordless/v15/detect-absolute-yellow-iron",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "shark-stratos",
@@ -623,7 +663,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.sharkclean.com/products/shark-stratos-cordless-vacuum-iz862h-zidIZ862H",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "lg-c4-oled",
@@ -687,7 +732,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.lg.com/us/tvs/lg-oled65c4pua-oled-4k-tv",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "sony-bravia-9",
@@ -751,7 +801,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://electronics.sony.com/tv-video/televisions/all-tvs/p/k65xr90",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "samsung-s95d",
@@ -815,7 +870,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/televisions-home-theater/tvs/oled-tvs/65-class-oled-s95d-qn65s95dafxza/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "tcl-qm8",
@@ -867,7 +927,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.tcl.com/us/en/products/home-theater/qm8-class/65-class-4k-mini-led-qled-hdr-google-tv-65qm851g",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "hisense-u8n",
@@ -931,7 +996,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.hisense-usa.com/televisions/hisense-65-u8-series-mini-led-uled-google-tv-65u8n",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "asus-rog-zephyrus-g16",
@@ -994,7 +1064,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://rog.asus.com/us/laptops/rog-zephyrus/rog-zephyrus-g16-2024/spec/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "lenovo-thinkpad-x1-carbon",
@@ -1057,7 +1132,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadx1/thinkpad-x1-carbon-gen-12-14-inch-intel/len101t0083",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "framework-laptop-16",
@@ -1120,7 +1200,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://frame.work/products/laptop16-diy-edition/specs",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "microsoft-surface-laptop-7",
@@ -1183,7 +1268,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.microsoft.com/en-us/surface/devices/surface-laptop-7th-edition",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "apple-macbook-air-15",
@@ -1246,7 +1336,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/macbook-air/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "hp-spectre-x360-16",
@@ -1309,7 +1404,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.hp.com/us-en/shop/pdp/hp-spectre-x360-2-in-1-laptop-16-aa0097nr",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "google-pixel-9-pro",
@@ -1406,7 +1506,12 @@
         "gpu",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://store.google.com/product/pixel_9_pro_specs",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "oneplus-12",
@@ -1503,7 +1608,12 @@
         "gpu",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.oneplus.com/us/12/specs",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "xiaomi-14-ultra",
@@ -1590,7 +1700,12 @@
         "cellular",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.mi.com/global/product/xiaomi-14-ultra/specs",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "samsung-galaxy-z-fold-6",
@@ -1687,7 +1802,12 @@
         "gpu",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/smartphones/galaxy-z-fold6/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "iphone-16",
@@ -1784,7 +1904,12 @@
         "cpu",
         "gpu",
         "charger_in_box"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/iphone-16/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "google-pixel-9",
@@ -1881,7 +2006,12 @@
         "gpu",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://store.google.com/product/pixel_9_specs",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "samsung-galaxy-s24",
@@ -1978,7 +2108,12 @@
       "sameAsUs": [
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/smartphones/galaxy-s24/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "asus-zenfone-11-ultra",
@@ -2065,7 +2200,12 @@
         "cellular",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.asus.com/mobile-handhelds/phones/zenfone/zenfone-11-ultra/techspec/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "dyson-gen5detect",
@@ -2118,7 +2258,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.dyson.com/vacuum-cleaners/cordless/gen5/detect-absolute-purple-iron",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "tineco-pure-one-s15",
@@ -2171,7 +2316,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://us.tineco.com/products/pure-one-s15-series.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "samsung-bespoke-jet-ai",
@@ -2224,7 +2374,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/home-appliances/vacuums/stick-vacuums/bespoke-jet-ai-cordless-stick-vacuum-with-all-in-one-clean-station-vs28c9762uk-aa/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "dreame-z10-station",
@@ -2277,7 +2432,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.dreametech.com/products/dreame-z10-station-cordless-stick-vacuum",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "shark-cordless-pro",
@@ -2320,7 +2480,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.sharkclean.com/products/shark-cordless-pro-with-clean-sense-iq-iz562h-zidIZ562H",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "lg-cordzero-all-in-one",
@@ -2363,7 +2528,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.lg.com/us/vacuum-cleaners/lg-a939kgms-stick-vacuum",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "sony-wh-1000xm5",
@@ -2411,7 +2581,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://electronics.sony.com/audio/headphones/headband/p/wh1000xm5-b",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "apple-airpods-max",
@@ -2459,7 +2634,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/airpods-max/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "bose-quietcomfort-ultra",
@@ -2507,7 +2687,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.bose.com/p/headphones/bose-quietcomfort-ultra-headphones/QCUH-HEADPHONEARN.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "sennheiser-momentum-4",
@@ -2555,7 +2740,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.sennheiser-hearing.com/en-US/p/momentum-4-wireless/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "bowers-wilkins-px7-s2e",
@@ -2603,7 +2793,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.bowerswilkins.com/en-us/product/over-ear-headphones/px7-s2e/300612-01-00-101.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "focal-bathys",
@@ -2651,7 +2846,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.focal.com/products/bathys",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "coway-airmega-400",
@@ -2686,7 +2886,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://cowaymega.com/products/airmega-400",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "dyson-purifier-hot-cool-hp09",
@@ -2732,7 +2937,12 @@
       "sameAsUs": [
         "warranty",
         "energy"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.dyson.com/air-treatment/air-purifiers/purifier-hot-cool-formaldehyde-hp09/white-gold",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "levoit-core-600s",
@@ -2788,7 +2998,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://levoit.com/products/core-600s-smart-true-hepa-air-purifier",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "blueair-protect-7470i",
@@ -2844,7 +3059,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.blueair.com/us/air-purifiers/protect-7470i/2096.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "winix-5500-2",
@@ -2879,7 +3099,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.winixamerica.com/product/5500-2-air-purifier/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "aleno-breathe-smart-75i",
@@ -2914,7 +3139,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://alen.com/products/alen-breathesmart-75i-air-purifier",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "american-express-gold-card",
@@ -3212,7 +3442,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/televisions-home-theater/tvs/neo-qled-4k/65-class-qn90d-samsung-neo-qled-4k-smart-tv-2024-qn65qn90dafxza/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "lg-b4-oled",
@@ -3276,7 +3511,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.lg.com/us/tvs/lg-oled65b4pua-oled-4k-tv",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "sony-bravia-8",
@@ -3340,7 +3580,12 @@
         "warranty",
         "smart_os",
         "voice_assistants"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://electronics.sony.com/tv-video/televisions/all-tvs/p/k65xr80",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "apple-macbook-pro-14",
@@ -3403,7 +3648,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/macbook-pro/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "lenovo-yoga-pro-9i",
@@ -3466,7 +3716,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.lenovo.com/us/en/p/laptops/yoga/yoga-pro-series/yoga-pro-9i-gen-9-16-inch-intel/len101y0042",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "razer-blade-16",
@@ -3529,7 +3784,12 @@
       },
       "sameAsUs": [
         "gpu"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.razer.com/gaming-laptops/razer-blade-16",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "iphone-16-pro-max",
@@ -3626,7 +3886,12 @@
         "cpu",
         "gpu",
         "charger_in_box"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/iphone-16-pro/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "samsung-galaxy-z-flip-6",
@@ -3723,7 +3988,12 @@
         "gpu",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.samsung.com/us/smartphones/galaxy-z-flip6/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "google-pixel-9-pro-xl",
@@ -3820,7 +4090,12 @@
         "gpu",
         "charger_in_box",
         "sim"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://store.google.com/product/pixel_9_pro_specs",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "dyson-v12-detect-slim",
@@ -3873,7 +4148,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.dyson.com/vacuum-cleaners/cordless/v12/detect-slim-yellow-iron",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "shark-powerdetect-cordless",
@@ -3916,7 +4196,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.sharkclean.com/products/shark-powerdetect-clean-empty-cordless-vacuum-system-ip3251-zidIP3251",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "sonos-ace",
@@ -3964,7 +4249,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.sonos.com/en-us/shop/sonos-ace",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "bose-quietcomfort-headphones",
@@ -4012,7 +4302,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.bose.com/p/headphones/bose-quietcomfort-headphones/QC-HEADPHONEARN.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "sony-wh-1000xm4",
@@ -4060,7 +4355,12 @@
       },
       "sameAsUs": [
         "warranty"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://electronics.sony.com/audio/headphones/headband/p/wh1000xm4-b",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "levoit-core-400s",
@@ -4106,7 +4406,12 @@
       "sameAsUs": [
         "warranty",
         "energy"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://levoit.com/products/core-400s-smart-true-hepa-air-purifier",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "coway-airmega-ap-1512hh",
@@ -4141,7 +4446,12 @@
       },
       "markets": [
         "us"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://cowaymega.com/products/airmega-ap-1512hh",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "blueair-blue-pure-211-plus-auto",
@@ -4187,7 +4497,12 @@
       "sameAsUs": [
         "warranty",
         "energy"
-      ]
+      ],
+      "officialSource": {
+        "url": "https://www.blueair.com/us/air-purifiers/blue-pure-211-auto/2026.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
     },
     {
       "id": "chase-sapphire-reserve",

@@ -45,6 +45,24 @@ export function ProductSpecs({ product }: { product: Product }) {
           </div>
         ))}
       </div>
+
+      {product.officialSource?.url ? (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-ink-3">
+          <span>Specs sourced from manufacturer published documentation.</span>
+          <a
+            href={product.officialSource.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
+          >
+            Official {product.name} {product.officialSource.kind === 'issuer-terms' ? 'terms' : 'spec sheet'}
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+              <path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+      ) : null}
     </section>
   )
 }

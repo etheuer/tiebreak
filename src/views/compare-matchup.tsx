@@ -333,7 +333,41 @@ export async function CompareMatchup({
           <div className="shell shell-wide">
             <FinanceDisclaimer products={[productA, productB]} />
           </div>
-        ) : null}
+        ) : (
+          <div className="shell shell-wide mt-4 flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-ink-3">
+            <span>Every row above is computed from manufacturer-published specifications.</span>
+            <div className="flex flex-wrap items-center gap-3">
+              {productA.officialSource?.url && (
+                <a
+                  href={productA.officialSource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
+                >
+                  {productA.name} source
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                    <path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
+              {productB.officialSource?.url && (
+                <a
+                  href={productB.officialSource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
+                >
+                  {productB.name} source
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                    <path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Who should buy which */}
@@ -433,6 +467,32 @@ export async function CompareMatchup({
             </Link>
             <ShareVerdict />
           </div>
+          {(productA.officialSource?.url || productB.officialSource?.url) && (
+            <p className="mt-4 text-[12px] text-ink-3">
+              Manufacturer pages:{' '}
+              {productA.officialSource?.url && (
+                <a
+                  href={productA.officialSource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline inline-flex items-center gap-0.5 ml-1"
+                >
+                  {productA.name} ↗
+                </a>
+              )}
+              {productA.officialSource?.url && productB.officialSource?.url && ' · '}
+              {productB.officialSource?.url && (
+                <a
+                  href={productB.officialSource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline inline-flex items-center gap-0.5 ml-1"
+                >
+                  {productB.name} ↗
+                </a>
+              )}
+            </p>
+          )}
         </section>
 
         <section className="mt-14" aria-labelledby="faq">

@@ -79,6 +79,15 @@ const badCardSources = cards.filter((product) => {
     && /^https:\/\//.test(source.url)
   )
 })
+const badSources = products.filter((product) => {
+  const source = product.officialSource
+  return !(
+    source
+    && (source.kind === 'issuer-terms' || source.kind === 'spec-sheet')
+    && dateStamp.test(source.asOf)
+    && /^https:\/\//.test(source.url)
+  )
+})
 
 const checkExport = process.argv.includes('--export')
 const staticRoot = path.join(root, '.next-static')
@@ -95,6 +104,7 @@ const checks = [
   ['popular searches match the catalog', badSearches.length, 0],
   ['all subcategories are known', [...presentSubs].every((sub) => sub in SUB_LABEL), true],
   ['credit cards have issuer-terms URLs', badCardSources.length, 0],
+  ['every product has an official source URL', badSources.length, 0],
 ]
 
 if (checkExport) {
