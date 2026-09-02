@@ -6600,6 +6600,659 @@
         "asOf": "2026-09-02",
         "kind": "spec-sheet"
       }
+    },
+    {
+      "id": "oneplus-13",
+      "name": "OnePlus 13",
+      "brand": "OnePlus",
+      "category": "electronics",
+      "subcategory": "smartphones",
+      "price": 899,
+      "image_url": "https://via.placeholder.com/300x200?text=OnePlus+13",
+      "description": "Flagship power smartphone featuring Snapdragon 8 Elite, massive 6,000 mAh Glacier battery with 100W charging, IP68/IP69 rating, and Hasselblad triple 50MP cameras.",
+      "pros": [
+        "Massive 6,000 mAh Silicon-Carbon Glacier battery with 100W wired / 50W wireless charging",
+        "Snapdragon 8 Elite flagship performance with up to 24GB RAM options",
+        "Stunning 2K 120Hz ProXDR display with 4,500 nits peak brightness and IP69 water/dust resistance"
+      ],
+      "cons": [
+        "USB-C cable in box requires proprietary SuperVOOC charger for top speeds",
+        "Thick circular camera island design"
+      ],
+      "specifications": {
+        "dimensions": "162.9 × 76.5 × 8.5 mm",
+        "weight": "213 g (7.51 oz)",
+        "build": "Aluminum frame with Crystal Shield glass front and ceramic/glass back",
+        "ip_rating": "IP68 and IP69 dust and high-pressure water resistant",
+        "colors": "Midnight Ocean, Black Eclipse, Arctic Dawn",
+        "stylus": "No",
+        "display_type": "2K Oriental LTPO AMOLED (DisplayMate A++)",
+        "display_size": "6.82 inches",
+        "resolution": "3168 × 1440 (2K ProXDR)",
+        "ppi": "510 ppi",
+        "refresh_rate": "120 Hz (1–120Hz dynamic LTPO)",
+        "peak_brightness": "4,500 nits peak / 1,600 nits HBM",
+        "hdr": "Dolby Vision, HDR10+, HDR Vivid",
+        "screen_protection": "OnePlus Crystal Shield Ceramic Glass",
+        "always_on": "Yes",
+        "os": "OxygenOS 15 (Android 15)",
+        "os_updates": "4 major Android OS updates & 6 years security updates",
+        "chipset": "Qualcomm Snapdragon 8 Elite (3 nm)",
+        "cpu": "8-core Oryon CPU (2× 4.32 GHz Prime + 6× 3.53 GHz Performance)",
+        "gpu": "Adreno 830",
+        "ram": "16 GB LPDDR5X (up to 24 GB)",
+        "storage": "512 GB UFS 4.0",
+        "storage_options": "256 GB, 512 GB, 1 TB",
+        "expandable_storage": "No",
+        "main_camera": "50 MP Sony LYT-808 (f/1.6, 23mm, 1/1.4\", multi-directional PDAF, OIS)",
+        "ultrawide_camera": "50 MP (f/2.0, 15mm, 120° FOV, AF macro)",
+        "telephoto_camera": "50 MP 3x periscope telephoto (f/2.6, 73mm, 1/1.95\", multi-prism, OIS)",
+        "optical_zoom": "3x optical zoom (6x in-sensor lossless zoom, up to 120x digital)",
+        "ois": "OIS on main camera and 3x periscope telephoto",
+        "rear_video": "8K at 30 fps, 4K at 30/60 fps Dolby Vision HDR",
+        "front_camera": "32 MP (f/2.4, 21mm, autofocus)",
+        "front_video": "4K at 30/60 fps",
+        "battery_capacity": "6,000 mAh",
+        "wired_charging": "100W SUPERVOOC fast charging (1–100% in 36 min)",
+        "wireless_charging": "50W AIRVOOC wireless fast charging",
+        "reverse_charging": "10W reverse wireless charging",
+        "charger_in_box": "Yes (100W SUPERVOOC adapter included in US)",
+        "speakers": "Dual stereo speakers with Dolby Atmos and spatial audio",
+        "headphone_jack": "No",
+        "cellular": "5G (sub-6 GHz and mmWave on US model)",
+        "wifi": "Wi-Fi 7 (802.11be tri-band)",
+        "bluetooth": "Bluetooth 5.4",
+        "nfc": "Yes (360° omnidirectional NFC antenna)",
+        "usb": "USB-C 3.2 Gen 1 (DisplayPort video out)",
+        "sim": "Dual Nano-SIM + eSIM support",
+        "biometrics": "Ultrasonic in-display fingerprint sensor + Face Unlock",
+        "extra_controls": "Alert Slider (Ring/Vibrate/Silent)",
+        "unique_features": "6,000 mAh Glacier Silicon-Carbon battery, 100W fast charging, IP69 rating, Hasselblad Master Camera System, Alert Slider"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.oneplus.com/us/13",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "google-pixel-9-pro-fold",
+      "name": "Google Pixel 9 Pro Fold",
+      "brand": "Google",
+      "category": "electronics",
+      "subcategory": "smartphones",
+      "price": 1799,
+      "image_url": "https://via.placeholder.com/300x200?text=Pixel+9+Pro+Fold",
+      "description": "Ultra-thin foldable with 8.0-inch Super Actua Flex inner display, 6.3-inch Actua cover display, Google Tensor G4 chip, 16GB RAM, and Google AI.",
+      "pros": [
+        "Huge 8.0-inch Super Actua Flex folding screen (brightest on any foldable up to 2,700 nits)",
+        "Ultra-thin 10.5mm folded profile with fluid gearless hinge",
+        "7 full years of Android OS and security Feature Drops with 16GB RAM standard"
+      ],
+      "cons": [
+        "Cameras use smaller sensors than traditional Pixel 9 Pro to fit the thin chassis",
+        "21W wired charging is slower than competitors"
+      ],
+      "specifications": {
+        "dimensions": "Folded: 155.2 × 77.1 × 10.5 mm / Unfolded: 155.2 × 150.2 × 5.1 mm",
+        "weight": "257 g (9.07 oz)",
+        "build": "Aerospace-grade high-strength aluminum alloy hinge with Gorilla Glass Victus 2 back",
+        "ip_rating": "IPX8 water resistant",
+        "colors": "Porcelain, Obsidian",
+        "stylus": "No",
+        "display_type": "Inner: 8.0\" Super Actua Flex LTPO OLED / Cover: 6.3\" Actua OLED",
+        "display_size": "8.0 inches unfolded (6.3 inches folded)",
+        "resolution": "Inner: 2076 × 2152 (373 ppi) / Cover: 2424 × 1080 (422 ppi)",
+        "ppi": "373 ppi inner / 422 ppi cover",
+        "refresh_rate": "120 Hz (1–120Hz LTPO on both inner and cover displays)",
+        "peak_brightness": "2,700 nits peak on both displays / 1,600 nits HDR",
+        "hdr": "HDR10, HDR10+, HLG",
+        "screen_protection": "Ultra Thin Glass (inner) / Corning Gorilla Glass Victus 2 (cover)",
+        "always_on": "Yes (with At a Glance)",
+        "os": "Android 15",
+        "os_updates": "7 years of OS, security, and Pixel Feature Drops",
+        "chipset": "Google Tensor G4 (4 nm, Titan M2 security coprocessor)",
+        "cpu": "8-core (1× Cortex-X4 + 3× Cortex-A720 + 4× Cortex-A520)",
+        "gpu": "Mali-G715 MC7",
+        "ram": "16 GB LPDDR5X",
+        "storage": "256 GB",
+        "storage_options": "256 GB, 512 GB",
+        "expandable_storage": "No",
+        "main_camera": "48 MP Quad PD (f/1.7, 25mm, 1/2.0\", Dual Pixel PDAF, OIS)",
+        "ultrawide_camera": "10.5 MP (f/2.2, 127° FOV, Dual Pixel PDAF, macro focus)",
+        "telephoto_camera": "10.8 MP 5x optical periscope (f/3.1, Dual Pixel PDAF, OIS, 20x Super Res Zoom)",
+        "optical_zoom": "5x optical zoom (up to 20x Super Res Zoom)",
+        "ois": "OIS on main camera and 5x periscope telephoto",
+        "rear_video": "4K at 24/30/60 fps, 1080p at 24/30/60 fps",
+        "front_camera": "Inner: 10 MP / Cover: 10 MP Dual PD (f/2.2, 87° FOV)",
+        "front_video": "4K at 30/60 fps (both inner and cover cameras)",
+        "battery_capacity": "4,650 mAh",
+        "wired_charging": "21W wired fast charging (USB-PD 3.0)",
+        "wireless_charging": "7.5W Qi wireless charging",
+        "reverse_charging": "No",
+        "charger_in_box": "No",
+        "speakers": "Spatial Audio stereo speakers",
+        "headphone_jack": "No",
+        "cellular": "5G (sub-6 GHz and mmWave)",
+        "wifi": "Wi-Fi 7 (802.11be tri-band)",
+        "bluetooth": "Bluetooth 5.3",
+        "nfc": "Yes (Google Wallet)",
+        "usb": "USB-C 3.2 Gen 2 (DisplayPort video out)",
+        "sim": "Single Nano-SIM + eSIM (Dual SIM support)",
+        "biometrics": "Side-mounted capacitive fingerprint sensor + Face Unlock on both screens",
+        "extra_controls": "None",
+        "unique_features": "8.0\" Super Actua Flex inner display, Google AI photography (Add Me, Best Take, Magic Editor), Split-Screen Multitasking, Satellite SOS"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://store.google.com/product/pixel_9_pro_fold_specs",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "apple-airpods-pro-2",
+      "name": "AirPods Pro 2 (USB-C)",
+      "brand": "Apple",
+      "category": "electronics",
+      "subcategory": "headphones",
+      "price": 249,
+      "image_url": "https://via.placeholder.com/300x200?text=AirPods+Pro+2",
+      "description": "Flagship wireless in-ear earbuds with Apple H2 chip, Pro-level Active Noise Cancellation, Adaptive Audio, Conversation Awareness, and clinical-grade Hearing Aid capability.",
+      "pros": [
+        "Pro-level Active Noise Cancellation and transparent Adaptive Audio",
+        "Clinical-grade Hearing Aid and Hearing Test features (FDA-authorized)",
+        "MagSafe USB-C case with Precision Finding speaker and lanyard loop"
+      ],
+      "cons": [
+        "Touch volume swipes on the stem can require a steady hand",
+        "Advanced features (Hearing Health, Spatial Audio) require Apple device ecosystem"
+      ],
+      "specifications": {
+        "type": "In-ear true wireless earbuds with silicone ear tips",
+        "driver": "Custom high-excursion Apple driver with custom high dynamic range amplifier",
+        "anc": "Yes (Pro-level Active Noise Cancellation with up to 2x more noise reduction)",
+        "transparency": "Yes (Adaptive Audio, Transparency Mode, and Conversation Awareness)",
+        "battery": "6 hours listening time on single charge (ANC on) / up to 30 hours with MagSafe Charging Case",
+        "charge": "5 minutes in case provides around 1 hour listening time; MagSafe, Apple Watch, Qi, or USB-C charging",
+        "weight": "10.6 g (0.38 oz) earbuds total (5.3 g each) / 50.8 g charging case",
+        "ip": "IP54 dust, sweat, and water resistant (earbuds and case)",
+        "codec": "AAC, SBC, Lossless Audio via Apple Vision Pro (24-bit/48kHz low latency)",
+        "mic": "Dual beamforming microphones + inward-facing microphone with Voice Isolation",
+        "multipoint": "Yes (automatic seamless device switching across Apple devices)",
+        "foldable": "No (pocket-sized charging case)",
+        "case": "MagSafe Charging Case (USB-C) with built-in U1 chip, Find My speaker, and lanyard loop",
+        "warranty": "1 year manufacturer warranty"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.apple.com/airpods-pro/specs/",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "bose-quietcomfort-ultra-earbuds",
+      "name": "Bose QuietComfort Ultra Earbuds",
+      "brand": "Bose",
+      "category": "electronics",
+      "subcategory": "headphones",
+      "price": 299,
+      "image_url": "https://via.placeholder.com/300x200?text=Bose+QC+Ultra+Earbuds",
+      "description": "Premium true wireless earbuds with world-class noise cancellation, CustomTune personalized sound, and Bose Immersive Audio spatialized sound.",
+      "pros": [
+        "Benchmark active noise cancellation that silences low and mid-frequency ambient noise",
+        "CustomTune technology calibrates sound and ANC to your ear canal shape on every insertion",
+        "Bose Immersive Audio provides spatialized audio regardless of source or platform"
+      ],
+      "cons": [
+        "Wireless charging case cover is sold as an optional accessory (USB-C wired standard)",
+        "Battery life drops to 4 hours with Immersive Audio turned on (6 hours standard)"
+      ],
+      "specifications": {
+        "type": "In-ear true wireless earbuds with silicone stability bands",
+        "driver": "High-performance proprietary dynamic transducers",
+        "anc": "Yes (World-class Active Noise Cancellation with CustomTune sound calibration)",
+        "transparency": "Yes (Aware Mode with ActiveSense technology)",
+        "battery": "6 hours listening time on single charge (4 hours with Immersive Audio) / up to 24 hours total with case",
+        "charge": "2 hours full charge (20 min quick charge gives 2 hours); USB-C wired",
+        "weight": "15.4 g (0.54 oz) earbuds total (7.7 g each) / 60 g charging case",
+        "ip": "IPX4 sweat and water resistant",
+        "codec": "Snapdragon Sound, aptX Adaptive, AAC, SBC",
+        "mic": "4 microphones in each earbud (8 mics total for ANC and voice pickup)",
+        "multipoint": "Yes (Bluetooth 5.3 multipoint connectivity)",
+        "foldable": "No (charging case)",
+        "case": "Pocket-sized hard shell charging case (USB-C)",
+        "warranty": "1 year manufacturer warranty"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "sony-wf-1000xm5",
+      "name": "Sony WF-1000XM5 Earbuds",
+      "brand": "Sony",
+      "category": "electronics",
+      "subcategory": "headphones",
+      "price": 299,
+      "image_url": "https://via.placeholder.com/300x200?text=Sony+WF-1000XM5",
+      "description": "Flagship true wireless earbuds with Integrated Processor V2, HD Noise Cancelling Processor QN2e, Dynamic Driver X, and LDAC Hi-Res Audio Wireless.",
+      "pros": [
+        "Dual processors (QN2e + V2) provide stellar active noise cancellation across all frequencies",
+        "Dynamic Driver X delivers wide frequency response and deep rich bass with LDAC Hi-Res support",
+        "Compact 25% smaller and 20% lighter design than previous XM4 generation with polyurethane foam tips"
+      ],
+      "cons": [
+        "Polyurethane noise-isolation foam tips require a rolling squeeze technique to fit properly",
+        "Glossy edge finish can make earbuds slightly slippery to grip from case"
+      ],
+      "specifications": {
+        "type": "In-ear true wireless earbuds with noise-isolation foam tips",
+        "driver": "8.4 mm Dynamic Driver X",
+        "anc": "Yes (Integrated Processor V2 + HD Noise Cancelling Processor QN2e with dual feedback mics)",
+        "transparency": "Yes (Ambient Sound mode with Quick Attention and Speak-to-Chat)",
+        "battery": "8 hours listening time with ANC on (12 hours ANC off) / up to 24 hours total with case",
+        "charge": "1.5 hours full charge (3 min quick charge gives 60 mins playback); Qi wireless or USB-C",
+        "weight": "11.8 g (0.42 oz) earbuds total (5.9 g each) / 39 g charging case",
+        "ip": "IPX4 splash and sweat resistant",
+        "codec": "LDAC, LC3, AAC, SBC (Hi-Res Audio Wireless certified)",
+        "mic": "3 microphones per earbud with bone conduction sensors and AI noise reduction",
+        "multipoint": "Yes (Bluetooth 5.3 multipoint for 2 devices simultaneously)",
+        "foldable": "No (compact pocket case)",
+        "case": "Qi wireless charging compatible case with USB-C",
+        "warranty": "1 year manufacturer warranty"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://electronics.sony.com/audio/headphones/truly-wireless-earbuds/p/wf1000xm5-b",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "lenovo-thinkpad-x1-carbon-gen-13",
+      "name": "Lenovo ThinkPad X1 Carbon Gen 13 Aura Edition",
+      "brand": "Lenovo",
+      "category": "electronics",
+      "subcategory": "laptops",
+      "price": 1999,
+      "image_url": "https://via.placeholder.com/300x200?text=ThinkPad+X1+Gen+13",
+      "description": "14-inch flagship enterprise Copilot+ PC laptop powered by Intel Core Ultra Series 2 (Lunar Lake), 2.8K 120Hz OLED display, and carbon fiber chassis under 2.2 lb.",
+      "pros": [
+        "Ultra-lightweight 2.16 lb (980 g) carbon fiber and magnesium chassis",
+        "Intel Core Ultra Series 2 (Lunar Lake) delivers remarkable efficiency and cool operation",
+        "2.8K 120Hz OLED display with Dolby Vision and anti-glare coating"
+      ],
+      "cons": [
+        "Memory is soldered (package-on-package Lunar Lake LPDDR5x)",
+        "High starting price for enterprise configurations"
+      ],
+      "specifications": {
+        "display_size": "14.0 inches",
+        "display_type": "2.8K OLED (16:10, anti-glare, anti-reflection)",
+        "resolution": "2880 × 1800 (2.8K)",
+        "refresh_rate": "120 Hz (variable)",
+        "brightness": "400 nits SDR / 500 nits HDR",
+        "color_gamut": "100% DCI-P3",
+        "touchscreen": "No (touch optional on select configurations)",
+        "processor": "Intel Core Ultra 7 258V (8 cores: 4P + 4 Low Power E, 47 TOPS NPU)",
+        "gpu": "Intel Arc Graphics 140V",
+        "ram": "32 GB LPDDR5x-8533 (Memory on Package)",
+        "ram_upgradable": "No (integrated MoP)",
+        "storage": "1 TB PCIe 4.0 NVMe SSD",
+        "storage_upgradable": "Yes (1× M.2 2280 PCIe Gen4 slot)",
+        "battery_life": "Up to 18 hours productivity / 14 hours video streaming",
+        "charger": "65W USB-C Slim AC Adapter",
+        "weight": "2.16 lb (0.98 kg)",
+        "thickness": "14.3 mm (0.56 inches)",
+        "material": "Recycled carbon fiber top cover and magnesium chassis",
+        "keyboard": "ThinkPad backlit keyboard with TrackPoint and glass touchpad",
+        "trackpad": "Haptic TouchPad with physical TrackPoint buttons option",
+        "webcam": "8MP MIPI camera with Computer Vision and Windows Hello IR",
+        "speakers": "Stereo speakers (2W woofer + 2W tweeter) with Dolby Atmos",
+        "thunderbolt": "2× Thunderbolt 4 (USB-C), 2× USB 3.2 Gen 1 Type-A",
+        "hdmi": "1× HDMI 2.1",
+        "sd_card": "No",
+        "magsafe": "No",
+        "headphone_jack": "Yes (3.5 mm combo audio jack)",
+        "os": "Windows 11 Pro",
+        "repairability": "Moderate (replaceable SSD, battery, and WWAN)"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadx1/thinkpad-x1-carbon-gen-13-aura-edition-(14-inch-intel)/len101t0114",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "dell-xps-14-9440",
+      "name": "Dell XPS 14 (2024)",
+      "brand": "Dell",
+      "category": "electronics",
+      "subcategory": "laptops",
+      "price": 1699,
+      "image_url": "https://via.placeholder.com/300x200?text=Dell+XPS+14",
+      "description": "14.5-inch creative laptop with CNC aluminum chassis, optional NVIDIA GeForce RTX 4050 graphics, 3.2K 120Hz OLED touch display, and seamless glass haptic touchpad.",
+      "pros": [
+        "Dedicated NVIDIA RTX 4050 GPU in a compact 14.5-inch footprint",
+        "Vibrant 3.2K 120Hz InfinityEdge OLED touch display",
+        "High-quality quad-speaker array with deep bass response"
+      ],
+      "cons": [
+        "Heavier than typical 14-inch ultrabooks at 3.7 lb (1.68 kg)",
+        "Capacitive touch function row instead of physical keys"
+      ],
+      "specifications": {
+        "display_size": "14.5 inches",
+        "display_type": "3.2K OLED InfinityEdge touch (or FHD+ IPS)",
+        "resolution": "3200 × 2000 (3.2K)",
+        "refresh_rate": "120 Hz (variable VRR)",
+        "brightness": "400 nits OLED / 500 nits IPS",
+        "color_gamut": "100% DCI-P3",
+        "touchscreen": "Yes (on OLED configuration)",
+        "processor": "Intel Core Ultra 7 155H (16 cores: 6P + 8E + 2 Low Power E, Intel AI Boost)",
+        "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU (30W TGP)",
+        "ram": "32 GB LPDDR5x (7467 MT/s)",
+        "ram_upgradable": "No (soldered)",
+        "storage": "1 TB PCIe 4.0 NVMe SSD",
+        "storage_upgradable": "Yes (1× M.2 2280 PCIe Gen4 slot)",
+        "battery_life": "Up to 12 hours (IPS) / ~8-9 hours (OLED)",
+        "charger": "60W / 100W Type-C AC Adapter",
+        "weight": "3.70 lb (1.68 kg)",
+        "thickness": "18.0 mm (0.71 inches)",
+        "material": "CNC machined aluminum and Gorilla Glass 3",
+        "keyboard": "Zero-lattice backlit keyboard with capacitive touch function row",
+        "trackpad": "Seamless glass haptic precision touchpad",
+        "webcam": "1080p FHD RGB-IR camera with Windows Hello",
+        "speakers": "Quad-speaker design (2W woofer + 2W tweeter, 8W total with Waves MaxxAudio)",
+        "thunderbolt": "3× Thunderbolt 4 (USB Type-C) with DisplayPort and Power Delivery",
+        "hdmi": "No (via included USB-C to HDMI adapter)",
+        "sd_card": "1× MicroSD v6.0 card slot",
+        "magsafe": "No",
+        "headphone_jack": "Yes (3.5 mm headphone/microphone combo)",
+        "os": "Windows 11 Home",
+        "repairability": "Moderate (M.2 SSD and Wi-Fi replaceable)"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.dell.com/en-us/shop/dell-laptops/xps-14-laptop/spd/xps-14-9440-laptop",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "dyson-v15s-detect-submarine",
+      "name": "Dyson V15s Detect Submarine",
+      "brand": "Dyson",
+      "category": "appliances",
+      "subcategory": "cordless-vacuums",
+      "price": 949,
+      "image_url": "https://via.placeholder.com/300x200?text=Dyson+Submarine",
+      "description": "All-in-one wet and dry cordless vacuum featuring Submarine wet roller cleaner head for hard floor washing, Fluffy Optic illumination, and 240AW suction.",
+      "pros": [
+        "Submarine wet roller head washes tile, hardwood, and laminate with clean water extraction",
+        "Includes full dry vacuum arsenal: 240AW suction, piezo dust counter, and Fluffy Optic head",
+        "Automatically switches modes when wet roller head is attached"
+      ],
+      "cons": [
+        "Submarine wet head requires manual rinse and maintenance after washing",
+        "Heavy when water tank is full (9.1 lb wet / 6.8 lb dry)"
+      ],
+      "specifications": {
+        "suction": "240 AW",
+        "auto_suction": "Yes (Auto mode reacts to dust levels on dry heads)",
+        "floor_illumination": "Fluffy Optic green laser on hard floor cleaner head",
+        "anti_tangle": "Digital Motorbar with de-tangling hair removal vanes",
+        "floor_types": "Hard floors (wet & dry), tile, laminate, area rugs, carpets",
+        "dust_sensing": "Piezo sensor counts and measures dust particles",
+        "max_runtime": "60 minutes (dry Eco mode) / ~30 minutes auto",
+        "typical_runtime": "~25–35 minutes mixed cleaning",
+        "charge_time": "4.5 hours",
+        "weight": "6.8 lb (3.1 kg) dry / 9.1 lb (4.1 kg) with filled Submarine wet head",
+        "bin_capacity": "0.77 L dry bin / 300 mL clean water tank + 360 mL dirty water tray",
+        "noise": "~76–80 dB",
+        "display": "LCD screen: real-time particle graph, runtime countdown, maintenance alerts",
+        "filtration": "Advanced whole-machine filtration (captures 99.99% of particles down to 0.3 microns)",
+        "sealed_system": "Yes (fully sealed system)",
+        "attachments": "Submarine wet roller head, Fluffy Optic head, Digital Motorbar, Hair screw tool, Combination tool, Crevice tool",
+        "docking_station": "Wall dock + drip tray for Submarine head",
+        "warranty": "2 years parts and labor limited warranty",
+        "bagless": "Yes (point-and-shoot hygienic bin emptying)"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.dyson.com/vacuum-cleaners/wet-dry/v15s-detect-submarine",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "tineco-floor-one-s7-pro",
+      "name": "Tineco Floor ONE S7 Pro Floor Washer",
+      "brand": "Tineco",
+      "category": "appliances",
+      "subcategory": "cordless-vacuums",
+      "price": 799,
+      "image_url": "https://via.placeholder.com/300x200?text=Tineco+S7+Pro",
+      "description": "Smart cordless wet/dry floor washer with SmoothDrive bi-directional self-propulsion, MHCBS continuous clean water roller washing, and 3.6-inch interactive LCD screen.",
+      "pros": [
+        "SmoothDrive bi-directional motorized wheels assist forward and backward movement effortlessly",
+        "MHCBS balanced pressure scraper continuously washes brushroll with clean fresh water",
+        "Centrifugal self-cleaning cycle dries roller with hot air on the charging base"
+      ],
+      "cons": [
+        "Designed exclusively for hard floors (cannot vacuum dry carpets)",
+        "Heavier unit at 10.8 lb due to dual water tank capacity"
+      ],
+      "specifications": {
+        "suction": "~150 AW class (high-power wet extraction)",
+        "auto_suction": "Yes (iLoop Smart Sensor automatically adjusts suction and water flow)",
+        "floor_illumination": "LED headlights along edge cleaner head",
+        "anti_tangle": "Dual-sided enhanced edge cleaning scraper",
+        "floor_types": "Hardwood, tile, laminate, marble, vinyl (sealed hard floors only)",
+        "dust_sensing": "iLoop Smart Sensor detects mess severity and displays red/blue cleanliness ring",
+        "max_runtime": "40 minutes (Auto mode)",
+        "typical_runtime": "~30–35 minutes continuous floor washing",
+        "charge_time": "4.5 hours",
+        "weight": "10.8 lb (4.9 kg)",
+        "bin_capacity": "0.85 L clean water tank / 0.72 L dirty water tank",
+        "noise": "~72–75 dB",
+        "display": "3.6-inch full-color interactive LCD display with animated cleaning assistant",
+        "filtration": "Multi-layer dry/wet filtration system with debris separator",
+        "sealed_system": "Yes (sealed dual-tank system)",
+        "attachments": "2× microfiber brushrollers, 2× dry filters, deodorizing cleaning solution",
+        "docking_station": "Self-cleaning charging dock with centrifugal heated air drying",
+        "warranty": "2 years limited warranty",
+        "bagless": "Yes (dual-tank mess separation system)"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://us.tineco.com/products/floor-one-s7-pro.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "blueair-blue-pure-311i-max",
+      "name": "Blueair Blue Pure 311i Max",
+      "brand": "Blueair",
+      "category": "appliances",
+      "subcategory": "air-purifiers",
+      "price": 229,
+      "image_url": "https://via.placeholder.com/300x200?text=Blueair+311i+Max",
+      "description": "Smart air purifier with HEPASilent dual filtration technology, cleaning up to 929 sq ft in 30 minutes, 23dB whisper quiet operation, and Blueair app control.",
+      "pros": [
+        "HEPASilent dual filtration combines electrostatic and mechanical filtration for faster airflow at lower noise",
+        "Cleans up to 387 sq ft in 12.5 minutes (4.8 ACH) / up to 929 sq ft in 30 minutes (2 ACH)",
+        "Ultra-quiet 23dB Night Mode with Energy Star certified low electricity draw"
+      ],
+      "cons": [
+        "Fabric pre-filter covers the exterior and requires periodic vacuuming/washing",
+        "Filter replacements needed every 6 to 9 months"
+      ],
+      "specifications": {
+        "cadr": "250 CFM (Smoke), 250 CFM (Dust), 250 CFM (Pollen)",
+        "room_size": "Medium to large bedrooms, living rooms, and open offices up to 387 sq ft (4.8 ACH) / 929 sq ft (2 ACH)",
+        "filters": "HEPASilent Main Particle + Carbon filter with customizable machine-washable fabric pre-filter",
+        "filter_life": "6 to 9 months (tracked by RealTrack algorithm in app)",
+        "noise": "23 dB (Night mode) – 50 dB (Max boost)",
+        "energy": "38 W max power consumption (Energy Star Most Efficient)",
+        "smart": "Blueair App (iOS/Android), voice control with Amazon Alexa and Google Assistant, geofencing Welcome Home feature",
+        "sensors": "Laser particle sensor with 5-color LED air quality indicator ring (PM1, PM2.5, PM10)",
+        "coverage": "387 sq ft (4.8 air changes/hr) / 929 sq ft (2 air changes/hr)",
+        "weight": "7.8 lb (3.5 kg)",
+        "warranty": "2 years limited warranty (extendable to 3 years with product registration)"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.blueair.com/us/air-purifiers/blue-pure-311i-max/3331.html",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "coway-airmega-250",
+      "name": "Coway Airmega 250",
+      "brand": "Coway",
+      "category": "appliances",
+      "subcategory": "air-purifiers",
+      "price": 399,
+      "image_url": "https://via.placeholder.com/300x200?text=Coway+Airmega+250",
+      "description": "Modern slim aesthetic air purifier with Green True HEPA Max2 filtration, covering up to 930 sq ft, Smart Auto mode, and easy-clean washable pre-filter.",
+      "pros": [
+        "Green True HEPA filter captures 99.999% of 0.01-micron ultrafine particles and neutralizes odors",
+        "Easy-to-clean EZ-pull front pre-filter slides out from the top without opening the machine",
+        "Covers up to 930 sq ft with Smart Auto Mode and real-time PM2.5 particle sensor LED ring"
+      ],
+      "cons": [
+        "No Wi-Fi app connectivity on the standard 250 model (app available on 250S variant)",
+        "Substantial 20.5 lb weight"
+      ],
+      "specifications": {
+        "cadr": "249 CFM (Smoke), 261 CFM (Dust), 230 CFM (Pollen)",
+        "room_size": "Large bedrooms, apartments, living rooms, and open layouts up to 930 sq ft",
+        "filters": "EZ-clean Washable Pre-filter + Max2 Green True HEPA and Activated Carbon filter",
+        "filter_life": "12 months (Max2 filter) / Washable slide-out pre-filter",
+        "noise": "22 dB (Sleep mode) – 54 dB (Max speed)",
+        "energy": "60 W max power consumption (Energy Star Certified)",
+        "smart": "Smart Auto Mode, Rapid Mode, Eco Mode, and Sleep Mode",
+        "sensors": "Real-time particle sensor with colorful LED air quality indicator",
+        "coverage": "930 sq ft (2 air changes/hr) / 465 sq ft (4 air changes/hr)",
+        "weight": "20.5 lb (9.3 kg)",
+        "warranty": "5 years limited warranty on motor / 1 year electronic parts"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://cowaymega.com/products/airmega-250",
+        "asOf": "2026-09-02",
+        "kind": "spec-sheet"
+      }
+    },
+    {
+      "id": "discover-it-cash-back",
+      "name": "Discover it Cash Back",
+      "brand": "Discover",
+      "category": "finance",
+      "subcategory": "credit-cards",
+      "price": 0,
+      "image_url": "https://via.placeholder.com/300x200?text=Discover+it",
+      "description": "No-annual-fee rewards card offering 5% cash back in quarterly rotating categories, 1% on all other purchases, and an unlimited dollar-for-dollar Cashback Match in your first year.",
+      "pros": [
+        "5% cash back on quarterly rotating categories (grocery stores, restaurants, gas, Amazon.com) up to $1,500 with activation",
+        "Unlimited Cashback Match: Discover automatically doubles all cash back earned at the end of your first year",
+        "No annual fee, no foreign transaction fees, and free FICO Credit Scorecard"
+      ],
+      "cons": [
+        "Requires quarterly category activation",
+        "5% bonus rate is capped at $1,500 quarterly spend (then 1%)"
+      ],
+      "specifications": {
+        "annual_fee": "$0",
+        "apr": "17.24% – 28.24% Variable APR",
+        "rewards_rate": "5% cash back on everyday purchases at different places each quarter (up to $1,500 in quarterly purchases with activation), 1% unlimited on all other purchases",
+        "intro_offer": "0% intro APR for 15 months on purchases and balance transfers",
+        "foreign_tx": "None (0%)",
+        "credit_needed": "Good to Excellent (670–850)",
+        "lounge": "No",
+        "sign_up_bonus": "Cashback Match: Discover will automatically match all cash back you earn at the end of your first year with no minimum or limit",
+        "late_fee": "None on first late payment, then up to $41",
+        "network": "Discover Network"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.discover.com/credit-cards/cash-back/it-card.html",
+        "asOf": "2026-09-02",
+        "kind": "issuer-terms"
+      }
+    },
+    {
+      "id": "american-express-blue-cash-everyday",
+      "name": "Blue Cash Everyday Card from American Express",
+      "brand": "American Express",
+      "category": "finance",
+      "subcategory": "credit-cards",
+      "price": 0,
+      "image_url": "https://via.placeholder.com/300x200?text=Amex+BCE",
+      "description": "No-annual-fee cash back card with 3% cash back on US supermarkets, 3% on US online retail purchases, 3% on US gas stations, and up to $84 Disney Bundle credit.",
+      "pros": [
+        "3% cash back on U.S. online retail purchases (up to $6k/year)",
+        "3% cash back at U.S. supermarkets and U.S. gas stations (up to $6k/year each)",
+        "Up to $84 annual Disney Bundle statement credit ($7/month) with $0 annual fee"
+      ],
+      "cons": [
+        "2.7% foreign transaction fee",
+        "3% bonus cash back categories are each capped at $6,000 annual spend (then 1%)"
+      ],
+      "specifications": {
+        "annual_fee": "$0",
+        "apr": "19.24% – 29.99% Variable APR",
+        "rewards_rate": "3% cash back on US supermarkets (up to $6,000 per year, then 1%), 3% on US online retail purchases (up to $6,000 per year, then 1%), 3% on US gas stations (up to $6,000 per year, then 1%), 1% on other purchases",
+        "intro_offer": "0% intro APR on purchases and balance transfers for 15 months from account opening",
+        "foreign_tx": "2.7% of each transaction after conversion to US dollars",
+        "credit_needed": "Good to Excellent (670–850)",
+        "lounge": "No",
+        "sign_up_bonus": "$200 statement credit after spending $2,000 in purchases in the first 6 months",
+        "late_fee": "Up to $40",
+        "network": "American Express"
+      },
+      "markets": [
+        "us"
+      ],
+      "officialSource": {
+        "url": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-everyday/",
+        "asOf": "2026-09-02",
+        "kind": "issuer-terms"
+      }
     }
   ],
   "categories": [
