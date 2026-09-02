@@ -25,9 +25,10 @@ import {
 } from '@/lib/nav'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import type { MarketId } from '@/lib/markets'
-import { buildAnswer, checkDealBreakers, flattenRows } from '@/lib/decision'
+import { buildAnswer, checkDealBreakers, flattenRows, shortName } from '@/lib/decision'
 import { buildCompareFaq, buildLensAnswers } from '@/lib/faq'
-import { absUrl, clip, SITE_NAME } from '@/lib/site'
+import { absUrl, clip, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
+import { displaySpec, formatCatalogDate } from '@/lib/format'
 import { casesFor } from '@/data/use-cases'
 import { SpecTables } from '@/components/SpecTables'
 import { ProductMark } from '@/components/ProductMark'
@@ -248,6 +249,53 @@ export async function CompareMatchup({
   const lenses = buildLensAnswers(productA, productB, rows, checks, useCases, market)
   const faq = buildCompareFaq(productA, productB, verdict, overall.headline, overall.reasons, lenses, checks, market)
 
+  const highlightDiffs = verdict.highlights.filter((r) => r.differs)
+  const otherDiffs = rows.filter((r) => r.differs && !highlightDiffs.some((h) => h.key === r.key))
+  const selectedDiffs = [...highlightDiffs, ...otherDiffs].slice(0, 5)
+
+  const nameA = shortName(productA)
+  const nameB = shortName(productB)
+
+  const whyInNumbers = selectedDiffs.map((row) => {
+    const valA = displaySpec(row.a, row.key, market)
+    const valB = displaySpec(row.b, row.key, market)
+
+    const sourceA =
+      row.origin === 'sheet' && productA.officialSource?.url
+        ? { url: productA.officialSource.url, text: `${productA.brand} sheet, ${productA.officialSource.asOf}` }
+        : null
+    const noteA =
+      row.origin === 'other'
+        ? 'other published figure, not on maker sheet'
+        : row.origin === 'editorial'
+          ? 'our summary'
+          : null
+
+    const sourceB =
+      row.origin === 'sheet' && productB.officialSource?.url
+        ? { url: productB.officialSource.url, text: `${productB.brand} sheet, ${productB.officialSource.asOf}` }
+        : null
+    const noteB =
+      row.origin === 'other'
+        ? 'other published figure, not on maker sheet'
+        : row.origin === 'editorial'
+          ? 'our summary'
+          : null
+
+    return {
+      key: row.key,
+      label: row.label,
+      valA,
+      valB,
+      nameA,
+      nameB,
+      sourceA,
+      noteA,
+      sourceB,
+      noteB,
+    }
+  })
+
   const sameType = new Set(
     (await getProducts(market))
       .filter((p) => p.subcategory === productA.subcategory)
@@ -285,6 +333,34 @@ export async function CompareMatchup({
           <p className="eyebrow">Head to head</p>
           <h1 className="display mt-2 text-[30px] sm:text-[40px]">{comparison.productName}</h1>
           <p className="mt-4 text-[16px] leading-relaxed text-ink sm:text-[17.5px]">{answer}</p>
+          <p className="mt-2 text-[12px] text-ink-3">Catalog as of {formatCatalogDate(CATALOG_AS_OF)}</p>
+
+          {whyInNumbers.length > 0 && (
+            <div className="mt-4 rounded-lg border border-line bg-surface-2 p-3.5 sm:p-4">
+              <h2 className="text-[13px] font-semibold text-ink">Why, in numbers</h2>
+              <ul className="mt-2 grid gap-1.5 text-[13px] leading-relaxed text-ink-2">
+                {whyInNumbers.map((item) => (
+                  <li key={item.key}>
+                    <span className="font-medium text-ink">{item.label}:</span>{' '}
+                    {item.nameA} lists {item.valA}
+                    {item.sourceA ? (
+                      <> (<a href={item.sourceA.url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{item.sourceA.text}</a>)</>
+                    ) : item.noteA ? (
+                      <> ({item.noteA})</>
+                    ) : null}
+                    ; {item.nameB} lists {item.valB}
+                    {item.sourceB ? (
+                      <> (<a href={item.sourceB.url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{item.sourceB.text}</a>)</>
+                    ) : item.noteB ? (
+                      <> ({item.noteB})</>
+                    ) : null}
+                    .
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <PriceNote subcategory={productA.subcategory} />
         </header>
 
@@ -628,6 +704,19 @@ export async function CompareMatchup({
                     },
                   ]),
             ],
+          }),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            name: comparison.productName,
+            url: absUrl(compareHref(comparison, market)),
+            dateModified: CATALOG_AS_OF,
           }),
         }}
       />

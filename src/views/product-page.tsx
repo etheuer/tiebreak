@@ -18,8 +18,9 @@ import {
   productHref,
   subLabel,
 } from '@/lib/nav'
-import { absUrl, clip, SITE_NAME } from '@/lib/site'
-import { formatMoney } from '@/lib/format'
+import { absUrl, clip, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
+import { formatCatalogDate, formatMoney } from '@/lib/format'
+import { buildProductFaq } from '@/lib/faq'
 import { ProductMark } from '@/components/ProductMark'
 import { ProductSpecs } from '@/components/ProductSpecs'
 import { VsCard } from '@/components/VsCard'
@@ -112,6 +113,8 @@ export async function ProductDetail({
     0
   )
 
+  const faq = buildProductFaq(product, comparisons, market)
+
   return (
     <div className="shell">
       <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 pt-6 text-[12.5px] text-ink-3">
@@ -147,6 +150,7 @@ export async function ProductDetail({
             {priceShort(product, market)}
           </p>
           <p className="num mt-1 text-[12px] text-ink-3">{attributeCount} attributes tracked</p>
+          <p className="num mt-1 text-[12px] text-ink-3">Catalog as of {formatCatalogDate(CATALOG_AS_OF)}</p>
           <PriceNote subcategory={product.subcategory} />
         </div>
       </header>
@@ -263,6 +267,22 @@ export async function ProductDetail({
         </section>
       )}
 
+      {faq.length > 0 && (
+        <section className="border-t border-line py-10" aria-labelledby="product-faq">
+          <h2 id="product-faq" className="display text-[20px] sm:text-[24px]">
+            Frequently asked
+          </h2>
+          <div className="mt-5 grid gap-4">
+            {faq.map(({ q, a }) => (
+              <div key={q} className="card p-5">
+                <h3 className="text-[15px] font-semibold text-ink">{q}</h3>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">{a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -351,6 +371,26 @@ export async function ProductDetail({
           }),
         }}
       />
+
+      {faq.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: faq.map(({ q, a }) => ({
+                '@type': 'Question',
+                name: q,
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: a,
+                },
+              })),
+            }),
+          }}
+        />
+      )}
     </div>
   )
 }
