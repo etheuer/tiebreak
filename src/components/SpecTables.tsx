@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useMemo, useState, useRef } from 'react'
+import Link from 'next/link'
 import type { Product } from '@/lib/data'
 import type { ScoredGroup, ScoredRow, Side } from '@/lib/verdict'
 import { ProductMark } from '@/components/ProductMark'
-import { priceShort } from '@/lib/nav'
+import { priceShort, productHref } from '@/lib/nav'
 import { shortName } from '@/lib/decision'
 import { displaySpec } from '@/lib/format'
 import type { MarketId } from '@/lib/markets'
@@ -159,9 +160,13 @@ export function SpecTables({
               >
                 <ProductMark product={product} size="xs" tone={side} className="hidden sm:grid" />
                 <span className="min-w-0">
-                  <span className="block truncate text-[12.5px] font-semibold leading-tight sm:text-[13.5px]">
+                  <Link
+                    href={productHref(product, market)}
+                    className="block truncate text-[12.5px] font-semibold leading-tight sm:text-[13.5px] hover:underline"
+                    title={`View ${product.name} spec sheet`}
+                  >
                     {shortName(product)}
-                  </span>
+                  </Link>
                   <span className="num block text-[12px] leading-tight text-ink-3">
                     {priceShort(product, market)}
                     <span

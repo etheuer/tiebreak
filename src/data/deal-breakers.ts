@@ -61,11 +61,6 @@ const firstAbove = (limit: number) =>
     const [first] = magnitudes(value, key)
     return first !== undefined && first > limit
   })
-const firstAtLeast = (limit: number) =>
-  known((value, key) => {
-    const [first] = magnitudes(value, key)
-    return first !== undefined && first >= limit
-  })
 const maxAbove = (limit: number) =>
   known((value, key) => {
     const all = magnitudes(value, key)
@@ -92,13 +87,6 @@ export const DEAL_BREAKERS: Record<Subcategory, DealBreakerRule[]> = {
       label: 'Only two HDMI 2.1 ports',
       why: 'A PS5, an Xbox and a 4K120 PC cannot all connect at full bandwidth, and one port doubles as eARC.',
       trips: firstBelow(4),
-    },
-    {
-      id: 'burn-in',
-      key: 'burn_in_risk',
-      label: 'Burn-in risk',
-      why: 'Static news tickers, game HUDs and desktop use can leave permanent marks over the years.',
-      trips: has(/^\s*yes\b/i),
     },
     {
       id: 'glossy-screen',
@@ -328,13 +316,6 @@ export const DEAL_BREAKERS: Record<Subcategory, DealBreakerRule[]> = {
       label: 'No airport lounge access',
       why: 'No free lounges; only matters if you fly often.',
       trips: isNo,
-    },
-    {
-      id: 'excellent-credit',
-      key: 'credit_needed',
-      label: 'Needs excellent credit (720+)',
-      why: 'Applications under 720 are usually declined.',
-      trips: firstAtLeast(720),
     },
     {
       id: 'no-intro-apr',

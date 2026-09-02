@@ -127,7 +127,13 @@ function ProductPanel({
       <div className="flex items-center gap-3 min-w-0">
         <ProductMark product={product} size="sm" tone={side} />
         <div className="min-w-0 flex flex-col justify-center">
-          <p className="truncate text-[13.5px] font-semibold leading-tight">{product.name}</p>
+          <Link
+            href={productHref(product, market)}
+            className="truncate text-[13.5px] font-semibold leading-tight hover:underline"
+            title={`View ${product.name} spec sheet`}
+          >
+            {product.name}
+          </Link>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
             <span className="num text-[12.5px] text-ink-3">{priceShort(product, market)}</span>
             <span className="num text-[12px] font-semibold" style={{ color: tintInk }}>
@@ -343,7 +349,7 @@ export async function CompareMatchup({
             ].map(({ product, side }) => (
               <div
                 key={product.id}
-                className="card p-5"
+                className="card flex flex-col p-5"
               >
                 <p className="eyebrow">Pick this one if</p>
                 <h3 className="mt-1.5 text-[16px] font-semibold">{product.name}</h3>
@@ -367,6 +373,14 @@ export async function CompareMatchup({
                     </li>
                   ))}
                 </ul>
+                <div className="mt-6 pt-4 border-t border-line">
+                  <Link
+                    href={productHref(product, market)}
+                    className="chip"
+                  >
+                    Full {product.name} specs →
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -401,12 +415,21 @@ export async function CompareMatchup({
 
         <section className="mt-14 card p-6 text-center" aria-labelledby="done">
           <h2 id="done" className="display text-[20px] sm:text-[23px]">Done deciding?</h2>
+          <p className="mt-1.5 text-[13.5px] text-ink-3">
+            Open the full standalone spec sheet for either device.
+          </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href={productHref(verdict.leader === 'a' ? productA : productB, market)}
+              href={productHref(productA, market)}
               className="btn rounded-full bg-ink px-5 py-2 text-[13px] font-semibold text-surface transition-transform motion-safe:hover:scale-[1.02]"
             >
-              Full spec sheet
+              {productA.name} spec sheet
+            </Link>
+            <Link
+              href={productHref(productB, market)}
+              className="btn rounded-full bg-ink px-5 py-2 text-[13px] font-semibold text-surface transition-transform motion-safe:hover:scale-[1.02]"
+            >
+              {productB.name} spec sheet
             </Link>
             <ShareVerdict />
           </div>

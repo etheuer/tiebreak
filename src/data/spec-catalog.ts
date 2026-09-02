@@ -13,8 +13,8 @@ export type SpecGroup = {
 }
 
 /**
- * What shoppers actually compare, by product type.
- * Smartphones follow GSMArena-style groups; TVs follow RTINGS-style picture/gaming splits.
+ * Rows we will show and score: facts a maker or issuer publishes on the
+ * official sheet. Measurements, estimates, and editorial judgments stay out.
  */
 export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
   smartphones: [
@@ -61,7 +61,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       label: 'Memory',
       fields: [
         { key: 'ram', label: 'RAM', highlight: true },
-        { key: 'storage', label: 'Storage (reviewed)' },
+        { key: 'storage', label: 'Storage' },
         { key: 'storage_options', label: 'Storage options' },
         { key: 'expandable_storage', label: 'microSD' },
       ],
@@ -136,10 +136,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
         { key: 'screen_size', label: 'Screen size' },
         { key: 'resolution', label: 'Resolution' },
         { key: 'native_refresh', label: 'Native refresh rate' },
-        { key: 'peak_brightness', label: 'Peak brightness (HDR)', highlight: true },
-        { key: 'contrast', label: 'Contrast' },
         { key: 'local_dimming', label: 'Local dimming' },
-        { key: 'viewing_angle', label: 'Viewing angle' },
         { key: 'screen_finish', label: 'Screen finish' },
         { key: 'hdr_formats', label: 'HDR formats' },
       ],
@@ -149,7 +146,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       label: 'Processing',
       fields: [
         { key: 'processor', label: 'Processor' },
-        { key: 'motion_handling', label: 'Motion handling' },
         { key: 'upscaling', label: 'Upscaling' },
       ],
     },
@@ -161,7 +157,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
         { key: 'four_k_120', label: '4K 120Hz' },
         { key: 'vrr', label: 'VRR' },
         { key: 'allm', label: 'Auto low latency (ALLM)' },
-        { key: 'input_lag', label: 'Input lag (4K 120, game mode)' },
         { key: 'gsync_freesync', label: 'G-Sync / FreeSync' },
       ],
     },
@@ -194,7 +189,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       id: 'ownership',
       label: 'Ownership',
       fields: [
-        { key: 'burn_in_risk', label: 'Burn-in risk' },
         { key: 'warranty', label: 'Warranty' },
       ],
     },
@@ -226,14 +220,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       ],
     },
     {
-      id: 'battery',
-      label: 'Battery',
-      fields: [
-        { key: 'battery_life', label: 'Claimed battery life', highlight: true },
-        { key: 'charger', label: 'Charger' },
-      ],
-    },
-    {
       id: 'build',
       label: 'Build & input',
       fields: [
@@ -255,6 +241,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
         { key: 'sd_card', label: 'SD card' },
         { key: 'magsafe', label: 'MagSafe' },
         { key: 'headphone_jack', label: 'Headphone jack' },
+        { key: 'charger', label: 'Charger' },
       ],
     },
     {
@@ -262,7 +249,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       label: 'Software',
       fields: [
         { key: 'os', label: 'Operating system' },
-        { key: 'repairability', label: 'Repairability' },
       ],
     },
   ],
@@ -284,7 +270,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       label: 'Runtime & charging',
       fields: [
         { key: 'max_runtime', label: 'Max runtime', highlight: true },
-        { key: 'typical_runtime', label: 'Typical mixed-use runtime' },
         { key: 'charge_time', label: 'Charge time' },
       ],
     },
@@ -294,7 +279,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       fields: [
         { key: 'weight', label: 'Weight', highlight: true },
         { key: 'bin_capacity', label: 'Bin capacity' },
-        { key: 'noise', label: 'Noise' },
         { key: 'display', label: 'Display' },
       ],
     },
@@ -343,7 +327,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
         { key: 'anc', label: 'Active Noise Cancelling', highlight: true },
         { key: 'transparency', label: 'Transparency mode' },
         { key: 'codec', label: 'Supported codecs' },
-        { key: 'mic', label: 'Microphone quality' },
+        { key: 'mic', label: 'Microphones' },
       ],
     },
     {
@@ -425,7 +409,6 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       id: 'details',
       label: 'Card Details',
       fields: [
-        { key: 'credit_needed', label: 'Credit needed' },
         { key: 'network', label: 'Network' },
       ],
     },
