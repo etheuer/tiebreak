@@ -8,6 +8,7 @@ import { buildVerdict } from '@/lib/verdict'
 import { categoryHref, compareHref, subLabel } from '@/lib/nav'
 import { primaryUseCase } from '@/data/use-cases'
 import { VsCard } from '@/components/VsCard'
+import { CompareLink } from '@/components/CompareLink'
 
 export async function homeMetadata(market: MarketId): Promise<Metadata> {
   const ukProducts = await getProducts('uk')
@@ -87,6 +88,7 @@ export async function HomePage({ market }: { market: MarketId }) {
         sub: entry.sub,
         label: `${entry.label} for ${useCase.label.toLowerCase()}`,
         href: `${entry.href}#for=${useCase.id}`,
+        useCaseId: useCase.id,
       },
     ]
   })
@@ -111,10 +113,10 @@ export async function HomePage({ market }: { market: MarketId }) {
           <div className="mt-8 flex flex-wrap items-center gap-2">
             {subcategories.map((entry) =>
               entry.href ? (
-                <Link key={entry.sub} href={entry.href} className="chip">
+                <CompareLink key={entry.sub} href={entry.href} className="chip">
                   {entry.label}
                   <span className="num text-micro text-ink-3">{entry.attributes} specs</span>
-                </Link>
+                </CompareLink>
               ) : null
             )}
             <span className="ml-1 hidden text-meta text-ink-3 sm:inline">
@@ -130,9 +132,9 @@ export async function HomePage({ market }: { market: MarketId }) {
           <div className="shell flex flex-wrap items-center gap-2 py-3.5">
             <span className="eyebrow mr-1">Buying for</span>
             {lensEntries.map((entry) => (
-              <Link key={entry.sub} href={entry.href} className="chip">
+              <CompareLink key={entry.sub} href={entry.href} useCaseId={entry.useCaseId} className="chip">
                 {entry.label}
-              </Link>
+              </CompareLink>
             ))}
           </div>
         </section>

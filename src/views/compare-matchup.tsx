@@ -39,6 +39,8 @@ import { PhysicalFitSection } from '@/components/PhysicalFitSection'
 import { OwnerFrictionCheck } from '@/components/OwnerFrictionCheck'
 import { ShareVerdict } from '@/components/ShareVerdict'
 import { FinanceDisclaimer, PriceNote } from '@/components/CatalogNotes'
+import { CompareLink } from '@/components/CompareLink'
+import { OfficialSourceLink } from '@/components/OfficialSourceLink'
 
 export async function generateStaticParamsForMarket(market: MarketId) {
   const comparisons = await getComparisons(market)
@@ -165,7 +167,7 @@ function ProductPanel({
             </p>
             {swaps.map((option) =>
               option.href ? (
-                <Link
+                <CompareLink
                   key={option.id}
                   href={option.href}
                   className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-meta hover:bg-surface-2"
@@ -174,7 +176,7 @@ function ProductPanel({
                   <span className="num shrink-0 text-label text-ink-3">
                     {option.priceText}
                   </span>
-                </Link>
+                </CompareLink>
               ) : (
                 <span
                   key={option.id}
@@ -266,7 +268,7 @@ export async function CompareMatchup({
 
     const sourceA =
       row.origin === 'sheet' && productA.officialSource?.url
-        ? { url: productA.officialSource.url, text: `${productA.brand} sheet, ${productA.officialSource.asOf}` }
+        ? { url: productA.officialSource.url, text: `${productA.brand} sheet, ${productA.officialSource.asOf}`, productId: productA.id }
         : null
     const noteA =
       row.origin === 'other'
@@ -277,7 +279,7 @@ export async function CompareMatchup({
 
     const sourceB =
       row.origin === 'sheet' && productB.officialSource?.url
-        ? { url: productB.officialSource.url, text: `${productB.brand} sheet, ${productB.officialSource.asOf}` }
+        ? { url: productB.officialSource.url, text: `${productB.brand} sheet, ${productB.officialSource.asOf}`, productId: productB.id }
         : null
     const noteB =
       row.origin === 'other'
@@ -348,13 +350,13 @@ export async function CompareMatchup({
                     <span className="font-medium text-ink">{item.label}:</span>{' '}
                     {item.nameA} lists {item.valA}
                     {item.sourceA ? (
-                      <> (<a href={item.sourceA.url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{item.sourceA.text}</a>)</>
+                      <> (<OfficialSourceLink href={item.sourceA.url} productId={item.sourceA.productId} className="text-accent hover:underline">{item.sourceA.text}</OfficialSourceLink>)</>
                     ) : item.noteA ? (
                       <> ({item.noteA})</>
                     ) : null}
                     ; {item.nameB} lists {item.valB}
                     {item.sourceB ? (
-                      <> (<a href={item.sourceB.url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{item.sourceB.text}</a>)</>
+                      <> (<OfficialSourceLink href={item.sourceB.url} productId={item.sourceB.productId} className="text-accent hover:underline">{item.sourceB.text}</OfficialSourceLink>)</>
                     ) : item.noteB ? (
                       <> ({item.noteB})</>
                     ) : null}
@@ -433,10 +435,9 @@ export async function CompareMatchup({
             </span>
             <div className="flex flex-wrap items-center gap-3">
               {productA.officialSource?.url && (
-                <a
+                <OfficialSourceLink
                   href={productA.officialSource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  productId={productA.id}
                   className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
                 >
                   {productA.name} source
@@ -444,13 +445,12 @@ export async function CompareMatchup({
                     <path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span className="sr-only"> (opens in a new tab)</span>
-                </a>
+                </OfficialSourceLink>
               )}
               {productB.officialSource?.url && (
-                <a
+                <OfficialSourceLink
                   href={productB.officialSource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  productId={productB.id}
                   className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
                 >
                   {productB.name} source
@@ -458,7 +458,7 @@ export async function CompareMatchup({
                     <path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span className="sr-only"> (opens in a new tab)</span>
-                </a>
+                </OfficialSourceLink>
               )}
             </div>
           </div>
@@ -568,25 +568,23 @@ export async function CompareMatchup({
             <p className="mt-4 text-label text-ink-3">
               Manufacturer pages:{' '}
               {productA.officialSource?.url && (
-                <a
+                <OfficialSourceLink
                   href={productA.officialSource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  productId={productA.id}
                   className="text-accent hover:underline inline-flex items-center gap-0.5 ml-1"
                 >
                   {productA.name} ↗
-                </a>
+                </OfficialSourceLink>
               )}
               {productA.officialSource?.url && productB.officialSource?.url && ' · '}
               {productB.officialSource?.url && (
-                <a
+                <OfficialSourceLink
                   href={productB.officialSource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  productId={productB.id}
                   className="text-accent hover:underline inline-flex items-center gap-0.5 ml-1"
                 >
                   {productB.name} ↗
-                </a>
+                </OfficialSourceLink>
               )}
             </p>
           )}
@@ -618,14 +616,14 @@ export async function CompareMatchup({
             </h2>
             <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
               {otherComparisons.map((comp) => (
-                <Link
+                <CompareLink
                   key={comp.productA + comp.productB}
                   href={compareHref(comp, market)}
                   className="card p-4 transition-colors hover:border-line-2"
                 >
                   <p className="text-body font-semibold leading-snug">{comp.productName}</p>
 
-                </Link>
+                </CompareLink>
               ))}
             </div>
           </section>

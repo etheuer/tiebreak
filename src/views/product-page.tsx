@@ -24,6 +24,7 @@ import { buildProductFaq } from '@/lib/faq'
 import { ProductMark } from '@/components/ProductMark'
 import { ProductSpecs } from '@/components/ProductSpecs'
 import { VsCard } from '@/components/VsCard'
+import { CompareLink } from '@/components/CompareLink'
 import { FinanceDisclaimer, PriceNote } from '@/components/CatalogNotes'
 
 export async function generateStaticParamsForMarket(market: MarketId) {
@@ -252,9 +253,9 @@ export async function ProductDetail({
                   </div>
                   <div className="mt-4 flex gap-2">
                     {matchup && (
-                      <Link href={compareHref(matchup, market)} className="chip">
+                      <CompareLink href={compareHref(matchup, market)} className="chip">
                         Compare
-                      </Link>
+                      </CompareLink>
                     )}
                     <Link href={productHref(alternative, market)} className="chip">
                       Specs

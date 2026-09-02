@@ -1,6 +1,7 @@
 import type { Product } from '@/lib/data'
 import { originNote } from '@/data/spec-catalog'
 import { buildProductGroups } from '@/lib/specs'
+import { OfficialSourceLink } from '@/components/OfficialSourceLink'
 
 export function ProductSpecs({ product }: { product: Product }) {
   const groups = buildProductGroups(product)
@@ -61,10 +62,9 @@ export function ProductSpecs({ product }: { product: Product }) {
               ? 'Card figures are from issuer materials and go stale. Credit-needed bands are our summary.'
               : 'Most rows are from the official spec sheet. Marked rows are other published figures or our summary, not lab tests we ran.'}
           </span>
-          <a
+          <OfficialSourceLink
             href={product.officialSource.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            productId={product.id}
             className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
           >
             Official {product.name} {product.officialSource.kind === 'issuer-terms' ? 'terms' : 'spec sheet'}
@@ -72,7 +72,7 @@ export function ProductSpecs({ product }: { product: Product }) {
               <path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <span className="sr-only"> (opens in a new tab)</span>
-          </a>
+          </OfficialSourceLink>
         </div>
       ) : null}
     </section>

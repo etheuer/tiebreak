@@ -20,6 +20,7 @@ import {
   ECOSYSTEM_OPTIONS,
   type EcosystemId,
 } from '@/data/ecosystems'
+import { capture } from '@/lib/analytics'
 
 const OVERALL = 'overall'
 const lensKey = (sub: string) => `clinchmark:for:${sub}`
@@ -115,6 +116,7 @@ export function DecisionPanel({
   }, [sub, useCases])
 
   function chooseLens(id: string) {
+    capture('use_case_selected', { use_case: id })
     setLensId(id)
     const url = `${window.location.pathname}${window.location.search}${id === OVERALL ? '' : `#for=${id}`}`
     window.history.replaceState(null, '', url)

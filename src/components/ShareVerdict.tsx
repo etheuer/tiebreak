@@ -1,11 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { capture } from '@/lib/analytics'
 
 export function ShareVerdict() {
   const [status, setStatus] = useState<'idle' | 'copied' | 'fallback'>('idle')
 
   function handleShare() {
+    capture('verdict_shared')
     if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(window.location.href)
         .then(() => {

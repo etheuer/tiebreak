@@ -26,6 +26,7 @@ import { formatCatalogDate } from '@/lib/format'
 import { casesFor } from '@/data/use-cases'
 import { buildAnswer, checkDealBreakers, flattenRows, lensRows, shortName } from '@/lib/decision'
 import { ProductMark } from '@/components/ProductMark'
+import { CompareLink } from '@/components/CompareLink'
 import { FinanceDisclaimer } from '@/components/CatalogNotes'
 
 const FLAGSHIP_PATTERN = /(?:iPhone|Galaxy|MacBook|OLED|Bravia|A95|Dyson|Amex|WH-1000|Bose)/i
@@ -193,12 +194,12 @@ export async function SubcategoryListing({
           {flagshipComp && (
             <>
               {' '}For a flagship matchup, explore the{' '}
-              <Link
+              <CompareLink
                 href={compareHref(flagshipComp, market)}
                 className="text-accent font-medium hover:underline"
               >
                 {flagshipComp.productName}
-              </Link>{' '}
+              </CompareLink>{' '}
               breakdown.
             </>
           )}
@@ -235,9 +236,9 @@ export async function SubcategoryListing({
                 {lensTableData.map((row) => (
                   <tr key={row.productName} className="hover:bg-surface-2">
                     <td className="py-2.5 pr-4 font-medium text-ink">
-                      <Link href={row.href} className="hover:text-accent hover:underline">
+                      <CompareLink href={row.href} className="hover:text-accent hover:underline">
                         {row.productName}
-                      </Link>
+                      </CompareLink>
                     </td>
                     {row.winners.map((winner, idx) => (
                       <td key={idx} className="py-2.5 px-3">
@@ -271,7 +272,7 @@ export async function SubcategoryListing({
             const verdict = buildVerdict(productA, productB, market)
             const answer = verdictLine(productA, productB, verdict, market)
             return (
-              <Link
+              <CompareLink
                 key={comparison.productA + comparison.productB}
                 href={compareHref(comparison, market)}
                 className="card group min-w-0 flex flex-col p-4 transition-all hover:border-line-2 sm:p-5"
@@ -295,7 +296,7 @@ export async function SubcategoryListing({
                     Compare →
                   </span>
                 </div>
-              </Link>
+              </CompareLink>
             )
           })}
         </div>
@@ -354,9 +355,9 @@ export async function SubcategoryListing({
                     {priceShort(product, market)}
                   </p>
                   {matchup ? (
-                    <Link href={matchup.href} className="btn btn-primary whitespace-nowrap text-meta">
+                    <CompareLink href={matchup.href} className="btn btn-primary whitespace-nowrap text-meta">
                       Compare vs {matchup.rival.brand}
-                    </Link>
+                    </CompareLink>
                   ) : (
                     <Link href={productHref(product, market)} className="btn btn-ghost text-meta">
                       Spec sheet
