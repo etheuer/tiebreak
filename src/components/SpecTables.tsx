@@ -9,6 +9,7 @@ import { priceShort, productHref } from '@/lib/nav'
 import { shortName } from '@/lib/decision'
 import { displaySpec } from '@/lib/format'
 import type { MarketId } from '@/lib/markets'
+import { originNote } from '@/data/spec-catalog'
 
 const STORAGE_KEY = 'tiebreak:hide-identical'
 
@@ -276,6 +277,11 @@ export function SpecTables({
                   <tr key={row.key}>
                     <th scope="row" className="row-label">
                       {row.label}
+                      {originNote(row.origin) ? (
+                        <span className="mt-0.5 block text-[11px] font-normal normal-case tracking-normal text-ink-3">
+                          {originNote(row.origin)}
+                        </span>
+                      ) : null}
                       {row.differs && !row.winner && (
                         <span className="ml-1 text-ink-3" aria-hidden>
                           ≠

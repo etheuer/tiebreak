@@ -61,7 +61,7 @@ export default function OpenGraphImage() {
             Two products. One answer.
           </div>
           <div style={{ fontSize: 28, color: '#565a57', maxWidth: 820, lineHeight: 1.35 }}>
-            Spec-by-spec comparisons with a verdict, from manufacturer-published figures.
+            Spec-by-spec comparisons with a verdict, from published figures.
           </div>
         </div>
       </div>

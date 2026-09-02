@@ -3,7 +3,7 @@ import { LegalPage, legalMetadata } from '@/views/legal-page'
 
 export const metadata = legalMetadata(
   'Terms of use',
-  'Tiebreak is informational. Specs are manufacturer-published, prices are list snapshots, and credit-card pages are not financial advice.',
+  'Tiebreak is informational. Specs are published figures, prices are list snapshots, and credit-card pages are not financial advice.',
   '/terms/'
 )
 
@@ -22,9 +22,10 @@ export default function TermsPage() {
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">Accuracy</h2>
       <p>
-        We score manufacturer-published specifications. Makers change sheets, retailers change
-        prices, and issuers change card terms. We do not promise that a page is complete or
-        current. Confirm facts with the manufacturer, seller, or issuer before you buy or apply.
+        We score published figures: official spec sheets plus some other published numbers that we
+        mark on the page. We do not run a lab. Makers change sheets, retailers change prices, and
+        issuers change card terms. We do not promise that a page is complete or current. Confirm
+        facts with the manufacturer, seller, or issuer before you buy or apply.
         See <Link href="/about/" className="text-accent hover:underline">how Tiebreak works</Link>.
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">Trademarks</h2>

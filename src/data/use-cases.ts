@@ -19,17 +19,20 @@ export const USE_CASES: Record<Subcategory, UseCase[]> = {
     {
       id: 'gaming',
       label: 'Gaming',
-      job: 'Console or PC play: 120 Hz, VRR, enough HDMI 2.1 ports for every box',
-      keys: ['hdmi_2_1_ports', 'four_k_120', 'vrr', 'allm', 'gsync_freesync', 'native_refresh'],
+      job: 'Console or PC play: low input lag, 120 Hz, enough HDMI 2.1 ports for every box',
+      keys: ['input_lag', 'hdmi_2_1_ports', 'four_k_120', 'vrr', 'allm', 'gsync_freesync', 'native_refresh'],
     },
     {
       id: 'movies',
       label: 'Movies',
-      job: 'Dark-room films and HDR streaming: panel type, HDR formats, local dimming',
+      job: 'Dark-room films and HDR streaming: black levels, HDR formats, motion and upscaling',
       keys: [
+        'contrast',
         'panel_type',
         'hdr_formats',
+        'peak_brightness',
         'local_dimming',
+        'motion_handling',
         'upscaling',
         'dolby_atmos',
       ],
@@ -37,16 +40,16 @@ export const USE_CASES: Record<Subcategory, UseCase[]> = {
     {
       id: 'bright-rooms',
       label: 'Bright rooms',
-      job: 'Daytime TV and sports in a sunny room: anti-glare finish and panel type',
-      keys: ['screen_finish', 'panel_type', 'hdr_formats'],
+      job: 'Daytime TV and sports in a sunny room: brightness, glare handling, wide seating',
+      keys: ['peak_brightness', 'screen_finish', 'viewing_angle', 'burn_in_risk', 'panel_type'],
     },
   ],
   laptops: [
     {
       id: 'travel',
       label: 'Travel',
-      job: 'In a bag every day: weight, thickness, a screen you can read on a train',
-      keys: ['weight', 'thickness', 'charger', 'brightness', 'webcam'],
+      job: 'In a bag every day: weight, battery, a screen you can read on a train',
+      keys: ['weight', 'thickness', 'battery_life', 'charger', 'brightness', 'webcam'],
     },
     {
       id: 'heavy-work',
@@ -100,13 +103,13 @@ export const USE_CASES: Record<Subcategory, UseCase[]> = {
       id: 'big-homes',
       label: 'Big homes',
       job: 'A large home in one session: runtime, bin size, a dock that empties itself',
-      keys: ['max_runtime', 'bin_capacity', 'docking_station', 'charge_time'],
+      keys: ['max_runtime', 'typical_runtime', 'bin_capacity', 'docking_station', 'charge_time'],
     },
     {
       id: 'light-quiet',
       label: 'Stairs & apartments',
-      job: 'Stairs and apartments: light in the hand, easy to park',
-      keys: ['weight', 'docking_station', 'display'],
+      job: 'Stairs and apartments: light in the hand, quiet, easy to park',
+      keys: ['weight', 'noise', 'docking_station', 'display'],
     },
   ],
   headphones: [
@@ -165,8 +168,8 @@ export const USE_CASES: Record<Subcategory, UseCase[]> = {
     {
       id: 'balance',
       label: 'Carrying a balance',
-      job: 'Paying over time: APR, intro offers, late fees',
-      keys: ['apr', 'intro_offer', 'late_fee', 'annual_fee'],
+      job: 'Paying over time or newer to credit: APR, intro offers, approval odds',
+      keys: ['apr', 'intro_offer', 'late_fee', 'credit_needed', 'annual_fee'],
     },
   ],
 }

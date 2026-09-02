@@ -335,7 +335,10 @@ export async function CompareMatchup({
           </div>
         ) : (
           <div className="shell shell-wide mt-4 flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-ink-3">
-            <span>Every row above is computed from manufacturer-published specifications.</span>
+            <span>
+              Most rows are from the official spec sheet. Marked rows are other published figures or
+              our summary, not lab tests we ran.
+            </span>
             <div className="flex flex-wrap items-center gap-3">
               {productA.officialSource?.url && (
                 <a
@@ -442,7 +445,9 @@ export async function CompareMatchup({
               ))}
             </div>
             <p className="mt-4 max-w-2xl text-[13px] leading-relaxed text-ink-3">
-              Every answer above is computed from manufacturer-published specifications; a lens scores only the specs that matter for that use. Switch lenses interactively in the panel above.
+              Every answer above is scored from published figures. A lens uses only the rows that
+              matter for that use, including marked rows that are not on the official sheet. Switch
+              lenses interactively in the panel above.
             </p>
           </section>
         )}

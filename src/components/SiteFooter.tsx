@@ -43,7 +43,8 @@ export function SiteFooter({
           </div>
           <p className="mt-3 max-w-sm text-[13.5px] leading-relaxed text-ink-2">
             Head to head spec comparisons for people who have already narrowed it down to two.
-            Figures come from published manufacturer specifications, not our own lab testing.
+            Figures are published specs and other published numbers we mark on the page, not lab
+            tests we ran.
           </p>
         </div>
 
@@ -99,8 +100,7 @@ export function SiteFooter({
             ))}
           </nav>
           <p>
-            US list prices in {MARKETS[market].currency}. Figures are manufacturer-published and
-            change often.
+            US list prices in {MARKETS[market].currency}. Figures change; confirm before you buy.
           </p>
         </div>
       </div>

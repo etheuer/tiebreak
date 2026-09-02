@@ -1,5 +1,5 @@
 import type { Product } from '@/lib/data'
-import { mergeCatalogs, type SpecField, type SpecGroup } from '@/data/spec-catalog'
+import { fieldOrigin, mergeCatalogs, type SpecField, type SpecGroup, type SpecOrigin } from '@/data/spec-catalog'
 
 export type SpecRow = {
   key: string
@@ -7,6 +7,7 @@ export type SpecRow = {
   a: string
   b: string
   differs: boolean
+  origin: SpecOrigin
 }
 
 export type RenderedGroup = {
@@ -40,6 +41,7 @@ export function buildComparisonGroups(productA: Product, productB: Product): Ren
         a,
         b,
         differs: a !== b && a !== EMPTY && b !== EMPTY,
+        origin: fieldOrigin(field),
       }
     }),
   }))

@@ -1,9 +1,23 @@
 export type Subcategory = 'tvs' | 'laptops' | 'smartphones' | 'cordless-vacuums' | 'headphones' | 'air-purifiers' | 'credit-cards'
 
+export type SpecOrigin = 'sheet' | 'other' | 'editorial'
+
 export type SpecField = {
   key: string
   label: string
   highlight?: boolean
+  /** Defaults to official-sheet. */
+  origin?: SpecOrigin
+}
+
+export function fieldOrigin(field: SpecField): SpecOrigin {
+  return field.origin ?? 'sheet'
+}
+
+export function originNote(origin: SpecOrigin): string | null {
+  if (origin === 'other') return 'Not on the official sheet'
+  if (origin === 'editorial') return 'Our summary'
+  return null
 }
 
 export type SpecGroup = {
@@ -13,8 +27,8 @@ export type SpecGroup = {
 }
 
 /**
- * Rows we will show and score: facts a maker or issuer publishes on the
- * official sheet. Measurements, estimates, and editorial judgments stay out.
+ * Shoppers see official-sheet facts and other published figures on the same
+ * page. `origin` marks the lane. Editorial rows stay visible but never score.
  */
 export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
   smartphones: [
@@ -91,7 +105,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       label: 'Battery & charging',
       fields: [
         { key: 'battery_capacity', label: 'Capacity', highlight: true },
-        { key: 'wired_charging', label: 'Wired charging' },
+        { key: 'wired_charging', label: 'Wired charging', origin: 'other' },
         { key: 'wireless_charging', label: 'Wireless charging' },
         { key: 'reverse_charging', label: 'Reverse wireless' },
         { key: 'charger_in_box', label: 'Charger in box' },
@@ -136,7 +150,10 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
         { key: 'screen_size', label: 'Screen size' },
         { key: 'resolution', label: 'Resolution' },
         { key: 'native_refresh', label: 'Native refresh rate' },
+        { key: 'peak_brightness', label: 'Peak brightness (HDR)', highlight: true, origin: 'other' },
+        { key: 'contrast', label: 'Contrast', origin: 'editorial' },
         { key: 'local_dimming', label: 'Local dimming' },
+        { key: 'viewing_angle', label: 'Viewing angle', origin: 'editorial' },
         { key: 'screen_finish', label: 'Screen finish' },
         { key: 'hdr_formats', label: 'HDR formats' },
       ],
@@ -146,6 +163,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       label: 'Processing',
       fields: [
         { key: 'processor', label: 'Processor' },
+        { key: 'motion_handling', label: 'Motion handling', origin: 'editorial' },
         { key: 'upscaling', label: 'Upscaling' },
       ],
     },
@@ -157,6 +175,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
         { key: 'four_k_120', label: '4K 120Hz' },
         { key: 'vrr', label: 'VRR' },
         { key: 'allm', label: 'Auto low latency (ALLM)' },
+        { key: 'input_lag', label: 'Input lag (4K 120, game mode)', origin: 'other' },
         { key: 'gsync_freesync', label: 'G-Sync / FreeSync' },
       ],
     },
@@ -181,7 +200,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       id: 'design',
       label: 'Design',
       fields: [
-        { key: 'thickness', label: 'Thickness' },
+        { key: 'thickness', label: 'Thickness', origin: 'other' },
         { key: 'wall_mount', label: 'Wall mount' },
       ],
     },
@@ -189,6 +208,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       id: 'ownership',
       label: 'Ownership',
       fields: [
+        { key: 'burn_in_risk', label: 'Burn-in risk', origin: 'editorial' },
         { key: 'warranty', label: 'Warranty' },
       ],
     },
@@ -202,7 +222,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
         { key: 'display_type', label: 'Panel', highlight: true },
         { key: 'resolution', label: 'Resolution' },
         { key: 'refresh_rate', label: 'Refresh rate' },
-        { key: 'brightness', label: 'Brightness' },
+        { key: 'brightness', label: 'Brightness', origin: 'other' },
         { key: 'color_gamut', label: 'Color' },
         { key: 'touchscreen', label: 'Touchscreen' },
       ],
@@ -245,10 +265,18 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       ],
     },
     {
+      id: 'battery',
+      label: 'Battery',
+      fields: [
+        { key: 'battery_life', label: 'Claimed battery life', highlight: true, origin: 'other' },
+      ],
+    },
+    {
       id: 'software',
       label: 'Software',
       fields: [
         { key: 'os', label: 'Operating system' },
+        { key: 'repairability', label: 'Repairability' },
       ],
     },
   ],
@@ -257,7 +285,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       id: 'cleaning',
       label: 'Cleaning performance',
       fields: [
-        { key: 'suction', label: 'Suction', highlight: true },
+        { key: 'suction', label: 'Suction', highlight: true, origin: 'other' },
         { key: 'auto_suction', label: 'Auto suction adjust' },
         { key: 'floor_illumination', label: 'Floor illumination' },
         { key: 'anti_tangle', label: 'Anti-tangle' },
@@ -270,6 +298,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       label: 'Runtime & charging',
       fields: [
         { key: 'max_runtime', label: 'Max runtime', highlight: true },
+        { key: 'typical_runtime', label: 'Typical mixed-use runtime', origin: 'other' },
         { key: 'charge_time', label: 'Charge time' },
       ],
     },
@@ -279,6 +308,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       fields: [
         { key: 'weight', label: 'Weight', highlight: true },
         { key: 'bin_capacity', label: 'Bin capacity' },
+        { key: 'noise', label: 'Noise', origin: 'other' },
         { key: 'display', label: 'Display' },
       ],
     },
@@ -409,6 +439,7 @@ export const SPEC_CATALOGS: Record<Subcategory, SpecGroup[]> = {
       id: 'details',
       label: 'Card Details',
       fields: [
+        { key: 'credit_needed', label: 'Credit needed', origin: 'editorial' },
         { key: 'network', label: 'Network' },
       ],
     },

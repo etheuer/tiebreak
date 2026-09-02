@@ -1,4 +1,5 @@
 import type { Product } from '@/lib/data'
+import { originNote } from '@/data/spec-catalog'
 import { buildProductGroups } from '@/lib/specs'
 
 export function ProductSpecs({ product }: { product: Product }) {
@@ -37,7 +38,14 @@ export function ProductSpecs({ product }: { product: Product }) {
             <dl className="divide-y divide-line">
               {group.rows.map((row) => (
                 <div key={row.key} className="grid grid-cols-[38%_1fr] gap-3 px-4 py-2.5">
-                  <dt className="text-[12.5px] leading-snug text-ink-3">{row.label}</dt>
+                  <dt className="text-[12.5px] leading-snug text-ink-3">
+                    {row.label}
+                    {originNote(row.origin) ? (
+                      <span className="mt-0.5 block text-[11px] font-normal text-ink-3">
+                        {originNote(row.origin)}
+                      </span>
+                    ) : null}
+                  </dt>
                   <dd className="text-[13px] leading-snug">{row.a}</dd>
                 </div>
               ))}
@@ -48,7 +56,11 @@ export function ProductSpecs({ product }: { product: Product }) {
 
       {product.officialSource?.url ? (
         <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-ink-3">
-          <span>Specs sourced from manufacturer published documentation.</span>
+          <span>
+            {product.officialSource.kind === 'issuer-terms'
+              ? 'Card figures are from issuer materials and go stale. Credit-needed bands are our summary.'
+              : 'Most rows are from the official spec sheet. Marked rows are other published figures or our summary, not lab tests we ran.'}
+          </span>
           <a
             href={product.officialSource.url}
             target="_blank"

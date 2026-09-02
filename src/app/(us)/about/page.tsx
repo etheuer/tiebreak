@@ -3,7 +3,7 @@ import { LegalPage, legalMetadata } from '@/views/legal-page'
 
 export const metadata = legalMetadata(
   'How Tiebreak works',
-  'Tiebreak compares two products from manufacturer-published specifications and scores a spec-by-spec verdict. No lab tests, no live prices.',
+  'Tiebreak compares two products from published figures and scores a spec-by-spec verdict. No lab tests, no live prices.',
   '/about/'
 )
 
@@ -16,9 +16,12 @@ export default function AboutPage() {
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">What the numbers are</h2>
       <p>
-        Every figure comes from manufacturer-published specifications. We do not run a lab, we do
-        not mystery-shop, and we do not convert currencies. A &ldquo;win&rdquo; means the published
-        number is better on that row, not that we measured it.
+        We compare published figures, not lab tests we ran. Most rows come from the maker&apos;s
+        spec sheet. Some rows (for example TV input lag and approximate HDR brightness) are
+        published figures that usually do not appear on that sheet. We still use those when they
+        help you decide, and we mark them. A &ldquo;win&rdquo; means the published number is better
+        on that row, not that we measured it. Confirm anything that matters on the official page
+        before you buy.
       </p>
       <h2 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-ink">Prices</h2>
       <p>

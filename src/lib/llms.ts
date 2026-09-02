@@ -34,12 +34,12 @@ export async function buildLlmsText(market: MarketId): Promise<string> {
   lines.push('')
   lines.push(
     market === 'uk'
-      ? 'UK English edition. Head-to-head product comparisons scored from manufacturer-published specifications.'
-      : 'Head-to-head product comparisons scored directly from manufacturer-published specifications. Every matchup delivers a spec-by-spec breakdown, highlights critical differences, and provides a clear verdict for shoppers who have already narrowed their choice down to two.'
+      ? 'UK English edition. Head-to-head product comparisons scored from published specifications.'
+      : 'Head-to-head product comparisons scored from published specifications. Every matchup delivers a spec-by-spec breakdown, highlights critical differences, and provides a clear verdict for shoppers who have already narrowed their choice down to two.'
   )
   lines.push('')
   lines.push(
-    'All figures and specifications are derived from official manufacturer datasheets. Differences are objectively calculated, and rankings reflect measurable specification advantages without subjective bias.'
+    'Most figures come from official spec sheets. Some rows (marked on the page) are other published figures that usually do not appear on the maker sheet. Tiebreak does not run a lab. Rankings reflect published numbers, not measurements we took.'
   )
   lines.push('')
   lines.push('## Matchups')
@@ -77,7 +77,7 @@ export async function buildLlmsText(market: MarketId): Promise<string> {
 
   lines.push('## About this site')
   lines.push('')
-  lines.push('- US catalog only on this launch. Figures are manufacturer-published specifications, not lab tests.')
+  lines.push('- US catalog only on this launch. Figures are published specs, not lab tests we ran. Some rows are marked as not on the official sheet.')
   lines.push('- Prices are list snapshots, not live offers. Credit-card pages are not financial advice.')
   lines.push(`- [How Tiebreak works](${absUrl('/about/')})`)
   lines.push(`- [Privacy](${absUrl('/privacy/')}) · [Terms](${absUrl('/terms/')}) · [Contact](${absUrl('/contact/')})`)

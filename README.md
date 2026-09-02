@@ -29,7 +29,7 @@ runs lint, types, catalog checks, the i18n data checks, and a production build.
 
 ## What the pages are
 
-Manufacturer-published specifications, not lab tests. List prices, not live offers. Credit-card pages are not financial advice.
+Published specifications, not lab tests we ran. Some comparison rows are other published figures, marked on the page. List prices, not live offers. Credit-card pages are not financial advice.
 
 ## Stack
 

@@ -1,6 +1,6 @@
 import type { Product } from '@/lib/data'
 import { priceOf } from '@/lib/pricing'
-import { mergeCatalogs, type SpecField } from '@/data/spec-catalog'
+import { mergeCatalogs, type SpecField, type SpecOrigin } from '@/data/spec-catalog'
 import { buildComparisonGroups, type RenderedGroup } from '@/lib/specs'
 import { isFeeBased } from '@/lib/nav'
 import { formatMoney } from '@/lib/format'
@@ -16,6 +16,7 @@ export type ScoredRow = {
   a: string
   b: string
   differs: boolean
+  origin: SpecOrigin
   /** null when the two values cannot be ranked honestly */
   winner: Side | null
   /** short human reason, e.g. "higher" / "lower" / "has it" */
@@ -240,7 +241,8 @@ export function buildVerdict(productA: Product, productB: Product, market: Marke
     let diffCount = 0
 
     const rows: ScoredRow[] = group.rows.map((row) => {
-      const { winner, reason } = judge(row.key, row.a, row.b)
+      const { winner, reason } =
+        row.origin === 'editorial' ? { winner: null, reason: null } : judge(row.key, row.a, row.b)
       total += 1
       if (row.differs) {
         differing += 1
