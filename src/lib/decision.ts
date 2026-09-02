@@ -53,7 +53,41 @@ export function lensCoverage(rows: LensRow[], useCase: UseCase | null): { scored
 }
 
 export function shortName(product: Product): string {
-  return product.name.replace(/\s*\((\d{4})\)/, '').replace(/ (TV|OLED evo TV|QLED TV)$/, '')
+  return product.name
+    .replace(/\s*\((\d{4})\)/, '')
+    .replace(/ (OLED evo TV|QLED TV|OLED TV|TV)$/, '')
+}
+
+/**
+ * Compact labels that let a reader tell the two columns apart.
+ * Cross-brand matchups use the brand ("Samsung" vs "Apple"). Same-brand
+ * matchups strip the shared brand mention so the model name carries the
+ * distinction ("Blue Cash Preferred" vs "Blue Cash Everyday", never
+ * "American Express" twice). Falls back to the full short name if
+ * stripping would make the two labels identical.
+ */
+export function columnLabels(productA: Product, productB: Product): { a: string; b: string } {
+  if (productA.brand !== productB.brand) {
+    return { a: productA.brand, b: productB.brand }
+  }
+
+  const stripBrand = (product: Product) => {
+    const full = shortName(product)
+    const brand = product.brand.toLowerCase()
+    let name = full
+    if (name.toLowerCase().startsWith(`${brand} `)) name = name.slice(product.brand.length + 1)
+    const tail = ` from ${brand}`
+    if (name.toLowerCase().endsWith(tail)) name = name.slice(0, -tail.length)
+    name = name.replace(/\s+(Credit Card|Card)$/i, '')
+    name = name.trim()
+    // A bare number ("OnePlus 12" -> "12") reads worse than the full name.
+    if (!name || /^\d+$/.test(name)) return full
+    return name
+  }
+
+  const a = stripBrand(productA)
+  const b = stripBrand(productB)
+  return a === b ? { a: shortName(productA), b: shortName(productB) } : { a, b }
 }
 
 function groupIndex(subcategory: string): Map<string, string> {

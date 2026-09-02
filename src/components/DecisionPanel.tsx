@@ -6,6 +6,7 @@ import type { UseCase } from '@/data/use-cases'
 import { subLabel } from '@/lib/nav'
 import {
   buildAnswer,
+  columnLabels,
   lensRows,
   scoreLens,
   shortName,
@@ -134,6 +135,7 @@ export function DecisionPanel({
   )
 
   const names = { a: shortName(productA), b: shortName(productB) }
+  const cols = columnLabels(productA, productB)
   const thing = subLabel(sub).toLowerCase().replace(/s$/, '')
   const eliminated = new Set<'a' | 'b'>()
   for (const check of checks) {
@@ -353,10 +355,11 @@ export function DecisionPanel({
                         className={`${side === 'a' ? 'col-a' : 'col-b'} px-3.5 py-3 ${side === 'b' ? 'border-l border-line' : ''}`}
                       >
                         <p
-                          className="text-label font-semibold uppercase tracking-[0.06em]"
+                          className="line-clamp-2 text-label font-semibold uppercase leading-snug tracking-[0.06em]"
                           style={{ color: side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)' }}
+                          title={side === 'a' ? productA.name : productB.name}
                         >
-                          {side === 'a' ? productA.brand : productB.brand}
+                          {cols[side]}
                         </p>
                         <p
                           className={`mt-1 text-cell leading-snug ${

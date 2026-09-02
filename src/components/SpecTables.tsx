@@ -6,7 +6,7 @@ import type { Product } from '@/lib/data'
 import type { ScoredGroup, ScoredRow, Side } from '@/lib/verdict'
 import { ProductMark } from '@/components/ProductMark'
 import { priceShort, productHref } from '@/lib/nav'
-import { shortName } from '@/lib/decision'
+import { columnLabels, shortName } from '@/lib/decision'
 import { displaySpec } from '@/lib/format'
 import type { MarketId } from '@/lib/markets'
 import { originNote } from '@/data/spec-catalog'
@@ -101,6 +101,13 @@ export function SpecTables({
     const differing = groups.reduce((sum, group) => sum + group.diffCount, 0)
     return { total, differing }
   }, [groups])
+
+  // Mobile column switch: first words if they already differ, otherwise
+  // same-brand-aware labels so "Blue" never faces "Blue".
+  const tags = useMemo(() => {
+    const first = { a: shortName(productA).split(' ')[0], b: shortName(productB).split(' ')[0] }
+    return first.a === first.b ? columnLabels(productA, productB) : first
+  }, [productA, productB])
 
   const pauseSpy = useRef(false)
   useEffect(() => {
@@ -222,7 +229,7 @@ export function SpecTables({
                 }}
                 aria-pressed={focus === mode}
               >
-                {mode === 'a' ? shortName(productA).split(' ')[0] : mode === 'b' ? shortName(productB).split(' ')[0] : 'Both'}
+                {mode === 'a' ? tags.a : mode === 'b' ? tags.b : 'Both'}
               </button>
             ))}
           </div>
