@@ -149,40 +149,76 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
   const MARKET_IDS = ['us', 'uk']
   const SCANNED_EXTENSIONS = ['.html', '.js', '.txt', '.json', '.md', '.xml']
 
-  // Fields that exist only on a Market config record, never on a Product. The
-  // MARKETS table is site configuration and legitimately keys by market id.
-  const MARKET_CONFIG_CONTEXT = /hreflang|unitSystem|ogLocale/
-
-  // No structural parsing on purpose. An earlier version walked brace depth
-  // over quote-unescaped text, and a literal quote inside a price source could
-  // close the object early on a valid-looking prefix, hiding the key that
-  // followed. A leak scanner must not have a path that silently under-reports,
-  // so this only asks whether a foreign market id is used as an object key at
-  // all, and exempts the one construct that legitimately does.
-  function leaksMarketData(text, others) {
-    if (/"(variants|availability)"\s*:\s*\{/.test(text)) return true
-    for (const id of others) {
-      for (const match of text.matchAll(new RegExp(`"${id}"\\s*:`, 'g'))) {
-        const context = text.slice(Math.max(0, match.index - 300), match.index)
-        if (!MARKET_CONFIG_CONTEXT.test(context)) return true
+  // Spec values only one market ever shows. Derived from the catalog rather
+  // than hardcoded, so new regional overrides are covered automatically.
+  // Prices are deliberately excluded: no product carries a UK price today, and
+  // a bare amount is not a distinctive enough string to match on. A leaked
+  // foreign price object still trips the `prices`-bearing structural checks
+  // below, because forClient removes the whole foreign entry.
+  function exclusiveValues(market) {
+    const baseValues = new Set()
+    const variantValues = new Set()
+    for (const product of products) {
+      for (const value of Object.values(product.specifications ?? {})) {
+        if (typeof value === 'string') baseValues.add(value)
+      }
+      for (const value of Object.values(product.variants?.uk?.specifications ?? {})) {
+        if (typeof value === 'string') variantValues.add(value)
       }
     }
-    return false
+    const exclusive = new Set()
+    for (const product of products) {
+      const overrides = product.variants?.uk?.specifications ?? {}
+      for (const [key, ukValue] of Object.entries(overrides)) {
+        const usValue = product.specifications?.[key]
+        if (typeof ukValue !== 'string' || ukValue === usValue) continue
+        // Keep only values the other market never legitimately shows, and skip
+        // any that appear inside one of its strings: "43 W max power" is a UK
+        // override but also a prefix of the US "43 W max power (Energy Star
+        // certified)", so a substring match there would be a false positive.
+        const isDistinct = (value, otherValues) =>
+          ![...otherValues].some((other) => other.includes(value))
+        if (market === 'uk' && isDistinct(ukValue, baseValues)) exclusive.add(ukValue)
+        if (market === 'us' && typeof usValue === 'string' && isDistinct(usValue, variantValues)) {
+          exclusive.add(usValue)
+        }
+      }
+    }
+    return [...exclusive]
   }
 
-  function crossMarketLeaks(root, market, excludeSubtree) {
-    const others = MARKET_IDS.filter((id) => id !== market)
-    const files = filesUnder(root, SCANNED_EXTENSIONS).filter(
-      (file) => !excludeSubtree || !file.startsWith(excludeSubtree + path.sep)
-    )
+  const EXCLUSIVE = { us: exclusiveValues('us'), uk: exclusiveValues('uk') }
+
+  // Value-based on purpose. Three earlier key-shaped versions of this check
+  // each had a false-negative path — a fixed character window, a brace walk
+  // over unescaped text, and a quoted-key match that missed bare and
+  // unicode-escaped properties. A leaked spec is the same string however the
+  // payload is encoded or minified, so this looks for the data itself.
+  // `variants` and `availability` are Product-only field names that forClient
+  // removes entirely, so their presence is a leak in any spelling.
+  function leaksMarketData(text, foreignMarket) {
+    if (/["']?(variants|availability)["']?\s*:\s*\{/.test(text)) return true
+    return EXCLUSIVE[foreignMarket].some((value) => text.includes(value))
+  }
+
+  function crossMarketLeaks(root, market, excludeSubtree, extraFiles = []) {
+    const foreign = market === 'us' ? 'uk' : 'us'
+    const files = [
+      ...filesUnder(root, SCANNED_EXTENSIONS).filter(
+        (file) => !excludeSubtree || !file.startsWith(excludeSubtree + path.sep)
+      ),
+      ...extraFiles,
+    ]
     const offenders = files.filter((file) => {
-      // The RSC payload escapes its quotes. Check both forms rather than
-      // rewriting one into the other, so neither spelling can slip past.
       const raw = readFileSync(file, 'utf8')
-      return leaksMarketData(raw, others) || leaksMarketData(raw.split('\\"').join('"'), others)
+      return leaksMarketData(raw, foreign) || leaksMarketData(raw.split('\\"').join('"'), foreign)
     })
     return { scanned: files.length, offenders }
   }
+
+  // Shared chunks live at the root but are loaded by both markets, so the UK
+  // pass must open them too; the US pass already covers them.
+  const sharedChunks = filesUnder(path.join(staticRoot, '_next'), SCANNED_EXTENSIONS)
 
   const usScan = crossMarketLeaks(staticRoot, 'us', staticUkRoot)
 
@@ -214,7 +250,7 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
       ['static UK pages do not show invented GBP amounts', hasSourcedUkPrice || ukHtml.every(({ html }) => !/£\s?\d/.test(html)), true],
       ['static UK meta descriptions do not contain USD amounts', ukDescriptionTags.every((tag) => !/\$\s?\d/.test(tag)), true],
       (() => {
-        const ukScan = crossMarketLeaks(staticUkRoot, 'uk', null)
+        const ukScan = crossMarketLeaks(staticUkRoot, 'uk', null, sharedChunks)
         return [`no UK output ships another market's data (${ukScan.scanned} files scanned)`, leakResult(ukScan), true]
       })(),
     )
