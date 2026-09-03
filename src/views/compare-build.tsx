@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { getComparisons, getProducts, type Comparison, type Product } from '@/lib/data'
-import { homeHref, pairKey, priceShort, subLabel } from '@/lib/nav'
+import { getComparisons, getProducts } from '@/lib/data'
+import { homeHref } from '@/lib/nav'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { SITE_NAME, absUrl } from '@/lib/site'
-import { CompareBuilder, type BuilderProduct } from '@/components/CompareBuilder'
+import { CompareBuilder } from '@/components/CompareBuilder'
+import { builderData } from '@/lib/builder-data'
 import { CompareBuildResult } from '@/views/compare-build-result'
 
 export async function buildMetadata(market: MarketId): Promise<Metadata> {
@@ -27,30 +28,6 @@ export async function buildMetadata(market: MarketId): Promise<Metadata> {
       locale: openGraphLocale(market),
     },
   }
-}
-
-export function builderData(
-  products: Product[],
-  comparisons: Comparison[],
-  market: MarketId
-): { builderProducts: BuilderProduct[]; published: Record<string, string> } {
-  const builderProducts: BuilderProduct[] = products
-    .slice()
-    .sort((x, y) => x.name.localeCompare(y.name))
-    .map((p) => ({
-      id: p.id,
-      name: p.name,
-      brand: p.brand,
-      subcategory: p.subcategory,
-      subLabel: subLabel(p.subcategory),
-      priceText: priceShort(p, market),
-    }))
-
-  const published: Record<string, string> = {}
-  for (const c of comparisons) {
-    published[pairKey(c.productA, c.productB)] = `${c.productA}-vs-${c.productB}`
-  }
-  return { builderProducts, published }
 }
 
 export async function CompareBuildPage({ market }: { market: MarketId }) {
@@ -80,6 +57,7 @@ export async function CompareBuildPage({ market }: { market: MarketId }) {
       <Suspense>
         <CompareBuildResult
           products={builderProducts}
+          catalog={products}
           published={published}
           market={market}
         />

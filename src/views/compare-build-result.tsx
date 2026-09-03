@@ -6,20 +6,13 @@ import { useMemo } from 'react'
 import { buildVerdict, verdictLine } from '@/lib/verdict'
 import { buildAnswer, checkDealBreakers, flattenRows, shortName } from '@/lib/decision'
 import { casesFor } from '@/data/use-cases'
-import { inMarket, resolveProduct, type Product } from '@/lib/pricing'
+import type { Product } from '@/lib/pricing'
 import { priceShort, productHref, subLabel } from '@/lib/nav'
 import { marketPath, type MarketId } from '@/lib/markets'
 import { DecisionPanel } from '@/components/DecisionPanel'
 import { SpecTables } from '@/components/SpecTables'
 import { ProductImage } from '@/components/ProductImage'
 import type { BuilderProduct } from '@/components/CompareBuilder'
-import productsData from '@/data/products.json'
-
-const ALL_PRODUCTS = (productsData as { products: object[] }).products as unknown as Product[]
-
-function marketProducts(market: MarketId): Product[] {
-  return ALL_PRODUCTS.filter((p) => inMarket(p, market)).map((p) => resolveProduct(p, market))
-}
 
 /**
  * Live verdict for an arbitrary ?a=&b= pair. Same scoring, lenses and
@@ -28,10 +21,13 @@ function marketProducts(market: MarketId): Product[] {
  */
 export function CompareBuildResult({
   products,
+  catalog,
   published,
   market,
 }: {
   products: BuilderProduct[]
+  /** Already filtered and resolved for `market` on the server: no other market's data crosses. */
+  catalog: Product[]
   published: Record<string, string>
   market: MarketId
 }) {
@@ -41,13 +37,9 @@ export function CompareBuildResult({
 
   const pair = useMemo(() => {
     if (!idA || !idB) return null
-    const all = marketProducts(market)
-    const byId = new Map(all.map((p) => [p.id, p]))
-    const productA = byId.get(idA) ?? null
-    const productB = byId.get(idB) ?? null
-    if (!productA || !productB || productA.id === productB.id) return { productA, productB }
-    return { productA, productB }
-  }, [idA, idB, market])
+    const byId = new Map(catalog.map((p) => [p.id, p]))
+    return { productA: byId.get(idA) ?? null, productB: byId.get(idB) ?? null }
+  }, [idA, idB, catalog])
 
   if (!idA || !idB) {
     return (

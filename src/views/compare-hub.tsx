@@ -7,7 +7,7 @@ import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { absUrl, SITE_NAME } from '@/lib/site'
 import { CompareBuilder } from '@/components/CompareBuilder'
-import { builderData } from '@/views/compare-build'
+import { builderData } from '@/lib/builder-data'
 
 export async function generateHubMetadata(market: MarketId): Promise<Metadata> {
   const [comparisons, ukComparisons] = await Promise.all([

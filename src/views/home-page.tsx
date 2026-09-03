@@ -9,7 +9,7 @@ import { categoryHref, compareHref, subLabel } from '@/lib/nav'
 import { primaryUseCase } from '@/data/use-cases'
 import { VsCard } from '@/components/VsCard'
 import { CompareBuilder } from '@/components/CompareBuilder'
-import { builderData } from '@/views/compare-build'
+import { builderData } from '@/lib/builder-data'
 
 export async function homeMetadata(market: MarketId): Promise<Metadata> {
   const ukProducts = await getProducts('uk')
