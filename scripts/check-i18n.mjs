@@ -151,10 +151,13 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
 
   // Spec values only one market ever shows. Derived from the catalog rather
   // than hardcoded, so new regional overrides are covered automatically.
-  // Prices are deliberately excluded: no product carries a UK price today, and
-  // a bare amount is not a distinctive enough string to match on. A leaked
-  // foreign price object still trips the `prices`-bearing structural checks
-  // below, because forClient removes the whole foreign entry.
+  // Prices are deliberately excluded and NOT covered by any check here: no
+  // product carries a UK price today, and a bare amount is not distinctive
+  // enough to match on without false positives. This is a known gap - a
+  // foreign price object alone would pass. Closing it properly needs a unit
+  // test importing forClient directly, which needs a TS-capable test runner
+  // this project does not have; a text scan over build output cannot be both
+  // false-positive-free and complete.
   function exclusiveValues(market) {
     const baseValues = new Set()
     const variantValues = new Set()
