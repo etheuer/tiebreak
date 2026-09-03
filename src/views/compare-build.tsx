@@ -32,7 +32,7 @@ export async function buildMetadata(market: MarketId): Promise<Metadata> {
 
 export async function CompareBuildPage({ market }: { market: MarketId }) {
   const [products, comparisons] = await Promise.all([getProducts(market), getComparisons(market)])
-  const { builderProducts, published } = builderData(products, comparisons, market)
+  const { builderProducts, publishedPairs } = builderData(products, comparisons, market)
 
   return (
     <div className="shell">
@@ -51,14 +51,14 @@ export async function CompareBuildPage({ market }: { market: MarketId }) {
           Pick two products of the same type. Published pairs open their full breakdown;
           every other pair is scored instantly from the same published specs.
         </p>
-        <CompareBuilder products={builderProducts} published={published} market={market} />
+        <CompareBuilder products={builderProducts} publishedPairs={publishedPairs} market={market} />
       </header>
 
       <Suspense>
         <CompareBuildResult
           products={builderProducts}
           catalog={products}
-          published={published}
+          publishedPairs={publishedPairs}
           market={market}
         />
       </Suspense>

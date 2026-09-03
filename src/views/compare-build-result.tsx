@@ -7,12 +7,12 @@ import { buildVerdict, verdictLine } from '@/lib/verdict'
 import { buildAnswer, checkDealBreakers, flattenRows, shortName } from '@/lib/decision'
 import { casesFor } from '@/data/use-cases'
 import type { Product } from '@/lib/pricing'
-import { priceShort, productHref, subLabel } from '@/lib/nav'
+import { priceShort, productHref, subLabel, subLabelSingular } from '@/lib/nav'
 import { marketPath, type MarketId } from '@/lib/markets'
 import { DecisionPanel } from '@/components/DecisionPanel'
 import { SpecTables } from '@/components/SpecTables'
 import { ProductImage } from '@/components/ProductImage'
-import type { BuilderProduct } from '@/components/CompareBuilder'
+import { publishedSlug, type BuilderProduct, type PublishedPairs } from '@/lib/builder-data'
 
 /**
  * Live verdict for an arbitrary ?a=&b= pair. Same scoring, lenses and
@@ -22,13 +22,13 @@ import type { BuilderProduct } from '@/components/CompareBuilder'
 export function CompareBuildResult({
   products,
   catalog,
-  published,
+  publishedPairs,
   market,
 }: {
   products: BuilderProduct[]
   /** Already filtered and resolved for `market` on the server: no other market's data crosses. */
   catalog: Product[]
-  published: Record<string, string>
+  publishedPairs: PublishedPairs
   market: MarketId
 }) {
   const params = useSearchParams()
@@ -67,6 +67,19 @@ export function CompareBuildResult({
   }
 
   const { productA, productB } = pair
+  if (productA.subcategory !== productB.subcategory) {
+    return (
+      <div className="py-10">
+        <h2 className="display text-h2">Those two can&apos;t be compared</h2>
+        <p className="mt-2 max-w-xl text-body text-ink-2">
+          {shortName(productA)} is a {subLabelSingular(productA.subcategory)} and{' '}
+          {shortName(productB)} is a {subLabelSingular(productB.subcategory)}. Spec lenses and
+          deal-breakers are defined per product type, so a verdict across types would be noise.
+          Pick two of the same type above.
+        </p>
+      </div>
+    )
+  }
   if (productA.id === productB.id) {
     return (
       <div className="py-10">
@@ -76,12 +89,12 @@ export function CompareBuildResult({
     )
   }
 
-  const slug = published[[productA.id, productB.id].sort().join('\0')]
+  const slug = publishedSlug(products, publishedPairs, productA.id, productB.id)
   const verdict = buildVerdict(productA, productB, market)
   const answer = verdictLine(productA, productB, verdict, market)
   const rows = flattenRows(verdict)
   const checks = checkDealBreakers(productA, productB)
-  const useCases = productA.subcategory === productB.subcategory ? casesFor(productA.subcategory) : []
+  const useCases = casesFor(productA.subcategory)
   const overall = buildAnswer({ productA, productB, useCase: null, rows, checks, matters: new Set(), market })
 
   return (

@@ -68,7 +68,7 @@ export async function HomePage({ market }: { market: MarketId }) {
     verdict: buildVerdict(pair.productA, pair.productB, market),
   }))
 
-  const { builderProducts, published } = builderData(products, comparisons, market)
+  const { builderProducts, publishedPairs } = builderData(products, comparisons, market)
 
   const subcategories = [...new Set(products.map((product) => product.subcategory))].map((sub) => {
     const entry = pairs.find((pair) => pair.productA.subcategory === sub)
@@ -175,7 +175,7 @@ export async function HomePage({ market }: { market: MarketId }) {
           <p className="mt-2 max-w-xl text-body text-ink-2">
             Your shortlist isn&apos;t on the list? Pick the pair and get the verdict instantly.
           </p>
-          <CompareBuilder products={builderProducts} published={published} market={market} />
+          <CompareBuilder products={builderProducts} publishedPairs={publishedPairs} market={market} />
         </section>
 
         <section id="categories" className="scroll-mt-24 border-t border-line py-14">

@@ -3,16 +3,8 @@
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { marketPath, type MarketId } from '@/lib/markets'
-import { buildHref, pairKey } from '@/lib/nav'
-
-export type BuilderProduct = {
-  id: string
-  name: string
-  brand: string
-  subcategory: string
-  subLabel: string
-  priceText: string
-}
+import { buildHref, subLabelSingular } from '@/lib/nav'
+import { publishedSlug, type BuilderProduct, type PublishedPairs } from '@/lib/builder-data'
 
 /**
  * Compare-any-two picker. Resolves to the published breakdown when the pair
@@ -22,15 +14,12 @@ export type BuilderProduct = {
  */
 export function CompareBuilder({
   products,
-  published,
+  publishedPairs,
   market = 'us',
-  compact = false,
 }: {
   products: BuilderProduct[]
-  /** pairKey -> published slug (`a-vs-b` in stored order). */
-  published: Record<string, string>
+  publishedPairs: PublishedPairs
   market?: MarketId
-  compact?: boolean
 }) {
   const router = useRouter()
   const [idA, setIdA] = useState('')
@@ -47,14 +36,18 @@ export function CompareBuilder({
 
   function chooseA(id: string) {
     setIdA(id)
+    // Keep the second pick only while it is still a valid partner: same type,
+    // and not the product just chosen as the first.
     const next = products.find((p) => p.id === id)
-    if (next && products.find((p) => p.id === idB)?.subcategory !== next.subcategory) {
+    const current = products.find((p) => p.id === idB)
+    if (!next || !current || current.id === next.id || current.subcategory !== next.subcategory) {
       setIdB('')
     }
   }
 
   const ready = Boolean(productA && productB && productA.id !== productB.id)
-  const slug = productA && productB ? published[pairKey(productA.id, productB.id)] : undefined
+  const slug =
+    productA && productB ? publishedSlug(products, publishedPairs, productA.id, productB.id) : undefined
   const target =
     productA && productB
       ? slug
@@ -70,7 +63,7 @@ export function CompareBuilder({
   return (
     <form
       onSubmit={submit}
-      className={compact ? 'mt-4 flex flex-col gap-2.5' : 'card mt-6 grid gap-3 p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end sm:p-5'}
+      className="card mt-6 grid gap-3 p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end sm:p-5"
       aria-label="Compare any two products"
     >
       <label className="grid gap-1.5 text-meta font-medium text-ink-2">
@@ -97,7 +90,7 @@ export function CompareBuilder({
           disabled={!productA}
           className="w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-body text-ink disabled:opacity-50"
         >
-          <option value="">{productA ? `Another ${productA.subLabel.toLowerCase()}…` : 'Pick the first product…'}</option>
+          <option value="">{productA ? `Another ${subLabelSingular(productA.subcategory)}…` : 'Pick the first product…'}</option>
           {optionsB.map((p) => (
             <option key={p.id} value={p.id}>
               {p.name} · {p.priceText}

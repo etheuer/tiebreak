@@ -45,7 +45,7 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
     getComparisons(market),
   ])
 
-  const { builderProducts, published } = builderData(products, comparisons, market)
+  const { builderProducts, publishedPairs } = builderData(products, comparisons, market)
   const byId = new Map(products.map((p) => [p.id, p]))
 
   // Group by subcategory
@@ -99,7 +99,7 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
         <p className="mt-2 max-w-xl text-body text-ink-2">
           Missing pair? Score it instantly from published specs.
         </p>
-        <CompareBuilder products={builderProducts} published={published} market={market} />
+        <CompareBuilder products={builderProducts} publishedPairs={publishedPairs} market={market} />
       </section>
 
       <div className="py-8 grid gap-10">
