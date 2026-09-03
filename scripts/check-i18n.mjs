@@ -149,38 +149,25 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
   const MARKET_IDS = ['us', 'uk']
   const SCANNED_EXTENSIONS = ['.html', '.js', '.txt', '.json', '.md', '.xml']
 
-  // Read the whole `{...}` starting at `open`, ignoring braces inside strings.
-  // A bounded character window is not sound here: one long PricePoint.source
-  // pushes the next market key past any fixed cutoff.
-  function balancedObject(raw, open) {
-    let depth = 0
-    let inString = false
-    let escaped = false
-    for (let i = open; i < raw.length; i += 1) {
-      const ch = raw[i]
-      if (inString) {
-        if (escaped) escaped = false
-        else if (ch === '\\') escaped = true
-        else if (ch === '"') inString = false
-        continue
-      }
-      if (ch === '"') inString = true
-      else if (ch === '{') depth += 1
-      else if (ch === '}') {
-        depth -= 1
-        if (depth === 0) return raw.slice(open, i + 1)
-      }
-    }
-    return raw.slice(open)
-  }
+  // Fields that exist only on a Market config record, never on a Product. The
+  // MARKETS table is site configuration and legitimately keys by market id.
+  const MARKET_CONFIG_CONTEXT = /hreflang|unitSystem|ogLocale/
 
-  function foreignMarketKey(block, others) {
-    try {
-      return Object.keys(JSON.parse(block)).some((key) => others.includes(key))
-    } catch {
-      // Truncated or non-JSON context: fall back to a whitespace-tolerant match.
-      return others.some((id) => new RegExp(`"${id}"\\s*:`).test(block))
+  // No structural parsing on purpose. An earlier version walked brace depth
+  // over quote-unescaped text, and a literal quote inside a price source could
+  // close the object early on a valid-looking prefix, hiding the key that
+  // followed. A leak scanner must not have a path that silently under-reports,
+  // so this only asks whether a foreign market id is used as an object key at
+  // all, and exempts the one construct that legitimately does.
+  function leaksMarketData(text, others) {
+    if (/"(variants|availability)"\s*:\s*\{/.test(text)) return true
+    for (const id of others) {
+      for (const match of text.matchAll(new RegExp(`"${id}"\\s*:`, 'g'))) {
+        const context = text.slice(Math.max(0, match.index - 300), match.index)
+        if (!MARKET_CONFIG_CONTEXT.test(context)) return true
+      }
     }
+    return false
   }
 
   function crossMarketLeaks(root, market, excludeSubtree) {
@@ -189,14 +176,10 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
       (file) => !excludeSubtree || !file.startsWith(excludeSubtree + path.sep)
     )
     const offenders = files.filter((file) => {
-      // The RSC payload escapes its quotes; compare against an unescaped copy.
-      const raw = readFileSync(file, 'utf8').split('\\"').join('"')
-      if (/"(variants|availability)"\s*:\s*\{/.test(raw)) return true
-      for (const match of raw.matchAll(/"prices"\s*:\s*\{/g)) {
-        const block = balancedObject(raw, raw.indexOf('{', match.index))
-        if (foreignMarketKey(block, others)) return true
-      }
-      return false
+      // The RSC payload escapes its quotes. Check both forms rather than
+      // rewriting one into the other, so neither spelling can slip past.
+      const raw = readFileSync(file, 'utf8')
+      return leaksMarketData(raw, others) || leaksMarketData(raw.split('\\"').join('"'), others)
     })
     return { scanned: files.length, offenders }
   }
