@@ -81,6 +81,8 @@ export function officialSourceUrl(product: Product): string | undefined {
  * codebase is meant to hold.
  */
 export function forClient(product: Product, market: MarketId): Product {
+  // Destructured only to drop them from `rest`.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { variants: _variants, availability: _availability, prices, ...rest } = product
   const listed = prices?.[market]
   return listed ? { ...rest, prices: { [market]: listed } } : rest

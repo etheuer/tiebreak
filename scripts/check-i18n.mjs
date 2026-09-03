@@ -140,25 +140,46 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
   )
   const hasSourcedUkPrice = uk.some((product) => Boolean(product.prices?.uk))
 
-  // Every file a US visitor can load: pages plus the shared JS chunks. A single
-  // page-level probe missed a client prop that carried the whole catalog, so
-  // this sweeps the entire US surface instead of one known page.
-  const usOutputs = filesUnder(staticRoot, ['.html', '.js']).filter(
-    (file) => !file.startsWith(staticUkRoot + path.sep)
-  )
-  const usLeaks = usOutputs.filter((file) => {
-    // The RSC payload escapes its quotes, so compare against an unescaped copy.
-    const raw = readFileSync(file, 'utf8').split('\\"').join('"')
-    return raw.includes('Exynos 2400') || /"variants":\s*\{\s*"(uk|us)"/.test(raw)
-  })
+  // Cross-market leak sweep. forClient drops `variants` and `availability`
+  // entirely and narrows `prices` to the market being served, so none of those
+  // may appear in another market's output. Scans every file a visitor can
+  // load: pages, shared JS chunks, and the RSC Flight payloads Next emits as
+  // .txt for client-side navigation - a page-level probe over .html alone is
+  // what let this leak survive.
+  const MARKET_IDS = ['us', 'uk']
+  const SCANNED_EXTENSIONS = ['.html', '.js', '.txt', '.json']
+
+  function crossMarketLeaks(root, market, excludeSubtree) {
+    const others = MARKET_IDS.filter((id) => id !== market)
+    const files = filesUnder(root, SCANNED_EXTENSIONS).filter(
+      (file) => !excludeSubtree || !file.startsWith(excludeSubtree + path.sep)
+    )
+    const offenders = files.filter((file) => {
+      // The RSC payload escapes its quotes; compare against an unescaped copy.
+      const raw = readFileSync(file, 'utf8').split('\\"').join('"')
+      if (/"(variants|availability)":\s*\{/.test(raw)) return true
+      for (const match of raw.matchAll(/"prices":\s*\{/g)) {
+        const window = raw.slice(match.index, match.index + 500)
+        if (others.some((id) => window.includes(`"${id}":`))) return true
+      }
+      return false
+    })
+    return { scanned: files.length, offenders }
+  }
+
+  const usScan = crossMarketLeaks(staticRoot, 'us', staticUkRoot)
+
+  function leakResult({ offenders }) {
+    return offenders.length === 0
+      ? true
+      : `${offenders.length} file(s), e.g. ${offenders.slice(0, 3).map((f) => path.relative(staticRoot, f)).join(', ')}`
+  }
 
   checks.push(
     ['static US S24 contains Snapdragon and not Exynos 2400', usS24Html.includes('Snapdragon') && !usS24Html.includes('Exynos 2400'), true],
     [
-      `no US output ships another market's specs (${usOutputs.length} files scanned)`,
-      usLeaks.length === 0
-        ? true
-        : `${usLeaks.length} file(s), e.g. ${usLeaks.slice(0, 3).map((f) => path.relative(staticRoot, f)).join(', ')}`,
+      `no US output ships another market's data (${usScan.scanned} files scanned)`,
+      leakResult(usScan),
       true,
     ],
   )
@@ -175,6 +196,10 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
         && !existsSync(path.join(staticUkRoot, 'product', 'finance')), true],
       ['static UK pages do not show invented GBP amounts', hasSourcedUkPrice || ukHtml.every(({ html }) => !/£\s?\d/.test(html)), true],
       ['static UK meta descriptions do not contain USD amounts', ukDescriptionTags.every((tag) => !/\$\s?\d/.test(tag)), true],
+      (() => {
+        const ukScan = crossMarketLeaks(staticUkRoot, 'uk', null)
+        return [`no UK output ships another market's data (${ukScan.scanned} files scanned)`, leakResult(ukScan), true]
+      })(),
     )
   } else {
     checks.push(['US-only export does not emit /uk/', !existsSync(staticUkRoot), true])
