@@ -67,6 +67,15 @@ function htmlFilesUnder(directory) {
   })
 }
 
+function filesUnder(directory, extensions) {
+  if (!existsSync(directory)) return []
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const fullPath = path.join(directory, entry.name)
+    if (entry.isDirectory()) return filesUnder(fullPath, extensions)
+    return entry.isFile() && extensions.some((ext) => entry.name.endsWith(ext)) ? [fullPath] : []
+  })
+}
+
 const s24 = products.find((p) => p.id === 'samsung-galaxy-s24')
 const s24Uk = resolveProduct(s24, 'uk')
 const s24Us = resolveProduct(s24, 'us')
@@ -131,8 +140,27 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
   )
   const hasSourcedUkPrice = uk.some((product) => Boolean(product.prices?.uk))
 
+  // Every file a US visitor can load: pages plus the shared JS chunks. A single
+  // page-level probe missed a client prop that carried the whole catalog, so
+  // this sweeps the entire US surface instead of one known page.
+  const usOutputs = filesUnder(staticRoot, ['.html', '.js']).filter(
+    (file) => !file.startsWith(staticUkRoot + path.sep)
+  )
+  const usLeaks = usOutputs.filter((file) => {
+    // The RSC payload escapes its quotes, so compare against an unescaped copy.
+    const raw = readFileSync(file, 'utf8').split('\\"').join('"')
+    return raw.includes('Exynos 2400') || /"variants":\s*\{\s*"(uk|us)"/.test(raw)
+  })
+
   checks.push(
     ['static US S24 contains Snapdragon and not Exynos 2400', usS24Html.includes('Snapdragon') && !usS24Html.includes('Exynos 2400'), true],
+    [
+      `no US output ships another market's specs (${usOutputs.length} files scanned)`,
+      usLeaks.length === 0
+        ? true
+        : `${usLeaks.length} file(s), e.g. ${usLeaks.slice(0, 3).map((f) => path.relative(staticRoot, f)).join(', ')}`,
+      true,
+    ],
   )
 
   if (ukPublished) {

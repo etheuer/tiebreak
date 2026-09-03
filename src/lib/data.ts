@@ -8,6 +8,7 @@ import { sentenceCase, shortName } from '@/lib/decision'
 
 export type { MarketAttestation, OfficialSource, PricePoint, Product, ProductVariant } from '@/lib/pricing'
 export { inMarket, marketsOf, officialSourceUrl, priceOf, resolveProduct } from '@/lib/pricing'
+import { forClient } from '@/lib/pricing'
 
 
 export interface Category {
@@ -44,9 +45,13 @@ export async function getProducts(market: MarketId = 'us'): Promise<Product[]> {
   const cached = marketProductsCache.get(market)
   if (cached) return cached
   const products = await getAllProducts()
+  // forClient drops the fields resolveProduct leaves behind (`variants`,
+  // `availability`, other markets' `prices`). Nothing downstream reads them,
+  // and keeping them let a client-component prop serialize the UK catalog
+  // into US pages.
   const result = products
     .filter((product) => inMarket(product, market))
-    .map((product) => resolveProduct(product, market))
+    .map((product) => forClient(resolveProduct(product, market), market))
   marketProductsCache.set(market, result)
   return result
 }
