@@ -67,6 +67,15 @@ function htmlFilesUnder(directory) {
   })
 }
 
+function filesUnder(directory, extensions) {
+  if (!existsSync(directory)) return []
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const fullPath = path.join(directory, entry.name)
+    if (entry.isDirectory()) return filesUnder(fullPath, extensions)
+    return entry.isFile() && extensions.some((ext) => entry.name.endsWith(ext)) ? [fullPath] : []
+  })
+}
+
 const s24 = products.find((p) => p.id === 'samsung-galaxy-s24')
 const s24Uk = resolveProduct(s24, 'uk')
 const s24Us = resolveProduct(s24, 'us')
@@ -131,8 +140,104 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
   )
   const hasSourcedUkPrice = uk.some((product) => Boolean(product.prices?.uk))
 
+  // Cross-market leak sweep. forClient drops `variants` and `availability`
+  // entirely and narrows `prices` to the market being served, so none of those
+  // may appear in another market's output. Scans every file a visitor can
+  // load: pages, shared JS chunks, and the RSC Flight payloads Next emits as
+  // .txt for client-side navigation - a page-level probe over .html alone is
+  // what let this leak survive.
+  const MARKET_IDS = ['us', 'uk']
+  const SCANNED_EXTENSIONS = ['.html', '.js', '.txt', '.json', '.md', '.xml']
+
+  // Spec values only one market ever shows. Derived from the catalog rather
+  // than hardcoded, so new regional overrides are covered automatically.
+  // Prices are deliberately excluded and NOT covered by any check here: no
+  // product carries a UK price today, and a bare amount is not distinctive
+  // enough to match on without false positives. This is a known gap - a
+  // foreign price object alone would pass. Closing it properly needs a unit
+  // test importing forClient directly, which needs a TS-capable test runner
+  // this project does not have; a text scan over build output cannot be both
+  // false-positive-free and complete.
+  function exclusiveValues(market) {
+    const baseValues = new Set()
+    const variantValues = new Set()
+    for (const product of products) {
+      for (const value of Object.values(product.specifications ?? {})) {
+        if (typeof value === 'string') baseValues.add(value)
+      }
+      for (const value of Object.values(product.variants?.uk?.specifications ?? {})) {
+        if (typeof value === 'string') variantValues.add(value)
+      }
+    }
+    const exclusive = new Set()
+    for (const product of products) {
+      const overrides = product.variants?.uk?.specifications ?? {}
+      for (const [key, ukValue] of Object.entries(overrides)) {
+        const usValue = product.specifications?.[key]
+        if (typeof ukValue !== 'string' || ukValue === usValue) continue
+        // Keep only values the other market never legitimately shows, and skip
+        // any that appear inside one of its strings: "43 W max power" is a UK
+        // override but also a prefix of the US "43 W max power (Energy Star
+        // certified)", so a substring match there would be a false positive.
+        const isDistinct = (value, otherValues) =>
+          ![...otherValues].some((other) => other.includes(value))
+        if (market === 'uk' && isDistinct(ukValue, baseValues)) exclusive.add(ukValue)
+        if (market === 'us' && typeof usValue === 'string' && isDistinct(usValue, variantValues)) {
+          exclusive.add(usValue)
+        }
+      }
+    }
+    return [...exclusive]
+  }
+
+  const EXCLUSIVE = { us: exclusiveValues('us'), uk: exclusiveValues('uk') }
+
+  // Value-based on purpose. Three earlier key-shaped versions of this check
+  // each had a false-negative path — a fixed character window, a brace walk
+  // over unescaped text, and a quoted-key match that missed bare and
+  // unicode-escaped properties. A leaked spec is the same string however the
+  // payload is encoded or minified, so this looks for the data itself.
+  // `variants` and `availability` are Product-only field names that forClient
+  // removes entirely, so their presence is a leak in any spelling.
+  function leaksMarketData(text, foreignMarket) {
+    if (/["']?(variants|availability)["']?\s*:\s*\{/.test(text)) return true
+    return EXCLUSIVE[foreignMarket].some((value) => text.includes(value))
+  }
+
+  function crossMarketLeaks(root, market, excludeSubtree, extraFiles = []) {
+    const foreign = market === 'us' ? 'uk' : 'us'
+    const files = [
+      ...filesUnder(root, SCANNED_EXTENSIONS).filter(
+        (file) => !excludeSubtree || !file.startsWith(excludeSubtree + path.sep)
+      ),
+      ...extraFiles,
+    ]
+    const offenders = files.filter((file) => {
+      const raw = readFileSync(file, 'utf8')
+      return leaksMarketData(raw, foreign) || leaksMarketData(raw.split('\\"').join('"'), foreign)
+    })
+    return { scanned: files.length, offenders }
+  }
+
+  // Shared chunks live at the root but are loaded by both markets, so the UK
+  // pass must open them too; the US pass already covers them.
+  const sharedChunks = filesUnder(path.join(staticRoot, '_next'), SCANNED_EXTENSIONS)
+
+  const usScan = crossMarketLeaks(staticRoot, 'us', staticUkRoot)
+
+  function leakResult({ offenders }) {
+    return offenders.length === 0
+      ? true
+      : `${offenders.length} file(s), e.g. ${offenders.slice(0, 3).map((f) => path.relative(staticRoot, f)).join(', ')}`
+  }
+
   checks.push(
     ['static US S24 contains Snapdragon and not Exynos 2400', usS24Html.includes('Snapdragon') && !usS24Html.includes('Exynos 2400'), true],
+    [
+      `no US output ships another market's data (${usScan.scanned} files scanned)`,
+      leakResult(usScan),
+      true,
+    ],
   )
 
   if (ukPublished) {
@@ -147,6 +252,10 @@ if (process.argv.includes('--export') && existsSync(path.join(staticRoot, 'index
         && !existsSync(path.join(staticUkRoot, 'product', 'finance')), true],
       ['static UK pages do not show invented GBP amounts', hasSourcedUkPrice || ukHtml.every(({ html }) => !/£\s?\d/.test(html)), true],
       ['static UK meta descriptions do not contain USD amounts', ukDescriptionTags.every((tag) => !/\$\s?\d/.test(tag)), true],
+      (() => {
+        const ukScan = crossMarketLeaks(staticUkRoot, 'uk', null, sharedChunks)
+        return [`no UK output ships another market's data (${ukScan.scanned} files scanned)`, leakResult(ukScan), true]
+      })(),
     )
   } else {
     checks.push(['US-only export does not emit /uk/', !existsSync(staticUkRoot), true])

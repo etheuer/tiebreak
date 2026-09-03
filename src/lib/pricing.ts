@@ -70,6 +70,24 @@ export function officialSourceUrl(product: Product): string | undefined {
   return url && url.startsWith('https://') ? url : undefined
 }
 
+/**
+ * Narrow a resolved product to what a client component may receive.
+ *
+ * `resolveProduct` folds a market's overrides into `specifications`, but it
+ * keeps the raw `variants`, `availability` and every market's `prices`
+ * alongside them — and for the US market it returns the product untouched.
+ * Handing that straight to a client component serializes every other market's
+ * specs and prices into the page payload, which is exactly the boundary this
+ * codebase is meant to hold.
+ */
+export function forClient(product: Product, market: MarketId): Product {
+  // Destructured only to drop them from `rest`.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { variants: _variants, availability: _availability, prices, ...rest } = product
+  const listed = prices?.[market]
+  return listed ? { ...rest, prices: { [market]: listed } } : rest
+}
+
 export function resolveProduct(product: Product, market: MarketId = 'us'): Product {
   if (market === 'us') return product
   const variant = product.variants?.[market]
