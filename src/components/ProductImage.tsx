@@ -1,7 +1,8 @@
 import type { Product } from '@/lib/pricing'
 import { isRealImageUrl, toVisual } from '@/lib/product-image'
 import manifest from '@/data/generated/product-images.json'
-import { Monogram, ProductPhoto, type ProductImageSize, type ProductImageTone } from '@/components/ProductPhoto'
+import { ProductPhoto } from '@/components/ProductPhoto'
+import { Monogram, type ProductImageSize, type ProductImageTone } from '@/components/Monogram'
 
 const LOCAL_IMAGES: Record<string, string> = manifest as Record<string, string>
 
@@ -46,6 +47,7 @@ export function ProductImage({
   }
   return (
     <ProductPhoto
+      key={sources.join('|')}
       visual={visual}
       sources={sources}
       size={size}

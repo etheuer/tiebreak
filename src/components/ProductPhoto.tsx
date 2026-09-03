@@ -1,56 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { brandHue, brandInitials, type ProductVisual } from '@/lib/product-image'
-import { Glyph, SIZES, type ProductMarkSize } from '@/components/ProductMark'
+import type { ProductVisual } from '@/lib/product-image'
+import { SIZES } from '@/components/ProductMark'
+import { Monogram, type ProductImageSize, type ProductImageTone } from '@/components/Monogram'
 
-export type ProductImageSize = ProductMarkSize
-export type ProductImageTone = 'a' | 'b' | 'neutral'
-
-export function Monogram({
-  visual,
-  size = 'sm',
-  tone = 'neutral',
-  className = '',
-}: {
-  visual: ProductVisual
-  size?: ProductImageSize
-  tone?: ProductImageTone
-  className?: string
-}) {
-  const spec = SIZES[size]
-  const hue = brandHue(visual.brand)
-  const initials = brandInitials(visual.brand)
-  const showGlyph = size === 'md' || size === 'lg'
-  return (
-    <span
-      className={`p-mark p-monogram ${className}`}
-      role="img"
-      aria-label={visual.name}
-      title={visual.name}
-      style={
-        {
-          width: spec.box,
-          height: spec.box,
-          borderRadius: spec.radius,
-          '--mark-hue':
-            tone === 'a' ? 'var(--accent)' : tone === 'b' ? 'var(--rival)' : 'var(--ink-3)',
-          '--brand-hue': `${hue}`,
-        } as React.CSSProperties
-      }
-    >
-      <span aria-hidden className="p-initials" style={{ fontSize: Math.round(spec.box * 0.38) }}>
-        {initials}
-      </span>
-      {showGlyph && (
-        <span aria-hidden className="p-glyph">
-          <Glyph subcategory={visual.subcategory} size={Math.round(spec.glyph * 0.62)} />
-        </span>
-      )}
-    </span>
-  )
-}
-
+/**
+ * A product photo that steps through its candidate sources on error and lands
+ * on the monogram when none load. Only rendered when at least one source
+ * exists, so pages with no photos stay fully server-rendered.
+ *
+ * Callers must key this on `sources` (ProductImage does) so a recycled instance
+ * cannot inherit the previous product's failure count.
+ */
 export function ProductPhoto({
   visual,
   sources,
@@ -73,10 +35,11 @@ export function ProductPhoto({
   }
   return (
     // Plain <img> is deliberate: static export has no Next image optimizer.
+    // Decorative: the product name always sits beside the tile as a link or heading.
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={sources[failed]}
-      alt={visual.name}
+      alt=""
       width={spec.box}
       height={spec.box}
       loading={eager ? 'eager' : 'lazy'}

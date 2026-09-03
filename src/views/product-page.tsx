@@ -135,7 +135,7 @@ export async function ProductDetail({
       </nav>
 
       <header className="mt-5 flex flex-col gap-6 border-b border-line pb-9 sm:flex-row sm:items-start sm:gap-7">
-        <ProductImage product={product} size="lg" />
+        <ProductImage product={product} size="lg" eager />
         <div className="min-w-0 flex-1">
           <p className="eyebrow">
             {product.brand} · {subLabel(product.subcategory)}
