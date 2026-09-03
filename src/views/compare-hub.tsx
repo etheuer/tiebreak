@@ -8,6 +8,7 @@ import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import { absUrl, SITE_NAME } from '@/lib/site'
 import { CompareBuilder } from '@/components/CompareBuilder'
 import { builderData } from '@/lib/builder-data'
+import { CompareLink } from '@/components/CompareLink'
 
 export async function generateHubMetadata(market: MarketId): Promise<Metadata> {
   const [comparisons, ukComparisons] = await Promise.all([
@@ -117,12 +118,12 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
                     : c.description
                 return (
                   <li key={c.productA + c.productB} className="card p-4">
-                    <Link
+                    <CompareLink
                       href={compareHref(c, market)}
                       className="text-body font-semibold text-ink hover:text-accent"
                     >
                       {c.productName}
-                    </Link>
+                    </CompareLink>
                     <p className="mt-1.5 text-meta leading-relaxed text-ink-3">{claim}</p>
                   </li>
                 )

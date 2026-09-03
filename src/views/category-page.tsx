@@ -11,6 +11,7 @@ import { absUrl, SITE_NAME } from '@/lib/site'
 import { casesFor } from '@/data/use-cases'
 import { ProductImage } from '@/components/ProductImage'
 import { VsCard } from '@/components/VsCard'
+import { CompareLink } from '@/components/CompareLink'
 import { FinanceDisclaimer } from '@/components/CatalogNotes'
 
 export async function generateStaticParamsForMarket(market: MarketId) {
@@ -236,9 +237,9 @@ export async function CategoryListing({
                 <div className="mt-3 flex flex-wrap items-center gap-1.5">
                   <span className="mr-1 text-label text-ink-3">Buying for</span>
                   {list.lenses.map((lens) => (
-                    <Link key={lens.id} href={lens.href} className="chip" title={lens.job}>
+                    <CompareLink key={lens.id} href={lens.href} useCaseId={lens.id} className="chip" title={lens.job}>
                       {lens.label}
-                    </Link>
+                    </CompareLink>
                   ))}
                 </div>
               )}
@@ -284,9 +285,9 @@ export async function CategoryListing({
                           {priceShort(product, market)}
                         </p>
                         {matchup ? (
-                          <Link href={matchup.href} className="btn btn-primary whitespace-nowrap text-meta">
+                          <CompareLink href={matchup.href} className="btn btn-primary whitespace-nowrap text-meta">
                             Compare vs {matchup.rival.brand}
-                          </Link>
+                          </CompareLink>
                         ) : (
                           <Link href={productHref(product, market)} className="btn btn-ghost text-meta">
                             Spec sheet
