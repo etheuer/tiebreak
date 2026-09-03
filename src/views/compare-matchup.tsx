@@ -130,6 +130,11 @@ function ProductPanel({
 }) {
   const tintInk = side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)'
 
+  // This panel's product is the one being replaced, so it keeps this panel's
+  // side in the custom comparison; the kept product stays on the other side.
+  const customHref = (optionId: string) =>
+    side === 'a' ? buildHref(optionId, keepId, market) : buildHref(keepId, optionId, market)
+
   return (
     <div className="card min-w-0 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-3 sm:p-4 h-[72px]" style={{ borderTop: `3px solid ${side === 'a' ? 'var(--accent)' : 'var(--rival)'}` }}>
       <div className="flex items-center gap-3 min-w-0">
@@ -181,7 +186,7 @@ function ProductPanel({
               ) : (
                 <Link
                   key={option.id}
-                  href={buildHref(option.id, keepId, market)}
+                  href={customHref(option.id)}
                   className="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-meta hover:bg-surface-2"
                   title="No published matchup yet: score this pair live"
                 >
