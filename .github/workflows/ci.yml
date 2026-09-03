@@ -48,6 +48,9 @@ jobs:
       - name: Validate i18n & market rules
         run: npm run check:i18n
 
+      - name: Validate specs, comparisons & staleness
+        run: npm run check:spec:schema && npm run check:spec:values && npm run check:spec:consistency && npm run check:comparisons && npm run check:staleness
+
       - name: Build static export
         run: npm run build
 

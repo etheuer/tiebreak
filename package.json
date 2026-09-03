@@ -20,7 +20,6 @@
     "check:export": "node scripts/check-catalog.mjs --export && node scripts/check-i18n.mjs --export",
     "verify:internal": "npm run check:catalog && npm run check:i18n && npm run check:spec:schema && npm run check:spec:values && npm run check:spec:consistency && npm run check:comparisons && npm run check:staleness",
     "verify": "npm run lint && npm run typecheck && npm run verify:internal && npm run build && npm run check:export",
-    "verify:sources": "node scripts/verify-sources.mjs",
     "review": "node scripts/open-for-review.mjs",
     "test": "npm run verify"
   },
