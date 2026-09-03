@@ -3,13 +3,13 @@ import { compareHref, isFeeBased, priceShort, subLabel } from '@/lib/nav'
 import { priceLabel, type Verdict } from '@/lib/verdict'
 import { shortName } from '@/lib/decision'
 import type { MarketId } from '@/lib/markets'
-import { ProductMark } from '@/components/ProductMark'
+import { ProductImage } from '@/components/ProductImage'
 import { CompareLink } from '@/components/CompareLink'
 
 function Side({ product, side, market }: { product: Product; side: 'a' | 'b'; market: MarketId }) {
   return (
     <div className="flex min-w-0 flex-1 items-center gap-2.5">
-      <ProductMark product={product} size="sm" tone={side} />
+      <ProductImage product={product} size="sm" tone={side} />
       <div className="min-w-0">
         <p className="truncate text-cell font-semibold leading-tight">{product.name}</p>
         <p className="num mt-0.5 text-meta text-ink-3">{priceShort(product, market)}</p>

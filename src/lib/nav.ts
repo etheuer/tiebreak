@@ -17,6 +17,11 @@ export function subLabel(subcategory: string): string {
   return SUBCATEGORY_LABEL[subcategory] ?? subcategory.replace(/-/g, ' ')
 }
 
+/** Lowercase singular for prose like "Another TV…" or "a different laptop". */
+export function subLabelSingular(subcategory: string): string {
+  return subLabel(subcategory).toLowerCase().replace(/s$/, '')
+}
+
 /**
  * Credit cards carry an annual fee in the `price` field, so money wording has
  * to change with the product type or the page states something untrue.
@@ -46,6 +51,20 @@ export function compareHref(comparison: Comparison, market: MarketId = 'us'): st
 
 export function categoryHref(categoryId: string, market: MarketId = 'us'): string {
   return marketPath(market, `/category/${categoryId}/`)
+}
+
+/** Order-independent key for a product pair. Shared by server and client. */
+export function pairKey(idA: string, idB: string): string {
+  return [idA, idB].sort().join('\0')
+}
+
+/**
+ * Custom comparison for any two products, scored live in the browser.
+ * Published matchups keep their own pages; this covers every other pair.
+ */
+export function buildHref(idA: string, idB: string, market: MarketId = 'us'): string {
+  const base = marketPath(market, '/compare/build/')
+  return `${base}?a=${encodeURIComponent(idA)}&b=${encodeURIComponent(idB)}`
 }
 
 export function homeHref(market: MarketId = 'us'): string {
