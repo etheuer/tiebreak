@@ -452,6 +452,7 @@ export async function CompareMatchup({
                 <OfficialSourceLink
                   href={productA.officialSource.url}
                   productId={productA.id}
+                  brand={productA.brand}
                   className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
                 >
                   {productA.name} source
@@ -465,6 +466,7 @@ export async function CompareMatchup({
                 <OfficialSourceLink
                   href={productB.officialSource.url}
                   productId={productB.id}
+                  brand={productB.brand}
                   className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
                 >
                   {productB.name} source
@@ -585,6 +587,7 @@ export async function CompareMatchup({
                 <OfficialSourceLink
                   href={productA.officialSource.url}
                   productId={productA.id}
+                  brand={productA.brand}
                   className="text-accent hover:underline inline-flex items-center gap-0.5 ml-1"
                 >
                   {productA.name} ↗
@@ -595,6 +598,7 @@ export async function CompareMatchup({
                 <OfficialSourceLink
                   href={productB.officialSource.url}
                   productId={productB.id}
+                  brand={productB.brand}
                   className="text-accent hover:underline inline-flex items-center gap-0.5 ml-1"
                 >
                   {productB.name} ↗

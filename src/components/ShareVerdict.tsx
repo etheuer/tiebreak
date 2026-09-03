@@ -7,18 +7,20 @@ export function ShareVerdict() {
   const [status, setStatus] = useState<'idle' | 'copied' | 'fallback'>('idle')
 
   function handleShare() {
-    capture('verdict_shared')
     if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(window.location.href)
         .then(() => {
+          capture('verdict_shared', { share_status: 'copied' })
           setStatus('copied')
           setTimeout(() => setStatus('idle'), 2000)
         })
         .catch(() => {
+          capture('verdict_shared', { share_status: 'fallback' })
           setStatus('fallback')
           setTimeout(() => setStatus('idle'), 4000)
         })
     } else {
+      capture('verdict_shared', { share_status: 'fallback' })
       setStatus('fallback')
       setTimeout(() => setStatus('idle'), 4000)
     }

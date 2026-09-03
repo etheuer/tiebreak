@@ -65,6 +65,7 @@ export function ProductSpecs({ product }: { product: Product }) {
           <OfficialSourceLink
             href={product.officialSource.url}
             productId={product.id}
+            brand={product.brand}
             className="text-accent hover:underline inline-flex items-center gap-1 font-medium"
           >
             Official {product.name} {product.officialSource.kind === 'issuer-terms' ? 'terms' : 'spec sheet'}

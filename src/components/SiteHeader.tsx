@@ -70,6 +70,7 @@ export function SiteHeader({
     (entry: JumpEntry) => {
       capture('search_result_clicked', {
         kind: entry.kind,
+        result_kind: entry.kind,
         query_length: query.trim().length,
       })
       close()
@@ -114,6 +115,7 @@ export function SiteHeader({
       capture('search_performed', {
         query_length: q.length,
         result_count: results.length,
+        has_results: results.length > 0,
       })
     }, 350)
     return () => window.clearTimeout(timer)

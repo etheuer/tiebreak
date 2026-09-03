@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { marketPath, type MarketId } from '@/lib/markets'
 import { buildHref, subLabelSingular } from '@/lib/nav'
 import { publishedSlug, type BuilderProduct, type PublishedPairs } from '@/lib/builder-data'
+import { capture } from '@/lib/analytics'
 
 /**
  * Compare-any-two picker. Resolves to the published breakdown when the pair
@@ -57,7 +58,17 @@ export function CompareBuilder({
 
   function submit(event: React.FormEvent) {
     event.preventDefault()
-    if (target) router.push(target)
+    if (target) {
+      capture('compare_started', {
+        from: 'builder',
+        href: target,
+        product_a: productA?.id,
+        product_b: productB?.id,
+        subcategory: productA?.subcategory,
+        is_published: Boolean(slug),
+      })
+      router.push(target)
+    }
   }
 
   return (

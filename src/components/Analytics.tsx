@@ -21,7 +21,10 @@ function PostHogClient() {
         disable_session_recording: true,
       })
     }
-    posthog.capture('$pageview', { $current_url: window.location.href })
+    posthog.capture('$pageview', {
+      $current_url: window.location.href,
+      $pathname: window.location.pathname,
+    })
   }, [pathname])
 
   return null
