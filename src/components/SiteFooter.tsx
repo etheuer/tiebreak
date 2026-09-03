@@ -29,18 +29,18 @@ export function SiteFooter({
     <footer className="rule-top mt-20 bg-surface">
       <div className="shell grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <span
               aria-hidden
-              className="grid place-items-center rounded-md"
-              style={{ width: 22, height: 22, background: 'var(--accent)' }}
+              className="grid place-items-center rounded-lg shadow-sm"
+              style={{ width: 24, height: 24, background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%)' }}
             >
               <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
-                <path d="M3 12.6 8.6 3.4" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" />
-                <path d="M7.4 12.6 13 3.4" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" opacity="0.55" />
+                <path d="M3 12.6 8.6 3.4" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+                <path d="M7.4 12.6 13 3.4" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
               </svg>
             </span>
-            <span className="font-bold tracking-[-0.03em]">{SITE_NAME}</span>
+            <span className="font-extrabold tracking-[-0.04em] text-title text-ink">{SITE_NAME}</span>
           </div>
           <p className="mt-3 max-w-sm text-cell leading-relaxed text-ink-2">
             Head to head spec comparisons for people who have already narrowed it down to two.

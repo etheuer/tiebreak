@@ -116,13 +116,16 @@ export function SpecTables({
       .filter((el): el is HTMLElement => Boolean(el))
     if (headings.length === 0) return
 
+    // Match the responsive scroll-mt on the group anchors: the sticky stack
+    // is shorter on mobile where the desktop jump-nav row is hidden.
+    const top = window.matchMedia('(min-width: 768px)').matches ? '-170px' : '-130px'
     const observer = new IntersectionObserver(
       (entries) => {
         if (pauseSpy.current) return
         const hit = entries.filter((entry) => entry.isIntersecting).sort((x, y) => x.boundingClientRect.top - y.boundingClientRect.top)[0]
         if (hit) setActive(hit.target.id)
       },
-      { rootMargin: '-170px 0px -60% 0px', threshold: 0 }
+      { rootMargin: `${top} 0px -60% 0px`, threshold: 0 }
     )
     headings.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
@@ -200,6 +203,7 @@ export function SpecTables({
                   pauseSpy.current = true
                   setTimeout(() => { pauseSpy.current = false }, 800)
                 }}
+                aria-current={active === group.id ? 'true' : undefined}
                 className="shrink-0 rounded-md px-2.5 py-1 text-meta font-medium transition-colors"
                 style={{
                   background: active === group.id ? 'var(--surface-3)' : 'transparent',
@@ -266,7 +270,7 @@ export function SpecTables({
         </p>
 
         {visible.map((group) => (
-          <div key={group.id} className="mb-8 scroll-mt-[168px]" id={group.id}>
+          <div key={group.id} className="mb-8 scroll-mt-[128px] md:scroll-mt-[168px]" id={group.id}>
             <div className="flex items-baseline justify-between gap-3 border-b-2 border-line pb-2">
               <h3 className="text-body font-semibold tracking-[-0.01em]">{group.label}</h3>
               <LeadBadge group={group} />
@@ -290,9 +294,12 @@ export function SpecTables({
                         </span>
                       ) : null}
                       {row.differs && !row.winner && (
-                        <span className="ml-1 text-ink-3" aria-hidden>
-                          ≠
-                        </span>
+                        <>
+                          <span className="ml-1 text-ink-3" aria-hidden>
+                            ≠
+                          </span>
+                          <span className="sr-only"> (differs)</span>
+                        </>
                       )}
                     </th>
                     <Cell row={row} side="a" market={market} />

@@ -41,9 +41,9 @@ function clipValue(value: string, max = 40): string {
 function LensBar({ aWins, bWins }: { aWins: number; bWins: number }) {
   const total = Math.max(1, aWins + bWins)
   return (
-    <div className="flex h-1.5 overflow-hidden rounded-full bg-surface-2" role="img" aria-label={`${aWins} to ${bWins}`}>
-      <span style={{ width: `${(aWins / total) * 100}%`, background: 'var(--accent)' }} />
-      <span style={{ width: `${(bWins / total) * 100}%`, background: 'var(--rival)' }} />
+    <div className="flex h-2.5 overflow-hidden rounded-full bg-surface-3 shadow-inner" role="img" aria-label={`${aWins} to ${bWins}`}>
+      <span style={{ width: `${(aWins / total) * 100}%`, background: 'var(--accent)' }} className="transition-all duration-300" />
+      <span style={{ width: `${(bWins / total) * 100}%`, background: 'var(--rival)' }} className="transition-all duration-300" />
     </div>
   )
 }
