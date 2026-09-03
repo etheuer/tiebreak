@@ -17,6 +17,11 @@ export function subLabel(subcategory: string): string {
   return SUBCATEGORY_LABEL[subcategory] ?? subcategory.replace(/-/g, ' ')
 }
 
+/** Lowercase singular for prose like "Another TV…" or "a different laptop". */
+export function subLabelSingular(subcategory: string): string {
+  return subLabel(subcategory).toLowerCase().replace(/s$/, '')
+}
+
 /**
  * Credit cards carry an annual fee in the `price` field, so money wording has
  * to change with the product type or the page states something untrue.
@@ -58,24 +63,8 @@ export function pairKey(idA: string, idB: string): string {
  * Published matchups keep their own pages; this covers every other pair.
  */
 export function buildHref(idA: string, idB: string, market: MarketId = 'us'): string {
-  // Built by hand: marketPath normalizes a trailing slash, which would land
-  // after the query string and corrupt the params.
-  const base = market === 'us' ? '/compare/build/' : '/uk/compare/build/'
+  const base = marketPath(market, '/compare/build/')
   return `${base}?a=${encodeURIComponent(idA)}&b=${encodeURIComponent(idB)}`
-}
-
-/**
- * Resolve "compare these two" to the published breakdown when one exists,
- * otherwise to the live custom comparison. Never a dead end.
- */
-export function comparePairHref(
-  comparisons: Comparison[],
-  idA: string,
-  idB: string,
-  market: MarketId = 'us'
-): string {
-  const match = findComparison(comparisons, idA, idB)
-  return match ? compareHref(match, market) : buildHref(idA, idB, market)
 }
 
 export function homeHref(market: MarketId = 'us'): string {

@@ -23,6 +23,7 @@ import {
   priceShort,
   productHref,
   subLabel,
+  subLabelSingular,
 } from '@/lib/nav'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import type { MarketId } from '@/lib/markets'
@@ -171,7 +172,7 @@ function ProductPanel({
             style={{ boxShadow: 'var(--shadow-2)' }}
           >
             <p className="px-2.5 py-1.5 text-label text-ink-3">
-              Compare a different {subLabel(product.subcategory).toLowerCase().replace(/s$/, '')}
+              Compare a different {subLabelSingular(product.subcategory)}
             </p>
             {swaps.map((option) =>
               option.href ? (
