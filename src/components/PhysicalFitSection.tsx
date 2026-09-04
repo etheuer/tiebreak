@@ -1,22 +1,22 @@
-import type { Product } from '@/lib/data'
-import { getPhysicalFitComparison } from '@/data/physical-fit'
-import { columnLabels } from '@/lib/decision'
+import type { Product } from "@/lib/data";
+import { getPhysicalFitComparison } from "@/data/physical-fit";
+import { columnLabels } from "@/lib/decision";
 
 export function PhysicalFitSection({
   productA,
   productB,
 }: {
-  productA: Product
-  productB: Product
+  productA: Product;
+  productB: Product;
 }) {
-  const profile = getPhysicalFitComparison(productA, productB)
-  if (!profile || profile.items.length === 0) return null
+  const profile = getPhysicalFitComparison(productA, productB);
+  if (!profile || profile.items.length === 0) return null;
 
-  const cols = columnLabels(productA, productB)
+  const cols = columnLabels(productA, productB);
 
   return (
     <section
-      className="card mt-10 overflow-hidden border border-line bg-surface p-4 sm:p-5"
+      className="card mt-5 overflow-hidden p-5 sm:p-7"
       aria-labelledby="fit-heading"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-3">
@@ -24,13 +24,9 @@ export function PhysicalFitSection({
           <h2 id="fit-heading" className="display text-h4">
             {profile.title}
           </h2>
-          <p className="mt-1 text-cell text-ink-2">
-            {profile.description}
-          </p>
+          <p className="mt-1 text-cell text-ink-2">{profile.description}</p>
         </div>
-        <span className="text-label font-semibold uppercase tracking-[0.06em] text-ink-3">
-          Ergonomic & Spatial Check
-        </span>
+        <span className="text-label font-semibold  text-ink-3">Size & fit</span>
       </div>
 
       <div className="mt-4 divide-y divide-line">
@@ -43,10 +39,10 @@ export function PhysicalFitSection({
               <p className="mt-0.5 text-meta text-ink-3">{item.note}</p>
             )}
             <div className="mt-2.5 grid grid-cols-2 gap-3 sm:gap-4">
-              <div className="col-a rounded-md border border-line/60 p-2.5 sm:p-3">
+              <div className="col-a rounded-xl border border-line/60 p-2.5 sm:p-3">
                 <span
-                  className="text-label font-semibold uppercase tracking-[0.06em]"
-                  style={{ color: 'var(--accent-2)' }}
+                  className="text-label font-semibold "
+                  style={{ color: "var(--accent-2)" }}
                 >
                   {cols.a}
                 </span>
@@ -55,10 +51,10 @@ export function PhysicalFitSection({
                 </p>
               </div>
 
-              <div className="col-b rounded-md border border-line/60 p-2.5 sm:p-3">
+              <div className="col-b rounded-xl border border-line/60 p-2.5 sm:p-3">
                 <span
-                  className="text-label font-semibold uppercase tracking-[0.06em]"
-                  style={{ color: 'var(--rival-2)' }}
+                  className="text-label font-semibold "
+                  style={{ color: "var(--rival-2)" }}
                 >
                   {cols.b}
                 </span>
@@ -71,5 +67,5 @@ export function PhysicalFitSection({
         ))}
       </div>
     </section>
-  )
+  );
 }

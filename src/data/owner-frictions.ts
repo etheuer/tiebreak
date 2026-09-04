@@ -332,11 +332,5 @@ export function getOwnerFrictions(product: Product): OwnerFriction[] {
     ]
   }
 
-  return [
-    {
-      tag: 'Maintenance',
-      complaint: 'Requires ongoing care to maintain peak out-of-box performance.',
-      context: 'Regular cleaning, firmware updates, and standard care are recommended to preserve longevity.',
-    },
-  ]
+  return []
 }

@@ -21,6 +21,10 @@ npm run verify
 
 runs lint, types, catalog checks, the i18n data checks, and a production build.
 
+## Adding product photos
+
+Follow the [product image runbook](public/images/products/README.md). New or changed photos must pass transparency checks and a visual review before the manifest or production build accepts them. Run `npm run images:review` to generate the review sheet and `npm run check:images` to check the current assets.
+
 ## Before you deploy
 
 1. Set `NEXT_PUBLIC_SITE_URL` to the real `https://` origin (no trailing slash). Canonicals, sitemap, and share cards bake this in at **build** time.

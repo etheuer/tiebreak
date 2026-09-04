@@ -5,5 +5,16 @@ node_modules
 .crew-*
 *.md
 !README.md
+# Markdown comparison endpoints are application routes, not local documents
+!src/app/**/index.md
+!src/app/**/index.md/**
 I18N-*.md
 SEO-PLAN.md
+
+# Local agent state and verification artifacts
+.claude
+.codex
+.agents
+.impeccable
+*.tsbuildinfo
+VERIFICATION-*.json

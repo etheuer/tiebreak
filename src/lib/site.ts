@@ -1,4 +1,4 @@
-// Set NEXT_PUBLIC_SITE_URL to https://clinchmark.com after that domain is ours.
+// Keep the configured deployment URL until a Clinchmark domain is connected.
 // Do not fall back to tiebreak.app — that hostname is someone else's tennis app.
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tiebreak-gilt.vercel.app').replace(/\/$/, '')
 export const SITE_NAME = 'Clinchmark'

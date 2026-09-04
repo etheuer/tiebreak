@@ -5,6 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "images:manifest": "node scripts/generate-image-manifest.mjs",
+    "check:images": "node scripts/check-product-images.mjs",
+    "images:review": "node scripts/check-product-images.mjs review",
+    "images:approve": "node scripts/check-product-images.mjs approve",
+    "test:images": "node --test scripts/check-product-images.test.mjs",
     "prebuild": "npm run images:manifest",
     "build": "next build",
     "start": "next start",
@@ -17,8 +21,9 @@
     "check:spec:consistency": "node scripts/check-spec-consistency.mjs",
     "check:comparisons": "node scripts/check-comparisons.mjs",
     "check:staleness": "node scripts/check-staleness.mjs",
+    "check:reachability": "node scripts/audit-reachability.mjs",
     "check:export": "node scripts/check-catalog.mjs --export && node scripts/check-i18n.mjs --export",
-    "verify:internal": "npm run check:catalog && npm run check:i18n && npm run check:spec:schema && npm run check:spec:values && npm run check:spec:consistency && npm run check:comparisons && npm run check:staleness",
+    "verify:internal": "npm run check:catalog && npm run check:i18n && npm run check:spec:schema && npm run check:spec:values && npm run check:spec:consistency && npm run check:comparisons && npm run check:staleness && npm run check:reachability",
     "verify": "npm run lint && npm run typecheck && npm run verify:internal && npm run build && npm run check:export",
     "review": "node scripts/open-for-review.mjs",
     "test": "npm run verify"
@@ -37,6 +42,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "serve": "^14.2.6",
+    "sharp": "0.35.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

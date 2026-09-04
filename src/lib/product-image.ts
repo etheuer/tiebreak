@@ -6,39 +6,9 @@
  * `src/data/generated/product-images.json`. Anything else falls back to a
  * branded monogram tile, never to a dead placeholder service.
  *
- * The catalog's `image_url` values all point at via.placeholder.com (long
- * dead), so they are treated as "no photo" on purpose: rendering them would
- * show broken images to shoppers. When a row gains a real manufacturer or
- * studio URL, `isRealImageUrl` lets it through automatically.
+ * Only reviewed local photos are rendered. Remote catalogue image_url values
+ * must be downloaded, prepared and reviewed before they enter the manifest.
  */
-
-const PLACEHOLDER_HOSTS = [
-  'via.placeholder.com',
-  'placehold.co',
-  'placehold.it',
-  'dummyimage.com',
-  'placehold.jp',
-  'example.com',
-]
-
-export function isPlaceholderUrl(url: string): boolean {
-  const normalized = url.trim().toLowerCase()
-  if (!normalized) return true
-  if (normalized.startsWith('data:')) return false
-  if (normalized.startsWith('/')) return false
-  let host = ''
-  try {
-    host = new URL(normalized).hostname
-  } catch {
-    return true
-  }
-  return PLACEHOLDER_HOSTS.some((blocked) => host === blocked || host.endsWith(`.${blocked}`))
-}
-
-export function isRealImageUrl(url: string | undefined | null): url is string {
-  if (!url || !url.trim()) return false
-  return !isPlaceholderUrl(url)
-}
 
 /**
  * Minimal product identity for the client-side photo boundary. The full
