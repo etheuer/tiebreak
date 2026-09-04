@@ -2,6 +2,10 @@
 // ProductImage. Also emits derived thumbs via generate-derived-thumbs.mjs.
 import { mkdirSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
+import { checkImages } from './check-product-images.mjs'
+
+// Fail before writing the manifest if any new or modified photo is unreviewed.
+await checkImages()
 
 const DIR = join(process.cwd(), 'public', 'images', 'products')
 const OUT = join(process.cwd(), 'src', 'data', 'generated', 'product-images.json')

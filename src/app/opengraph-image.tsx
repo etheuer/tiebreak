@@ -1,71 +1,97 @@
-import { ImageResponse } from 'next/og'
-
-export const dynamic = 'force-static'
-export const alt = 'Clinchmark — head to head product comparisons'
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
-
-export default function OpenGraphImage() {
+import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+export const dynamic = "force-static";
+export const alt = "Clinchmark — Find your better fit.";
+export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+export default async function OpenGraphImage() {
+  const [logo, font] = await Promise.all([
+    readFile(join(process.cwd(), "public/brand/clinchmark-logo.png")),
+    readFile(join(process.cwd(), "src/app/fonts/instrument-sans-600.ttf")),
+  ]);
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        background: "#f8f9fc",
+        padding: 70,
+        fontFamily: "Instrument",
+        color: "#24243e",
+        position: "relative",
+      }}
+    >
       <div
         style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          background: '#f5f5f1',
-          padding: '72px 80px',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          width: 780,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <img
+          alt=""
+          src={`data:image/png;base64,${logo.toString("base64")}`}
+          width={380}
+          height={127}
+          style={{ marginLeft: -12, marginTop: -35 }}
+        />
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 12,
-              background: '#0c7c6c',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            style={{ fontSize: 86, letterSpacing: "-4px", lineHeight: 1.05 }}
           >
-            <svg width="28" height="28" viewBox="0 0 16 16">
-              <path d="M3 12.6 8.6 3.4" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" fill="none" />
-              <path
-                d="M7.4 12.6 13 3.4"
-                stroke="#fff"
-                strokeWidth="1.7"
-                strokeLinecap="round"
-                fill="none"
-                opacity="0.55"
-              />
-            </svg>
+            Find your
           </div>
-          <div style={{ fontSize: 28, fontWeight: 700, color: '#17191a', letterSpacing: '-0.04em' }}>
-            Clinchmark
-          </div>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div
             style={{
-              fontSize: 64,
-              fontWeight: 700,
-              color: '#17191a',
-              letterSpacing: '-0.04em',
+              fontSize: 86,
+              letterSpacing: "-4px",
               lineHeight: 1.05,
-              maxWidth: 920,
+              color: "#594acc",
             }}
           >
-            Two products. One answer.
+            better fit.
           </div>
-          <div style={{ fontSize: 28, color: '#565a57', maxWidth: 820, lineHeight: 1.35 }}>
-            Spec-by-spec comparisons with a verdict, from published figures.
+          <div style={{ fontSize: 26, marginTop: 30, color: "#626477" }}>
+            Clear comparisons. Thoughtful choices.
           </div>
         </div>
       </div>
-    ),
-    size
-  )
+      <div
+        style={{
+          display: "flex",
+          gap: 16,
+          alignItems: "center",
+          position: "absolute",
+          right: 70,
+          top: 155,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            width: 120,
+            height: 310,
+            borderRadius: 30,
+            background: "#eeebfa",
+          }}
+        />
+        <div
+          style={{
+            display: "flex",
+            width: 120,
+            height: 250,
+            borderRadius: 30,
+            background: "#e5f1ec",
+          }}
+        />
+      </div>
+    </div>,
+    {
+      ...size,
+      fonts: [{ name: "Instrument", data: font, weight: 600, style: "normal" }],
+    },
+  );
 }

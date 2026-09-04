@@ -110,7 +110,7 @@ export async function buildLlmsText(market: MarketId = 'us'): Promise<string> {
   lines.push('')
   lines.push('## Methodology')
   lines.push('')
-  lines.push(`- [How Tiebreak works](${absUrl('/about/')}): Scoring methodology based entirely on published manufacturer specifications`)
+  lines.push(`- [How Clinchmark works](${absUrl('/about/')}): Scoring methodology based entirely on published manufacturer specifications`)
   lines.push('')
   lines.push('## Products')
   lines.push('')

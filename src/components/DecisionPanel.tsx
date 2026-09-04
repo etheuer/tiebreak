@@ -1,471 +1,319 @@
-'use client'
+"use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
-import type { Product } from '@/lib/data'
-import type { UseCase } from '@/data/use-cases'
-import { subLabel } from '@/lib/nav'
+import { useEffect, useMemo, useState, type ReactNode } from "react";
+import type { Product } from "@/lib/data";
+import type { UseCase } from "@/data/use-cases";
 import {
   buildAnswer,
-  columnLabels,
   lensRows,
-  scoreLens,
   shortName,
   type DealBreakerCheck,
   type LensRow,
-} from '@/lib/decision'
+} from "@/lib/decision";
 
-import type { MarketId } from '@/lib/markets'
+import type { MarketId } from "@/lib/markets";
 import {
   compareEcosystemImpact,
   ECOSYSTEM_OPTIONS,
   type EcosystemId,
-} from '@/data/ecosystems'
-import { capture } from '@/lib/analytics'
+} from "@/data/ecosystems";
+import { capture } from "@/lib/analytics";
 
-const OVERALL = 'overall'
-const lensKey = (sub: string) => `clinchmark:for:${sub}`
-const mattersKey = (sub: string) => `clinchmark:deal-breakers:${sub}`
-const ecosystemKey = 'clinchmark:ecosystem'
+const OVERALL = "overall";
+const lensKey = (sub: string) => `clinchmark:for:${sub}`;
+const mattersKey = (sub: string) => `clinchmark:deal-breakers:${sub}`;
+const ecosystemKey = "clinchmark:ecosystem";
 
 function hashLens(): string | null {
-  const match = window.location.hash.match(/(?:^#|&)for=([a-z0-9-]+)/i)
-  return match ? match[1] : null
-}
-
-function clipValue(value: string, max = 40): string {
-  const head = value.split(' (')[0].trim()
-  const text = head.length >= 6 ? head : value.trim()
-  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text
-}
-
-function LensBar({ aWins, bWins }: { aWins: number; bWins: number }) {
-  const total = Math.max(1, aWins + bWins)
+  const match = window.location.hash.match(/(?:^#|&)for=([a-z0-9-]+)/i);
   return (
-    <div className="flex h-2.5 overflow-hidden rounded-full bg-surface-3 shadow-inner" role="img" aria-label={`${aWins} to ${bWins}`}>
-      <span style={{ width: `${(aWins / total) * 100}%`, background: 'var(--accent)' }} className="transition-all duration-300" />
-      <span style={{ width: `${(bWins / total) * 100}%`, background: 'var(--rival)' }} className="transition-all duration-300" />
-    </div>
-  )
+    new URLSearchParams(location.search).get("priority") ??
+    (match ? match[1] : null)
+  );
 }
 
-/**
- * Client island for the three decision aids: a "buying for" lens that
- * re-scores wins, a deal-breaker checklist that can rule a product out, and a
- * straight answer that cites the numbers. `children` (the overall win summary)
- * renders between the decision card and the lens-aware "at a glance" grid.
- * Lens state lives in the URL hash (#for=gaming) so links stay static.
- */
+/** Preferences remain shareable in the query string while section anchors can change.
+ * Legacy #for= links and stored preferences remain supported. */
 export function DecisionPanel({
   productA,
   productB,
   rows,
   useCases,
   checks,
-  market = 'us',
+  market = "us",
   children,
 }: {
-  productA: Product
-  productB: Product
-  rows: LensRow[]
-  useCases: UseCase[]
-  checks: DealBreakerCheck[]
-  market?: MarketId
-  children?: ReactNode
+  productA: Product;
+  productB: Product;
+  rows: LensRow[];
+  useCases: UseCase[];
+  checks: DealBreakerCheck[];
+  market?: MarketId;
+  children?: ReactNode;
 }) {
-  const sub = productA.subcategory
-  const [lensId, setLensId] = useState<string>(OVERALL)
-  const [matters, setMatters] = useState<string[]>([])
-  const [ecosystem, setEcosystem] = useState<EcosystemId>('neutral')
+  const sub = productA.subcategory;
+  const [lensId, setLensId] = useState<string>(OVERALL);
+  const [matters, setMatters] = useState<string[]>([]);
+  const [ecosystem, setEcosystem] = useState<EcosystemId>("neutral");
 
   useEffect(() => {
-    const valid = new Set(useCases.map((useCase) => useCase.id))
-    const fromHash = hashLens()
+    const valid = new Set([OVERALL, ...useCases.map((useCase) => useCase.id)]);
+    const fromHash = hashLens();
     if (fromHash && valid.has(fromHash)) {
-      setLensId(fromHash)
+      setLensId(fromHash);
     } else {
       try {
-        const stored = window.localStorage.getItem(lensKey(sub))
-        if (stored && valid.has(stored)) setLensId(stored)
+        const stored = window.localStorage.getItem(lensKey(sub));
+        setLensId(stored && valid.has(stored) ? stored : OVERALL);
       } catch {
-        // storage blocked: overall is fine
+        setLensId(OVERALL);
       }
     }
     try {
-      const storedEco = window.localStorage.getItem(ecosystemKey)
-      if (storedEco === 'apple' || storedEco === 'android-windows' || storedEco === 'neutral') {
-        setEcosystem(storedEco)
+      const storedEco =
+        new URLSearchParams(location.search).get("devices") ??
+        window.localStorage.getItem(ecosystemKey);
+      if (
+        storedEco === "apple" ||
+        storedEco === "android-windows" ||
+        storedEco === "neutral"
+      ) {
+        setEcosystem(storedEco);
       }
     } catch {
       // ignore
     }
     try {
-      const raw = window.localStorage.getItem(mattersKey(sub))
-      const parsed: unknown = raw ? JSON.parse(raw) : []
-      if (Array.isArray(parsed)) setMatters(parsed.filter((id): id is string => typeof id === 'string'))
+      const params = new URLSearchParams(location.search);
+      const raw = window.localStorage.getItem(mattersKey(sub));
+      const parsed: unknown = params.has("requirements")
+        ? params.get("requirements")!.split(",").filter(Boolean)
+        : raw
+          ? JSON.parse(raw)
+          : [];
+      if (Array.isArray(parsed))
+        setMatters(parsed.filter((id): id is string => typeof id === "string"));
     } catch {
       // ignore
     }
 
     function onHash() {
-      const next = hashLens()
-      if (next && valid.has(next)) setLensId(next)
-      else if (!next) setLensId(OVERALL)
+      const next = hashLens();
+      if (next && valid.has(next)) setLensId(next);
     }
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
-  }, [sub, useCases])
-
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, [sub, useCases]);
+  function updatePreference(key: string, value: string) {
+    const url = new URL(location.href);
+    url.searchParams.set(key, value);
+    if (url.hash.startsWith("#for=")) url.hash = "";
+    history.replaceState(null, "", url.pathname + url.search + url.hash);
+  }
   function chooseLens(id: string) {
-    capture('use_case_selected', { use_case: id })
-    setLensId(id)
-    const url = `${window.location.pathname}${window.location.search}${id === OVERALL ? '' : `#for=${id}`}`
-    window.history.replaceState(null, '', url)
+    setLensId(id);
+    capture("use_case_selected", { use_case: id });
+    updatePreference("priority", id);
+    window.dispatchEvent(
+      new CustomEvent("clinchbench:priority", { detail: id }),
+    );
     try {
-      window.localStorage.setItem(lensKey(sub), id)
-    } catch {
-      // ignore
-    }
+      localStorage.setItem(lensKey(sub), id);
+    } catch {}
   }
-
   function chooseEcosystem(id: EcosystemId) {
-    setEcosystem(id)
+    setEcosystem(id);
+    updatePreference("devices", id);
     try {
-      window.localStorage.setItem(ecosystemKey, id)
-    } catch {
-      // ignore
-    }
+      localStorage.setItem(ecosystemKey, id);
+    } catch {}
   }
-
   function toggleMatters(id: string) {
-    setMatters((prev) => {
-      const next = prev.includes(id) ? prev.filter((entry) => entry !== id) : [...prev, id]
-      try {
-        window.localStorage.setItem(mattersKey(sub), JSON.stringify(next))
-      } catch {
-        // ignore
-      }
-      return next
-    })
+    const next = matters.includes(id)
+      ? matters.filter((k) => k !== id)
+      : [...matters, id];
+    setMatters(next);
+    updatePreference("requirements", next.join(","));
+    try {
+      localStorage.setItem(mattersKey(sub), JSON.stringify(next));
+    } catch {}
   }
-
-  const hasEcosystem = ['headphones', 'smartphones', 'laptops'].includes(sub)
+  const useCase = useMemo(
+    () => useCases.find((c) => c.id === lensId) ?? null,
+    [useCases, lensId],
+  );
+  const scoreRows = useMemo(
+    () => (useCase ? lensRows(rows, useCase) : rows),
+    [rows, useCase],
+  );
+  const mattersSet = useMemo(() => new Set(matters), [matters]);
+  const answer = useMemo(
+    () =>
+      buildAnswer({
+        productA,
+        productB,
+        useCase,
+        rows: scoreRows,
+        checks,
+        matters: mattersSet,
+        market,
+      }),
+    [productA, productB, useCase, scoreRows, checks, mattersSet, market],
+  );
+  const hasEcosystem = ["headphones", "smartphones", "laptops"].includes(sub);
   const ecosystemComparison = useMemo(
     () => compareEcosystemImpact(productA, productB, ecosystem),
-    [productA, productB, ecosystem]
-  )
-
-  const useCase = useMemo(() => useCases.find((entry) => entry.id === lensId) ?? null, [useCases, lensId])
-  // A lens scores only its own keys; Overall scores every row and shows the highlight rows.
-  const focusRows = useMemo(() => lensRows(rows, useCase), [rows, useCase])
-  const scoreRows = useMemo(() => (useCase ? focusRows : rows), [useCase, focusRows, rows])
-  const score = useMemo(() => scoreLens(scoreRows), [scoreRows])
-  const focusDiffering = useMemo(() => focusRows.filter((row) => row.differs).length, [focusRows])
-  const mattersSet = useMemo(() => new Set(matters), [matters])
-  const answer = useMemo(
-    () => buildAnswer({ productA, productB, useCase, rows: scoreRows, checks, matters: mattersSet, market }),
-    [productA, productB, useCase, scoreRows, checks, mattersSet, market]
-  )
-
-  const names = { a: shortName(productA), b: shortName(productB) }
-  const cols = columnLabels(productA, productB)
-  const thing = subLabel(sub).toLowerCase().replace(/s$/, '')
-  const eliminated = new Set<'a' | 'b'>()
-  for (const check of checks) {
-    if (!mattersSet.has(check.id)) continue
-    if (check.a === 'trips' && check.b !== 'trips') eliminated.add('a')
-    if (check.b === 'trips' && check.a !== 'trips') eliminated.add('b')
-  }
-
+    [productA, productB, ecosystem],
+  );
+  const names = { a: shortName(productA), b: shortName(productB) };
+  const pick =
+    answer.pick === "a" ? productA : answer.pick === "b" ? productB : null;
+  const tradeoff =
+    answer.caveat ||
+    (pick?.cons[0]
+      ? `${pick.name}: ${pick.cons[0]}`
+      : "The best fit depends on the features you value. Open the full specifications to see the details that aren’t ranked.");
   return (
     <>
-      <section className="card mt-5 overflow-hidden" aria-labelledby="decide">
-        {/* Lens picker */}
-        <div className="flex flex-col gap-2 border-b border-line px-4 py-3 sm:px-5 md:flex-row md:items-center md:gap-4">
-          <p id="decide" className="eyebrow shrink-0">
-            Buying for
-          </p>
-          <div
-            className="scroll-x -mx-1 flex gap-1.5 px-1 py-0.5 [mask-image:linear-gradient(to_right,black_calc(100%-28px),transparent_100%)] md:[mask-image:none]"
-            role="radiogroup"
-            aria-label="What are you buying this for"
+      <section className="cb-priorities" aria-labelledby="decide">
+        <h2 id="decide">What matters most to you?</h2>
+        <div className="cb-priority-buttons" aria-label="Your priority">
+          <button
+            className="chip"
+            aria-pressed={lensId === OVERALL}
+            onClick={() => chooseLens(OVERALL)}
           >
+            The whole picture
+          </button>
+          {useCases.map((entry) => (
             <button
-              type="button"
-              role="radio"
-              aria-checked={lensId === OVERALL}
-              data-on={lensId === OVERALL}
-              onClick={() => chooseLens(OVERALL)}
-              className="chip shrink-0"
+              className="chip"
+              key={entry.id}
+              aria-pressed={lensId === entry.id}
+              onClick={() => chooseLens(entry.id)}
             >
-              Overall
+              {entry.label}
             </button>
-            {useCases.map((entry) => (
-              <button
-                key={entry.id}
-                type="button"
-                role="radio"
-                aria-checked={lensId === entry.id}
-                data-on={lensId === entry.id}
-                onClick={() => chooseLens(entry.id)}
-                className="chip shrink-0"
-              >
-                {entry.label}
-              </button>
-            ))}
-          </div>
-          <p className="text-meta leading-snug text-ink-3 md:ml-auto md:max-w-[38%] md:text-right">
-            {useCase ? useCase.job : `Every rankable spec counts once. Pick a lens to score only what matters for your ${thing}.`}
-          </p>
+          ))}
         </div>
-
-        {/* Ecosystem picker */}
-        {hasEcosystem && (
-          <div className="flex flex-col gap-2 border-b border-line bg-surface-2/40 px-4 py-2.5 sm:px-5 md:flex-row md:items-center md:gap-4">
-            <p className="eyebrow shrink-0 text-ink-3">Your devices</p>
-            <div
-              className="scroll-x -mx-1 flex gap-1.5 px-1 py-0.5"
-              role="radiogroup"
-              aria-label="Filter by your device ecosystem"
-            >
-              {ECOSYSTEM_OPTIONS.map((opt) => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={ecosystem === opt.id}
-                  data-on={ecosystem === opt.id}
-                  onClick={() => chooseEcosystem(opt.id)}
-                  className="chip shrink-0 py-1 text-meta"
-                  title={opt.description}
-                >
-                  {opt.shortLabel}
-                </button>
-              ))}
-            </div>
-            <p className="text-meta leading-snug text-ink-3 md:ml-auto md:max-w-[42%] md:text-right">
-              {ecosystem === 'neutral'
-                ? 'Select your ecosystem to flag non-functional features or platform lock-in.'
-                : ECOSYSTEM_OPTIONS.find((o) => o.id === ecosystem)?.description}
+        <p className="cb-priority-note">
+          {useCase?.job ??
+            "Start with all rankable specifications, or focus on a particular use."}
+        </p>
+      </section>
+      <section className="cb-verdict" aria-label="Your comparison verdict">
+        <div aria-live="polite">
+          <p className="eyebrow">
+            {useCase
+              ? `For ${useCase.label.toLowerCase()}`
+              : "Your starting point"}
+          </p>
+          <h2>{answer.headline}</h2>
+          <ul>
+            {answer.reasons.slice(0, 2).map((reason) => (
+              <li key={reason}>{reason}</li>
+            ))}
+          </ul>
+          <details>
+            <summary>How we reached this</summary>
+            <p>
+              We compare the published specifications relevant to your priority.
+              Each rankable specification counts once; your selected
+              requirements can rule a product out. This is a guide to the
+              numbers, not a laboratory performance score.
             </p>
-          </div>
-        )}
-
-        <div className="grid md:grid-cols-[1.15fr_1fr]">
-          {/* Straight answer */}
-          <div className="p-4 sm:p-5">
-            <div className="flex items-baseline justify-between gap-3">
-              <p className="eyebrow">Straight answer</p>
-              {score.scored > 0 ? (
-                <p className="num text-label text-ink-3">
-                  {useCase ? useCase.label : 'Overall'}: {score.aWins} to {score.bWins}
-                </p>
-              ) : null}
-            </div>
-            <p className="mt-2 text-lead font-semibold leading-snug tracking-[-0.01em]" aria-live="polite">
-              {answer.headline}
-            </p>
-            <ul className="mt-3 grid gap-1.5">
-              {answer.reasons.map((reason) => (
-                <li key={reason} className="flex gap-2 text-cell leading-snug text-ink-2">
-                  <span aria-hidden className="text-ink-3">
-                    –
-                  </span>
-                  <span>{reason}</span>
-                </li>
-              ))}
-            </ul>
-            {answer.caveat && (
-              <p className="mt-3 rounded-md bg-surface-2 px-3 py-2 text-meta leading-snug text-ink-2">
-                {answer.caveat}
+            {answer.reasons.slice(2).map((reason) => (
+              <p className="mt-3" key={reason}>
+                {reason}
               </p>
-            )}
-
-            {hasEcosystem && ecosystemComparison.recommendation && (
-              <div className="mt-3 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-cell leading-snug text-ink">
-                <p className="font-semibold text-ink">📱 {ecosystemComparison.recommendation}</p>
-                {ecosystemComparison.a.crippledFeatures && ecosystemComparison.a.crippledFeatures.length > 0 && (
-                  <ul className="mt-1.5 list-disc pl-4 text-meta text-rival-2 space-y-0.5">
-                    {ecosystemComparison.a.crippledFeatures.map((f) => (
-                      <li key={f}>{cols.a}: {f}</li>
-                    ))}
-                  </ul>
-                )}
-                {ecosystemComparison.b.crippledFeatures && ecosystemComparison.b.crippledFeatures.length > 0 && (
-                  <ul className="mt-1.5 list-disc pl-4 text-meta text-rival-2 space-y-0.5">
-                    {ecosystemComparison.b.crippledFeatures.map((f) => (
-                      <li key={f}>{cols.b}: {f}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
-
-            <div className="mt-4">
-              <LensBar aWins={score.aWins} bWins={score.bWins} />
-              <div className="mt-1.5 flex items-center justify-between gap-3 text-label">
-                <span className="num font-semibold" style={{ color: 'var(--accent-2)' }}>
-                  {score.aWins} {names.a}
-                </span>
-                <span className="text-ink-3">
-                  {score.scored > 0
-                    ? `${score.scored} rankable of ${scoreRows.length} ${useCase ? `${useCase.label.toLowerCase()} ` : ''}specs`
-                    : 'nothing here can be ranked honestly'}
-                </span>
-                <span className="num font-semibold" style={{ color: 'var(--rival-2)' }}>
-                  {names.b} {score.bWins}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Deal-breakers */}
-          <div className="border-t border-line p-4 sm:p-5 md:border-l md:border-t-0">
-            <div className="flex items-baseline justify-between gap-3">
-              <p className="eyebrow">Deal-breakers</p>
-              {checks.length > 0 && (
-                <p className="text-label text-ink-3">tick what would make you walk away</p>
-              )}
-            </div>
-
-            {checks.length === 0 ? (
-              <p className="mt-2 text-meta leading-relaxed text-ink-2">
-                Nothing on either sheet trips a common {thing} deal-breaker. The decision is about degree, not
-                missing features.
-              </p>
-            ) : (
-              <ul className="mt-2 grid">
-                {checks.map((check) => {
-                  const on = mattersSet.has(check.id)
-                  return (
-                    <li
-                      key={check.id}
-                      className="db-row -mx-2 rounded-md px-2 py-2"
-                      data-on={on}
-                    >
-                      <div className="flex gap-2.5">
-                        <input
-                          id={`db-${check.id}`}
-                          type="checkbox"
-                          className="db-check mt-[3px]"
-                          checked={on}
-                          onChange={() => toggleMatters(check.id)}
-                          aria-describedby={`db-${check.id}-why`}
-                        />
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-baseline justify-between gap-2">
-                            <label htmlFor={`db-${check.id}`} className="cursor-pointer text-cell font-semibold leading-snug">
-                              {check.label}
-                            </label>
-                            <a href={`#${check.group}`} className="link-underline shrink-0 text-label text-ink-3">
-                              row
-                            </a>
-                          </div>
-                          <p id={`db-${check.id}-why`} className="text-meta leading-snug text-ink-3">
-                            {check.why}
-                          </p>
-                          <div className="mt-1.5 grid grid-cols-2 gap-x-3 gap-y-1 text-label">
-                            {(['a', 'b'] as const).map((side) => {
-                              const trips = check[side] === 'trips'
-                              const value = side === 'a' ? check.aValue : check.bValue
-                              const out = on && trips && eliminated.has(side)
-                              return (
-                                <span
-                                  key={side}
-                                  className={`db-side ${trips ? 'db-trips' : 'db-clear'}`}
-                                  data-out={out}
-                                  title={value}
-                                >
-                                  <span aria-hidden className="shrink-0" style={{ color: trips ? undefined : 'var(--accent)' }}>
-                                    {trips ? '✕' : '✓'}
-                                  </span>
-                                  <span className="sr-only">{trips ? 'Trips:' : 'Clear:'}</span>
-                                  <span className="truncate">
-                                    {names[side]}
-                                    <span className="text-ink-3"> · {clipValue(value)}</span>
-                                  </span>
-                                  {out && <span className="db-out">out</span>}
-                                </span>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-          </div>
+            ))}
+          </details>
+        </div>
+        <div className="cb-tradeoff">
+          <p className="eyebrow">The trade-off to know</p>
+          <p>{tradeoff}</p>
+          <a
+            className="link-underline text-meta inline-block mt-5"
+            href="#spec-tables"
+          >
+            Look at the differences ↓
+          </a>
         </div>
       </section>
-
-      {children}
-
-      {/* Lens-aware at a glance */}
-      {focusRows.length > 0 && (
-        <section className="mt-10" aria-labelledby="glance">
-          <div className="flex flex-wrap items-end justify-between gap-3">
+      <details className="cb-refine">
+        <summary>Refine your requirements</summary>
+        <div className="cb-refine-content">
+          {hasEcosystem && (
             <div>
-              <h2 id="glance" className="display text-h4">
-                {useCase ? `${useCase.label}: the specs that decide it` : 'At a glance'}
-              </h2>
-              <p className="mt-1.5 text-cell text-ink-2">
-                {useCase ? useCase.job : 'The handful of numbers that decide most purchases in this category.'}
-              </p>
-            </div>
-            <p className="num text-meta text-ink-3">
-              {focusDiffering} of {focusRows.length} differ
-            </p>
-          </div>
-          <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {focusRows.map((row) => (
-              <div key={row.key} className="card overflow-hidden">
-                <p className="flex items-baseline justify-between gap-2 border-b border-line px-3.5 py-2 text-label font-semibold uppercase tracking-[0.06em] text-ink-3">
-                  <span>{row.label}</span>
-                  {row.differs && !row.winner && (
-                    <span className="num normal-case tracking-normal" title="Differs, but cannot be ranked honestly" aria-label="differs">
-                      ≠
-                    </span>
-                  )}
-                  {!row.differs && <span className="normal-case tracking-normal">same</span>}
-                </p>
-                <div className="grid grid-cols-2">
-                  {(['a', 'b'] as const).map((side) => {
-                    const value = side === 'a' ? row.a : row.b
-                    const won = row.winner === side
-                    return (
-                      <div
-                        key={side}
-                        className={`${side === 'a' ? 'col-a' : 'col-b'} px-3.5 py-3 ${side === 'b' ? 'border-l border-line' : ''}`}
-                      >
-                        <p
-                          className="line-clamp-2 text-label font-semibold uppercase leading-snug tracking-[0.06em]"
-                          style={{ color: side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)' }}
-                          title={side === 'a' ? productA.name : productB.name}
-                        >
-                          {cols[side]}
-                        </p>
-                        <p
-                          className={`mt-1 text-cell leading-snug ${
-                            won ? (side === 'a' ? 'val-win-a' : 'val-win-b') : row.differs ? 'text-ink-2' : 'text-ink-3'
-                          }`}
-                        >
-                          {won && (
-                            <span className="win-flag" aria-hidden>
-                              ▲
-                            </span>
-                          )}
-                          {value}
-                        </p>
-                      </div>
-                    )
-                  })}
-                </div>
+              <h3 className="mb-4">Your other devices</h3>
+              <div className="cb-priority-buttons">
+                {ECOSYSTEM_OPTIONS.map((opt) => (
+                  <button
+                    className="chip"
+                    key={opt.id}
+                    aria-pressed={ecosystem === opt.id}
+                    onClick={() => chooseEcosystem(opt.id)}
+                  >
+                    {opt.id === "neutral" ? "No preference" : opt.shortLabel}
+                  </button>
+                ))}
               </div>
-            ))}
+              {ecosystemComparison.recommendation && (
+                <p className="mt-4 text-ink-2">
+                  {ecosystemComparison.recommendation}
+                </p>
+              )}
+              {(["a", "b"] as const).map((side) =>
+                ecosystemComparison[side].crippledFeatures?.map((feature) => (
+                  <p className="mt-2 text-meta text-ink-2" key={feature}>
+                    {names[side]}: {feature}
+                  </p>
+                )),
+              )}
+            </div>
+          )}
+          <div>
+            <h3>What would rule one out?</h3>
+            <p className="text-ink-2 text-meta mt-2 mb-4">
+              Select the requirements you can’t compromise on.
+            </p>
+            {checks.length ? (
+              <div className="cb-checklist">
+                {checks.map((check) => (
+                  <label key={check.id} className="cb-check">
+                    <input
+                      className="db-check"
+                      type="checkbox"
+                      checked={mattersSet.has(check.id)}
+                      onChange={() => toggleMatters(check.id)}
+                    />
+                    <span>
+                      <strong>{check.label}</strong>
+                      <p>{check.why}</p>
+                      <span className="cb-check-values">
+                        {(["a", "b"] as const).map((side) => (
+                          <span key={side}>
+                            {names[side]}:{" "}
+                            {check[side] === "trips"
+                              ? "Does not meet this requirement"
+                              : "No listed conflict"}{" "}
+                            · {side === "a" ? check.aValue : check.bValue}
+                          </span>
+                        ))}
+                      </span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            ) : (
+              <p className="text-ink-2">
+                No category requirements are flagged for this pair.
+              </p>
+            )}
           </div>
-        </section>
-      )}
+        </div>
+      </details>
+      {children}
     </>
-  )
+  );
 }

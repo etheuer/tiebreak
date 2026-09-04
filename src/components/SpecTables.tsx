@@ -1,323 +1,205 @@
-'use client'
-
-import { useEffect, useMemo, useState, useRef } from 'react'
-import Link from 'next/link'
-import type { Product } from '@/lib/data'
-import type { ScoredGroup, ScoredRow, Side } from '@/lib/verdict'
-import { ProductImage } from '@/components/ProductImage'
-import { priceShort, productHref } from '@/lib/nav'
-import { columnLabels, shortName } from '@/lib/decision'
-import { displaySpec } from '@/lib/format'
-import type { MarketId } from '@/lib/markets'
-import { originNote } from '@/data/spec-catalog'
-
-const STORAGE_KEY = 'clinchmark:hide-identical'
-
-function Cell({ row, side, market }: { row: ScoredRow; side: Side; market: MarketId }) {
-  const raw = side === 'a' ? row.a : row.b
-  const value = displaySpec(raw, row.key, market)
-  const won = row.winner === side
-  const lost = row.winner !== null && !won
-  const cls = won ? (side === 'a' ? 'val-win-a' : 'val-win-b') : row.differs || lost ? 'val-diff' : 'val-same'
-
-  return (
-    <td className={side === 'a' ? 'col-a' : 'col-b'}>
-      <span className={cls}>
-        {won && (
-          <span className="win-flag" aria-hidden>
-            ▲
-          </span>
-        )}
-        {value}
-      </span>
-      {won && <span className="sr-only"> (wins this row: {row.reason})</span>}
-    </td>
-  )
-}
-
-function LeadBadge({ group }: { group: ScoredGroup }) {
-  if (!group.leader) {
-    return <span className="text-label text-ink-3">{group.diffCount} differences</span>
-  }
-  const tone = group.leader === 'a' ? 'var(--accent-2)' : 'var(--rival-2)'
-  const score = group.leader === 'a' ? `${group.aWins}-${group.bWins}` : `${group.bWins}-${group.aWins}`
-  return (
-    <span className="num text-label font-semibold" style={{ color: tone }}>
-      leads {score}
-    </span>
-  )
-}
-
+"use client";
+import { Fragment, useEffect, useState } from "react";
+import type { Product } from "@/lib/data";
+import type { ScoredGroup } from "@/lib/verdict";
+import { displaySpec } from "@/lib/format";
+import type { MarketId } from "@/lib/markets";
+import { casesFor } from "@/data/use-cases";
 export function SpecTables({
   productA,
   productB,
   groups,
-  aWins,
-  bWins,
-  market = 'us',
+  market = "us",
 }: {
-  productA: Product
-  productB: Product
-  groups: ScoredGroup[]
-  aWins: number
-  bWins: number
-  market?: MarketId
+  productA: Product;
+  productB: Product;
+  groups: ScoredGroup[];
+  aWins: number;
+  bWins: number;
+  market?: MarketId;
 }) {
-  const [hideSame, setHideSame] = useState(false)
-  const [focus, setFocus] = useState<'both' | 'a' | 'b'>('both')
-  const [active, setActive] = useState<string>(groups[0]?.id ?? '')
-
+  const [view, setView] = useState<"key" | "all">("key");
+  const [query, setQuery] = useState("");
+  const [expanded, setExpanded] = useState<string[]>([]);
+  const [priority, setPriority] = useState("overall");
+  const [differences, setDifferences] = useState(false);
   useEffect(() => {
+    const hash = location.hash.match(/(?:^#|&)for=([a-z0-9-]+)/i);
     try {
-      if (window.localStorage.getItem(STORAGE_KEY) === '1') setHideSame(true)
+      setPriority(
+        new URLSearchParams(location.search).get("priority") ??
+          hash?.[1] ??
+          localStorage.getItem(`clinchmark:for:${productA.subcategory}`) ??
+          "overall",
+      );
     } catch {
-      // private mode or blocked storage: the default is fine
+      setPriority(
+        new URLSearchParams(location.search).get("priority") ??
+          hash?.[1] ??
+          "overall",
+      );
     }
-  }, [])
-
-  function toggleHideSame() {
-    setHideSame((prev) => {
-      const next = !prev
-      try {
-        window.localStorage.setItem(STORAGE_KEY, next ? '1' : '0')
-      } catch {
-        // ignore
-      }
-      return next
-    })
-  }
-
-  const visible = useMemo(() => {
-    return groups
-      .map((group) => ({
-        ...group,
-        rows: hideSame ? group.rows.filter((row) => row.differs) : group.rows,
-      }))
-      .filter((group) => group.rows.length > 0)
-  }, [groups, hideSame])
-
-  const totals = useMemo(() => {
-    const total = groups.reduce((sum, group) => sum + group.rows.length, 0)
-    const differing = groups.reduce((sum, group) => sum + group.diffCount, 0)
-    return { total, differing }
-  }, [groups])
-
-  // Mobile column switch: first words if they already differ, otherwise
-  // same-brand-aware labels so "Blue" never faces "Blue".
-  const tags = useMemo(() => {
-    const first = { a: shortName(productA).split(' ')[0], b: shortName(productB).split(' ')[0] }
-    return first.a === first.b ? columnLabels(productA, productB) : first
-  }, [productA, productB])
-
-  const pauseSpy = useRef(false)
-  useEffect(() => {
-    const headings = visible
-      .map((group) => document.getElementById(group.id))
-      .filter((el): el is HTMLElement => Boolean(el))
-    if (headings.length === 0) return
-
-    // Match the responsive scroll-mt on the group anchors: the sticky stack
-    // is shorter on mobile where the desktop jump-nav row is hidden.
-    const top = window.matchMedia('(min-width: 768px)').matches ? '-170px' : '-130px'
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (pauseSpy.current) return
-        const hit = entries.filter((entry) => entry.isIntersecting).sort((x, y) => x.boundingClientRect.top - y.boundingClientRect.top)[0]
-        if (hit) setActive(hit.target.id)
-      },
-      { rootMargin: `${top} 0px -60% 0px`, threshold: 0 }
+    const update = (e: Event) => setPriority((e as CustomEvent<string>).detail);
+    window.addEventListener("clinchbench:priority", update);
+    return () => window.removeEventListener("clinchbench:priority", update);
+  }, [productA.subcategory]);
+  const rows = groups.flatMap((group) =>
+    group.rows.map((row) => ({ ...row, group: group.label })),
+  );
+  const keys =
+    casesFor(productA.subcategory).find((c) => c.id === priority)?.keys ?? [];
+  const important = [...rows]
+    .sort(
+      (a, b) =>
+        Number(keys.includes(b.key)) * 4 +
+        Number(b.highlight) * 2 +
+        Number(b.differs) -
+        Number(keys.includes(a.key)) * 4 -
+        Number(a.highlight) * 2 -
+        Number(a.differs),
     )
-    headings.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [visible])
-
-  const focusClass = focus === 'a' ? 'focus-a' : focus === 'b' ? 'focus-b' : ''
-
+    .slice(0, 5);
+  const q = query.trim().toLowerCase();
+  const visible = rows.filter(
+    (row) =>
+      (q
+        ? `${row.label} ${row.group} ${row.a} ${row.b}`
+            .toLowerCase()
+            .includes(q)
+        : view === "all" || important.some((r) => r.key === row.key)) &&
+      (!differences || row.differs),
+  );
   return (
-    <section id="specs" className={focusClass} aria-label="Full specification comparison">
-      {/* Persistent column headings, Baymard comparison-table finding #3 */}
-      <div
-        className="sticky z-30 border-y border-line"
-        style={{
-          top: 'var(--header-h)',
-          background: 'color-mix(in oklab, var(--surface) 94%, transparent)',
-          backdropFilter: 'blur(8px)',
-        }}
-      >
-        <div className="shell shell-wide">
-          <div className="cmp-grid items-stretch">
-            <div className="flex items-center px-2.5 py-2 sm:px-4">
-              <button
-                type="button"
-                onClick={toggleHideSame}
-                className="chip"
-                data-on={hideSame}
-                aria-pressed={hideSame}
-                title="Hide rows where both products are identical"
-              >
-                <span className="num">≠</span>
-                <span className="hidden sm:inline">Differences only</span>
-                <span className="sm:hidden">Diff</span>
-              </button>
-            </div>
-
-            {[
-              { side: 'a' as const, product: productA, wins: aWins },
-              { side: 'b' as const, product: productB, wins: bWins },
-            ].map(({ side, product, wins }) => (
-              <div
-                key={side}
-                className={`${side === 'a' ? 'col-a' : 'col-b'} flex items-center gap-2 border-l border-line px-2.5 py-2 sm:gap-2.5 sm:px-4`}
-              >
-                <ProductImage product={product} size="xs" tone={side} className="hidden sm:grid" />
-                <span className="min-w-0">
-                  <Link
-                    href={productHref(product, market)}
-                    className="block truncate text-cell font-semibold leading-tight hover:underline"
-                    title={`View ${product.name} spec sheet`}
-                  >
-                    {shortName(product)}
-                  </Link>
-                  <span className="num block text-label leading-tight text-ink-3">
-                    {priceShort(product, market)}
-                    <span
-                      className="ml-1.5 font-semibold"
-                      style={{ color: side === 'a' ? 'var(--accent-2)' : 'var(--rival-2)' }}
-                    >
-                      {wins} {wins === 1 ? 'win' : 'wins'}
-                    </span>
-                  </span>
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Jump nav, desktop */}
-          <div className="scroll-x hidden gap-1.5 border-t border-line py-1.5 md:flex">
-            {visible.map((group) => (
-              <a
-                key={group.id}
-                href={`#${group.id}`}
-                onClick={() => {
-                  setActive(group.id)
-                  pauseSpy.current = true
-                  setTimeout(() => { pauseSpy.current = false }, 800)
-                }}
-                aria-current={active === group.id ? 'true' : undefined}
-                className="shrink-0 rounded-md px-2.5 py-1 text-meta font-medium transition-colors"
-                style={{
-                  background: active === group.id ? 'var(--surface-3)' : 'transparent',
-                  color: active === group.id ? 'var(--ink)' : 'var(--ink-3)',
-                }}
-              >
-                {group.label}
-              </a>
-            ))}
-          </div>
+    <section
+      className="cb-section"
+      id="spec-tables"
+      aria-labelledby="differences"
+    >
+      <div className="cb-section-head">
+        <div>
+          <p className="eyebrow">Side by side</p>
+          <h2 id="differences">The differences, in detail.</h2>
+          <p>Start with the key specs, then explore as much as you need.</p>
         </div>
       </div>
-
-      <div className="shell shell-wide">
-        {/* Controls, mobile */}
-        <div className="flex items-center gap-2 py-3 md:hidden">
-          <div className="flex min-w-0 rounded-lg border border-line p-0.5 text-label">
-            {(['a', 'both', 'b'] as const).map((mode) => (
-              <button
-                key={mode}
-                type="button"
-                onClick={() => setFocus(mode)}
-                className="mobile-switch-btn truncate rounded-md px-2.5 py-1 font-medium transition-colors"
-                style={{
-                  background: focus === mode ? 'var(--surface-3)' : 'transparent',
-                  color: focus === mode ? 'var(--ink)' : 'var(--ink-3)',
-                }}
-                aria-pressed={focus === mode}
-              >
-                {mode === 'a' ? tags.a : mode === 'b' ? tags.b : 'Both'}
-              </button>
-            ))}
-          </div>
-          <label className="sr-only" htmlFor="jump-select">
-            Jump to a section
-          </label>
-          <select
-            id="jump-select"
-            className="ml-auto min-w-0 shrink rounded-lg border border-line bg-surface px-2 py-1.5 text-meta text-ink-2"
-            value=""
-            onChange={(event) => {
-              const id = event.target.value
-              if (id) {
-                setActive(id)
-                pauseSpy.current = true
-                setTimeout(() => { pauseSpy.current = false }, 800)
-                document.getElementById(id)?.scrollIntoView({ block: 'start' })
-              }
+      <div className="cb-spec-toolbar">
+        <div className="cb-segment" aria-label="Specification view">
+          <button
+            aria-pressed={view === "key"}
+            onClick={() => {
+              setView("key");
+              setQuery("");
             }}
           >
-            <option value="">Jump to…</option>
-            {visible.map((group) => (
-              <option key={group.id} value={group.id}>
-                {group.label}
-              </option>
-            ))}
-          </select>
+            Key differences
+          </button>
+          <button aria-pressed={view === "all"} onClick={() => setView("all")}>
+            All specs ({rows.length})
+          </button>
         </div>
-
-        <p className="hidden py-3 text-meta text-ink-3 md:block">
-          <span className="num">{totals.differing}</span> of{' '}
-          <span className="num">{totals.total}</span> attributes differ.
-          {hideSame ? ' Showing differences only.' : ' Identical rows are dimmed.'}
-        </p>
-
-        {visible.map((group) => (
-          <div key={group.id} className="mb-8 scroll-mt-[128px] md:scroll-mt-[168px]" id={group.id}>
-            <div className="flex items-baseline justify-between gap-3 border-b-2 border-line pb-2">
-              <h3 className="text-body font-semibold tracking-[-0.01em]">{group.label}</h3>
-              <LeadBadge group={group} />
-            </div>
-            <table className="spec-table">
-              <caption className="sr-only">
-                {group.label} specifications. Middle column is {productA.name}, right column is{' '}
-                {productB.name}.
-              </caption>
-              <colgroup>
-                <col className="col-label" />
-              </colgroup>
-              <tbody>
-                {group.rows.map((row) => (
-                  <tr key={row.key}>
-                    <th scope="row" className="row-label">
-                      {row.label}
-                      {originNote(row.origin) ? (
-                        <span className="mt-0.5 block text-micro font-normal normal-case tracking-normal text-ink-3">
-                          {originNote(row.origin)}
-                        </span>
-                      ) : null}
-                      {row.differs && !row.winner && (
-                        <>
-                          <span className="ml-1 text-ink-3" aria-hidden>
-                            ≠
-                          </span>
-                          <span className="sr-only"> (differs)</span>
-                        </>
-                      )}
-                    </th>
-                    <Cell row={row} side="a" market={market} />
-                    <Cell row={row} side="b" market={market} />
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
-
-        {visible.length === 0 && (
-          <p className="card p-8 text-center text-body text-ink-2">
-            These two match on every attribute we track. Turn off differences only to see the full
-            sheet.
-          </p>
-        )}
+        <label className="text-meta flex items-center gap-2">
+          <input
+            type="checkbox"
+            className="db-check"
+            checked={differences}
+            onChange={(e) => setDifferences(e.target.checked)}
+          />
+          Hide identical
+        </label>
+        <label>
+          <span className="sr-only">Search specifications</span>
+          <input
+            className="cb-search-input"
+            placeholder="Find a specification…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </label>
       </div>
+      {visible.length ? (
+        <table className="cb-compare-table">
+          <caption className="sr-only">
+            {productA.name} versus {productB.name}, {visible.length}{" "}
+            specifications
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">What you’re comparing</th>
+              <th scope="col">{productA.name}</th>
+              <th scope="col">{productB.name}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visible.map((row) => (
+              <Fragment key={row.key}>
+                <tr>
+                  <th scope="row">
+                    {row.label}
+                    <button
+                      aria-label={`Explain ${row.label}`}
+                      aria-expanded={expanded.includes(row.key)}
+                      aria-controls={`explain-${row.key}`}
+                      onClick={() =>
+                        setExpanded((prev) =>
+                          prev.includes(row.key)
+                            ? prev.filter((k) => k !== row.key)
+                            : [...prev, row.key],
+                        )
+                      }
+                    >
+                      i
+                    </button>
+                    <small>{row.group}</small>
+                  </th>
+                  <td>{displaySpec(row.a, row.key, market)}</td>
+                  <td>{displaySpec(row.b, row.key, market)}</td>
+                </tr>
+                {expanded.includes(row.key) && (
+                  <tr className="cb-explanation" id={`explain-${row.key}`}>
+                    <td colSpan={3}>
+                      <strong>{row.label}: </strong>
+                      {row.reason ??
+                        (row.differs
+                          ? "These values differ, but this specification does not have a single better direction. Consider which fits your needs."
+                          : "Both products list the same value for this specification.")}
+                      <p className="mt-2">
+                        {row.origin === "sheet"
+                          ? "From published product specifications."
+                          : row.origin === "editorial"
+                            ? "This is an editorial assessment, rather than a manufacturer specification."
+                            : "From other published information; check the source before deciding."}{" "}
+                        A comparison on one specification does not establish
+                        overall quality.
+                      </p>
+                    </td>
+                  </tr>
+                )}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="cb-empty">
+          <h3>No matching specifications</h3>
+          <p>Try a shorter search or include identical values.</p>
+          <button
+            className="btn btn-ghost mt-4"
+            onClick={() => {
+              setQuery("");
+              setDifferences(false);
+            }}
+          >
+            Reset filters
+          </button>
+        </div>
+      )}
+      <p className="cb-table-footnote" aria-live="polite">
+        Showing {visible.length} of {rows.length} specifications. Missing values
+        stay unlisted.{" "}
+        <a className="link-underline" href="#sources">
+          About the sources
+        </a>
+      </p>
     </section>
-  )
+  );
 }
