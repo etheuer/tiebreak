@@ -53,6 +53,14 @@ export function categoryHref(categoryId: string, market: MarketId = 'us'): strin
   return marketPath(market, `/category/${categoryId}/`)
 }
 
+export function subcategoryHref(
+  categoryId: string,
+  subcategory: string,
+  market: MarketId = 'us'
+): string {
+  return marketPath(market, `/category/${categoryId}/${subcategory}/`)
+}
+
 /** Order-independent key for a product pair. Shared by server and client. */
 export function pairKey(idA: string, idB: string): string {
   return [idA, idB].sort().join('\0')

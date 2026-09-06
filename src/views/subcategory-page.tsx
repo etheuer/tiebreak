@@ -9,7 +9,7 @@ import {
 } from '@/lib/data'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
-import { defaultOgImages } from '@/lib/seo'
+import { defaultOgImages, rankComparisonsForHub } from '@/lib/seo'
 import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict, verdictLine } from '@/lib/verdict'
 import {
@@ -21,6 +21,7 @@ import {
   priceShort,
   productHref,
   subLabel,
+  subcategoryHref,
 } from '@/lib/nav'
 import { absUrl, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
 import { formatCatalogDate } from '@/lib/format'
@@ -29,8 +30,6 @@ import { buildAnswer, checkDealBreakers, flattenRows, lensRows, shortName } from
 import { ProductImage } from '@/components/ProductImage'
 import { CompareLink } from '@/components/CompareLink'
 import { FinanceDisclaimer } from '@/components/CatalogNotes'
-
-const FLAGSHIP_PATTERN = /(?:iPhone|Galaxy|MacBook|OLED|Bravia|A95|Dyson|Amex|WH-1000|Bose)/i
 
 export async function generateStaticParamsForMarket(market: MarketId) {
   const products = await getProducts(market)
@@ -117,18 +116,29 @@ export async function SubcategoryListing({
 
   const byId = new Map(products.map((p) => [p.id, p]))
   const subIds = new Set(subProducts.map((p) => p.id))
-  const subComparisons = comparisons.filter(
+  const subComparisonsRaw = comparisons.filter(
     (c) => subIds.has(c.productA) && subIds.has(c.productB)
   )
+  const subComparisons = rankComparisonsForHub(
+    subComparisonsRaw,
+    byId,
+    market,
+    subComparisonsRaw.length
+  )
+  const topCompareLinks = subComparisons.slice(0, 4)
+
+  const siblingSubs = [
+    ...new Set(
+      products
+        .filter((p) => p.category === slug && p.subcategory !== sub)
+        .map((p) => p.subcategory)
+    ),
+  ]
 
   const attributesCount = catalogFor(sub).reduce(
     (sum, group) => sum + group.fields.length,
     0
   )
-
-  const flagshipComp =
-    subComparisons.find((c) => FLAGSHIP_PATTERN.test(c.productName)) ??
-    subComparisons[0]
 
   const useCases = casesFor(sub)
   const lensTableData = subComparisons.map((c) => {
@@ -194,21 +204,44 @@ export async function SubcategoryListing({
           Compare {subProducts.length} {subLabel(sub).toLowerCase()} head to head across{' '}
           {attributesCount} tracked specifications. Every matchup is scored strictly from
           published maker spec sheets with no lab test estimates.
-          {flagshipComp && (
+          {topCompareLinks.length > 0 && (
             <>
-              {' '}For a flagship matchup, explore the{' '}
-              <CompareLink
-                href={compareHref(flagshipComp, market)}
-                className="text-accent font-medium hover:underline"
-              >
-                {flagshipComp.productName}
-              </CompareLink>{' '}
-              breakdown.
+              {' '}Start with{' '}
+              {topCompareLinks.map((comparison, index) => (
+                <span key={comparison.productA + comparison.productB}>
+                  {index > 0 ? (index === topCompareLinks.length - 1 ? ', or ' : ', ') : null}
+                  <CompareLink
+                    href={compareHref(comparison, market)}
+                    className="text-accent font-medium hover:underline"
+                  >
+                    {comparison.productName}
+                  </CompareLink>
+                </span>
+              ))}
+              .
             </>
           )}
         </p>
         <p className="mt-2 text-label text-ink-3">
           Catalog as of {formatCatalogDate(CATALOG_AS_OF)} · {subComparisons.length} published matchups
+        </p>
+        <p className="mt-3 text-meta text-ink-3">
+          Part of{' '}
+          <Link href={categoryHref(category.id, market)} className="text-accent font-medium hover:underline">
+            {category.name}
+          </Link>
+          {siblingSubs.length > 0 ? ' · Also browse ' : null}
+          {siblingSubs.map((sibling, index) => (
+            <span key={sibling}>
+              {index > 0 ? ' · ' : null}
+              <Link
+                href={subcategoryHref(category.id, sibling, market)}
+                className="text-accent font-medium hover:underline"
+              >
+                {subLabel(sibling)}
+              </Link>
+            </span>
+          ))}
         </p>
         {isFeeBased(sub) ? <FinanceDisclaimer /> : null}
       </header>

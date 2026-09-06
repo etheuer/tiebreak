@@ -1,11 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getComparisons, getProducts } from '@/lib/data'
+import { getCategories, getComparisons, getProducts } from '@/lib/data'
 import { buildVerdict, verdictLine } from '@/lib/verdict'
-import { compareHref, homeHref, hubHref, SUBCATEGORY_LABEL, subLabel } from '@/lib/nav'
+import {
+  categoryHref,
+  compareHref,
+  homeHref,
+  hubHref,
+  SUBCATEGORY_LABEL,
+  subLabel,
+  subcategoryHref,
+} from '@/lib/nav'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
-import { defaultOgImages } from '@/lib/seo'
+import { defaultOgImages, rankComparisonsForHub } from '@/lib/seo'
 import { absUrl, SITE_NAME } from '@/lib/site'
 import { CompareBuilder } from '@/components/CompareBuilder'
 import { builderData } from '@/lib/builder-data'
@@ -43,15 +51,16 @@ export async function generateHubMetadata(market: MarketId): Promise<Metadata> {
 }
 
 export async function CompareHubPage({ market }: { market: MarketId }) {
-  const [products, comparisons] = await Promise.all([
+  const [products, comparisons, categories] = await Promise.all([
     getProducts(market),
     getComparisons(market),
+    getCategories(market),
   ])
 
   const { builderProducts, publishedPairs } = builderData(products, comparisons, market)
   const byId = new Map(products.map((p) => [p.id, p]))
 
-  // Group by subcategory
+  // Group by subcategory; rank denser / flagship matchups first within each group.
   const subcategories = Object.keys(SUBCATEGORY_LABEL)
   const grouped = subcategories
     .map((sub) => {
@@ -59,13 +68,21 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
         const a = byId.get(c.productA)
         return a?.subcategory === sub
       })
+      const categoryId = comps.length
+        ? byId.get(comps[0].productA)?.category
+        : products.find((p) => p.subcategory === sub)?.category
       return {
         sub,
         label: subLabel(sub),
-        comparisons: comps,
+        categoryId: categoryId ?? null,
+        comparisons: rankComparisonsForHub(comps, byId, market, comps.length),
       }
     })
     .filter((g) => g.comparisons.length > 0)
+
+  const categoryHubs = categories.filter((category) =>
+    products.some((product) => product.category === category.id)
+  )
 
   return (
     <div className="shell">
@@ -85,14 +102,23 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
           specifications with a verdict for every pair.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
+          {categoryHubs.map((category) => (
+            <Link key={category.id} href={categoryHref(category.id, market)} className="chip">
+              {category.name}
+            </Link>
+          ))}
           {grouped.map((group) => (
-            <a
+            <Link
               key={group.sub}
-              href={`#${group.sub}`}
+              href={
+                group.categoryId
+                  ? subcategoryHref(group.categoryId, group.sub, market)
+                  : `#${group.sub}`
+              }
               className="chip"
             >
               {group.label}
-            </a>
+            </Link>
           ))}
         </div>
       </header>
@@ -108,9 +134,28 @@ export async function CompareHubPage({ market }: { market: MarketId }) {
       <div className="py-8 grid gap-10">
         {grouped.map((group) => (
           <section key={group.sub} id={group.sub} className="scroll-mt-20">
-            <h2 className="display text-h3 border-b-2 border-line pb-2">
-              {group.label}
-            </h2>
+            <div className="flex flex-wrap items-baseline justify-between gap-3 border-b-2 border-line pb-2">
+              <h2 className="display text-h3">
+                {group.categoryId ? (
+                  <Link
+                    href={subcategoryHref(group.categoryId, group.sub, market)}
+                    className="hover:text-accent"
+                  >
+                    {group.label}
+                  </Link>
+                ) : (
+                  group.label
+                )}
+              </h2>
+              {group.categoryId ? (
+                <Link
+                  href={subcategoryHref(group.categoryId, group.sub, market)}
+                  className="text-meta font-medium text-accent hover:underline"
+                >
+                  {group.label} hub →
+                </Link>
+              ) : null}
+            </div>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {group.comparisons.map((c) => {
                 const productA = byId.get(c.productA)
