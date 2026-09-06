@@ -19,6 +19,7 @@ import {
   subLabel,
 } from '@/lib/nav'
 import { absUrl, clip, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
+import { ogImagesForProducts, productImageAbsUrls } from '@/lib/seo'
 import { formatCatalogDate, formatMoney } from '@/lib/format'
 import { buildProductFaq } from '@/lib/faq'
 import { ProductImage } from '@/components/ProductImage'
@@ -44,6 +45,7 @@ export async function generateMetadataForMarket(
   const title = `${product.name} specs and price`
   const description = clip(`${product.name} at ${priceShort(product, market)}: ${product.description}`, 158)
   const includeUk = inMarket(product, 'uk')
+  const images = ogImagesForProducts([product])
   return {
     title,
     description,
@@ -55,11 +57,13 @@ export async function generateMetadataForMarket(
       type: 'website',
       siteName: SITE_NAME,
       locale: openGraphLocale(market),
+      images,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: images.map((image) => image.url),
     },
   }
 }
@@ -290,6 +294,7 @@ export async function ProductDetail({
           __html: JSON.stringify((() => {
             const point = priceOf(product, market)
             const sameAs = officialSourceUrl(product)
+            const images = productImageAbsUrls(product)
             if (isFeeBased(product.subcategory)) {
               return {
                 '@context': 'https://schema.org',
@@ -297,6 +302,7 @@ export async function ProductDetail({
                 name: product.name,
                 description: product.description,
                 url: absUrl(productHref(product, market)),
+                ...(images.length ? { image: images } : {}),
                 ...(sameAs ? { sameAs } : {}),
                 provider: {
                   '@type': 'Organization',
@@ -318,6 +324,7 @@ export async function ProductDetail({
               description: product.description,
               category: subLabel(product.subcategory),
               url: absUrl(productHref(product, market)),
+              ...(images.length ? { image: images } : {}),
               ...(sameAs ? { sameAs } : {}),
               ...(point
                 ? {

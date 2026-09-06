@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Archivo, JetBrains_Mono } from 'next/font/google'
 import { AppShell } from '@/components/AppShell'
 import { SITE_NAME, SITE_URL } from '@/lib/site'
+import { defaultOgImages } from '@/lib/seo'
 import './globals.css'
 
 const archivo = Archivo({
@@ -36,9 +37,11 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     url: '/',
     locale: 'en_US',
+    images: defaultOgImages(),
   },
   twitter: {
     card: 'summary_large_image',
+    images: defaultOgImages().map((image) => image.url),
   },
 }
 

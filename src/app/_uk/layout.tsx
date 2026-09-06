@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { AppShell } from '@/components/AppShell'
 import { MARKETS } from '@/lib/markets'
 import { SITE_NAME, SITE_URL } from '@/lib/site'
+import { defaultOgImages } from '@/lib/seo'
 import '../globals.css'
 
 const uk = MARKETS.uk
@@ -25,9 +26,11 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     url: '/uk/',
     locale: uk.ogLocale,
+    images: defaultOgImages(),
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
+    images: defaultOgImages().map((image) => image.url),
   },
 }
 

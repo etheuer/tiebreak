@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getCategories, getComparisons, getProducts, getProductsByCategory, type Product } from '@/lib/data'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
+import { defaultOgImages } from '@/lib/seo'
 import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict } from '@/lib/verdict'
 import { categoryHref, compareHref, homeHref, isFeeBased, priceCaption, priceShort, productHref, subLabel } from '@/lib/nav'
@@ -54,9 +55,11 @@ export async function generateMetadataForMarket(
       type: 'website',
       siteName: SITE_NAME,
       locale: openGraphLocale(market),
+      images: defaultOgImages(),
     },
     twitter: {
       card: 'summary_large_image',
+      images: defaultOgImages().map((image) => image.url),
       title,
       description,
     },

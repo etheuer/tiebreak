@@ -29,7 +29,14 @@ import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import type { MarketId } from '@/lib/markets'
 import { buildAnswer, checkDealBreakers, flattenRows, shortName } from '@/lib/decision'
 import { buildCompareFaq, buildLensAnswers } from '@/lib/faq'
-import { absUrl, clip, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
+import { absUrl, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
+import {
+  compareSeoDescription,
+  compareSeoTitle,
+  ogImagesForProducts,
+  productImageAbsUrls,
+  relatedComparisonsForSubcategory,
+} from '@/lib/seo'
 import { displaySpec, formatCatalogDate } from '@/lib/format'
 import { casesFor } from '@/data/use-cases'
 import { SpecTables } from '@/components/SpecTables'
@@ -69,29 +76,35 @@ export async function generateMetadataForMarket(
   const includeUk = inMarket(productA, 'uk') && inMarket(productB, 'uk')
   const verdict = buildVerdict(productA, productB, market)
   const answer = verdictLine(productA, productB, verdict, market)
-  const rawDesc = answer.length >= 120 ? answer : `${answer} ${comparison.description}`
-  const description = clip(rawDesc, 158)
-  const title =
-    comparison.productName.length <= 48
-      ? comparison.productName
-      : { absolute: comparison.productName }
+  const titleText = compareSeoTitle(productA, productB, verdict, comparison.productName)
+  const description = compareSeoDescription(
+    productA,
+    productB,
+    verdict,
+    answer,
+    comparison.description
+  )
+  const title = titleText.length <= 48 ? titleText : { absolute: titleText }
+  const images = ogImagesForProducts([productA, productB])
 
   return {
     title,
     description,
     alternates: pageAlternates(`/compare/${slug}/`, market, includeUk),
     openGraph: {
-      title: comparison.productName,
+      title: titleText,
       description,
       url: compareHref(comparison, market),
       type: 'website',
       siteName: SITE_NAME,
       locale: openGraphLocale(market),
+      images,
     },
     twitter: {
       card: 'summary_large_image',
-      title: comparison.productName,
+      title: titleText,
       description,
+      images: images.map((image) => image.url),
     },
     keywords: comparison.keywords,
   }
@@ -351,14 +364,13 @@ export async function CompareMatchup({
       .filter((p) => p.subcategory === productA.subcategory)
       .map((p) => p.id)
   )
-  const otherComparisons = allComparisons
-    .filter((c) => !(c.productA === productA.id && c.productB === productB.id))
-    .sort((x, y) => {
-      const xScore = Number(sameType.has(x.productA) && sameType.has(x.productB))
-      const yScore = Number(sameType.has(y.productA) && sameType.has(y.productB))
-      return yScore - xScore
-    })
-    .slice(0, 3)
+  const otherComparisons = relatedComparisonsForSubcategory(
+    allComparisons,
+    productA,
+    productB,
+    sameType,
+    6
+  )
 
   return (
     <>
@@ -684,9 +696,9 @@ export async function CompareMatchup({
         {otherComparisons.length > 0 && (
           <section className="mt-14" aria-labelledby="others">
             <h2 id="others" className="display text-h4">
-              Other matchups
+              Related comparisons
             </h2>
-            <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+            <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
               {otherComparisons.map((comp) => (
                 <CompareLink
                   key={comp.productA + comp.productB}
@@ -714,6 +726,7 @@ export async function CompareMatchup({
               const fee = isFeeBased(product.subcategory)
               const point = priceOf(product, market)
               const sameAs = officialSourceUrl(product)
+              const images = productImageAbsUrls(product)
               return {
                 '@type': 'ListItem',
                 position: index + 1,
@@ -726,6 +739,7 @@ export async function CompareMatchup({
                   },
                   description: product.description,
                   url: absUrl(productHref(product, market)),
+                  ...(images.length ? { image: images } : {}),
                   ...(sameAs ? { sameAs } : {}),
                   ...(fee
                     ? {
