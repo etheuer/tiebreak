@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getCategories, getComparisons, getProducts } from '@/lib/data'
 import { marketPath, type MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
+import { defaultOgImages } from '@/lib/seo'
 import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict } from '@/lib/verdict'
 import { categoryHref, compareHref, subLabel } from '@/lib/nav'
@@ -18,7 +19,8 @@ export async function homeMetadata(market: MarketId): Promise<Metadata> {
   const path = marketPath(market, '/')
   return {
     alternates: pageAlternates('/', market, includeUk),
-    openGraph: { url: path, locale: openGraphLocale(market) },
+    openGraph: { url: path, locale: openGraphLocale(market), images: defaultOgImages() },
+    twitter: { card: 'summary_large_image', images: defaultOgImages().map((image) => image.url) },
   }
 }
 

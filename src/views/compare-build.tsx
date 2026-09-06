@@ -5,6 +5,7 @@ import { getComparisons, getProducts } from '@/lib/data'
 import { homeHref } from '@/lib/nav'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
+import { defaultOgImages } from '@/lib/seo'
 import { SITE_NAME, absUrl } from '@/lib/site'
 import { CompareBuilder } from '@/components/CompareBuilder'
 import { builderData } from '@/lib/builder-data'
@@ -26,6 +27,7 @@ export async function buildMetadata(market: MarketId): Promise<Metadata> {
       type: 'website',
       siteName: SITE_NAME,
       locale: openGraphLocale(market),
+      images: defaultOgImages(),
     },
   }
 }

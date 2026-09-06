@@ -5,6 +5,7 @@ import { buildVerdict, verdictLine } from '@/lib/verdict'
 import { compareHref, homeHref, hubHref, SUBCATEGORY_LABEL, subLabel } from '@/lib/nav'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
+import { defaultOgImages } from '@/lib/seo'
 import { absUrl, SITE_NAME } from '@/lib/site'
 import { CompareBuilder } from '@/components/CompareBuilder'
 import { builderData } from '@/lib/builder-data'
@@ -30,11 +31,13 @@ export async function generateHubMetadata(market: MarketId): Promise<Metadata> {
       type: 'website',
       siteName: SITE_NAME,
       locale: openGraphLocale(market),
+      images: defaultOgImages(),
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title,
       description,
+      images: defaultOgImages().map((image) => image.url),
     },
   }
 }

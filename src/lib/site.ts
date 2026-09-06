@@ -1,6 +1,5 @@
-// Set NEXT_PUBLIC_SITE_URL to https://clinchmark.com after that domain is ours.
-// Do not fall back to tiebreak.app — that hostname is someone else's tennis app.
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tiebreak-gilt.vercel.app').replace(/\/$/, '')
+// Production canonical host. Override with NEXT_PUBLIC_SITE_URL when needed.
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://clinchmark.com').replace(/\/$/, '')
 export const SITE_NAME = 'Clinchmark'
 export const SITE_EMAIL = (process.env.NEXT_PUBLIC_SITE_EMAIL ?? '').trim()
 export const GITHUB_REPO = 'https://github.com/etheuer/tiebreak'

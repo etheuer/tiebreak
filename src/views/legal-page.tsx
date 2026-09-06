@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { LEGAL_UPDATED, SITE_NAME } from '@/lib/site'
+import { defaultOgImages } from '@/lib/seo'
 
 export function legalMetadata(title: string, description: string, path: string): Metadata {
   return {
@@ -13,8 +14,14 @@ export function legalMetadata(title: string, description: string, path: string):
       url: path,
       type: 'website',
       siteName: SITE_NAME,
+      images: defaultOgImages(),
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: defaultOgImages().map((image) => image.url),
+    },
   }
 }
 
