@@ -12,12 +12,14 @@ function Side({
   wins,
   isLeader,
   market,
+  eager = false,
 }: {
   product: Product
   side: 'a' | 'b'
   wins: number
   isLeader: boolean
   market: MarketId
+  eager?: boolean
 }) {
   const accentColor = side === 'a' ? 'var(--accent)' : 'var(--rival)'
   return (
@@ -32,7 +34,7 @@ function Side({
         border: `1px solid ${isLeader ? (side === 'a' ? 'color-mix(in oklab, var(--accent) 30%, transparent)' : 'color-mix(in oklab, var(--rival) 30%, transparent)') : 'transparent'}`,
       }}
     >
-      <ProductImage product={product} size="sm" tone={side} />
+      <ProductImage product={product} size="sm" tone={side} eager={eager} />
       <div className="min-w-0 flex-1">
         <p className="truncate text-cell font-bold text-ink leading-tight">{product.name}</p>
         <div className="mt-1 flex items-center justify-between gap-1">
@@ -58,12 +60,14 @@ export function VsCard({
   productB,
   verdict,
   market = 'us',
+  eager = false,
 }: {
   comparison: Comparison
   productA: Product
   productB: Product
   verdict: Verdict
   market?: MarketId
+  eager?: boolean
 }) {
   const leader = verdict.leader === 'a' ? productA : verdict.leader === 'b' ? productB : null
   const wins = verdict.leader === 'a' ? verdict.aWins : verdict.bWins
@@ -113,6 +117,7 @@ export function VsCard({
             wins={verdict.aWins}
             isLeader={verdict.leader === 'a'}
             market={market}
+            eager={eager}
           />
           <div className="flex flex-col items-center justify-center px-1">
             <span
@@ -129,6 +134,7 @@ export function VsCard({
             wins={verdict.bWins}
             isLeader={verdict.leader === 'b'}
             market={market}
+            eager={eager}
           />
         </div>
 

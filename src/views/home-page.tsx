@@ -8,10 +8,15 @@ import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict } from '@/lib/verdict'
 import { categoryHref, compareHref, subLabel } from '@/lib/nav'
 import { primaryUseCase } from '@/data/use-cases'
+import dynamic from 'next/dynamic'
 import { VsCard } from '@/components/VsCard'
-import { CompareBuilder } from '@/components/CompareBuilder'
 import { builderData } from '@/lib/builder-data'
 import { CompareLink } from '@/components/CompareLink'
+
+const CompareBuilder = dynamic(
+  () => import('@/components/CompareBuilder').then((m) => ({ default: m.CompareBuilder })),
+  { loading: () => null }
+)
 
 export async function homeMetadata(market: MarketId): Promise<Metadata> {
   const ukProducts = await getProducts('uk')
@@ -156,6 +161,7 @@ export async function HomePage({ market }: { market: MarketId }) {
       <div className="shell">
         {/* Strategic Differentiator Feature Matrix */}
         <section aria-label="Why Tiebreak" className="py-12 border-b border-line/80">
+          <h2 className="sr-only">Why Tiebreak</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="card p-4.5 sm:p-5">
               <div className="flex items-center gap-2.5">
@@ -227,7 +233,7 @@ export async function HomePage({ market }: { market: MarketId }) {
           </div>
 
           <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-[repeat(2,minmax(0,1fr))] md:gap-5">
-            {cards.map((card) => (
+            {cards.map((card, index) => (
               <VsCard
                 key={card.comparison.productA + card.comparison.productB}
                 comparison={card.comparison}
@@ -235,6 +241,7 @@ export async function HomePage({ market }: { market: MarketId }) {
                 productB={card.productB}
                 verdict={card.verdict}
                 market={market}
+                eager={index === 0}
               />
             ))}
           </div>

@@ -85,3 +85,27 @@ export function brandHue(brand: string): number {
   }
   return hash % 360
 }
+
+/** Display-box → derived pixel width (covers ~2x DPR). */
+export const DERIVED_WIDTH_FOR_SIZE = {
+  xs: 80,
+  sm: 80,
+  md: 160,
+  lg: 320,
+} as const
+
+export type DerivedWidth = (typeof DERIVED_WIDTH_FOR_SIZE)[keyof typeof DERIVED_WIDTH_FOR_SIZE]
+
+/**
+ * Map a full local studio URL to a pre-generated thumb under
+ * /images/products/derived/. Remote URLs are returned unchanged.
+ */
+export function derivedProductSrc(src: string, width: DerivedWidth): string {
+  if (!src.startsWith('/images/products/')) return src
+  if (src.includes('/derived/')) return src
+  const file = decodeURIComponent(src.slice(src.lastIndexOf('/') + 1))
+  const dot = file.lastIndexOf('.')
+  if (dot <= 0) return src
+  const id = file.slice(0, dot).toLowerCase()
+  return `/images/products/derived/${id}-w${width}.webp`
+}

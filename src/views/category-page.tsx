@@ -279,11 +279,11 @@ export async function CategoryListing({
                       <span className="num hidden w-6 shrink-0 text-body font-semibold text-ink-3 sm:block">
                         {index + 1}
                       </span>
-                      <ProductImage product={product} size="md" className="hidden sm:grid" />
+                      <ProductImage product={product} size="md" className="hidden sm:grid" eager={index < 2} />
 
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start gap-3">
-                          <ProductImage product={product} size="sm" className="sm:hidden" />
+                          <ProductImage product={product} size="sm" className="sm:hidden" eager={index < 2} />
                           <div className="min-w-0">
                             <p className="eyebrow">{product.brand}</p>
                             <h3 className="mt-0.5 text-subhead font-semibold tracking-[-0.02em]">
