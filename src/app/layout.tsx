@@ -45,9 +45,20 @@ export const metadata: Metadata = {
   },
 }
 
+const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY
+const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://us.i.posthog.com'
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${archivo.variable} ${jetbrains.variable}`}>
+      <head>
+        {POSTHOG_KEY ? (
+          <>
+            <link rel="preconnect" href={POSTHOG_HOST} />
+            <link rel="dns-prefetch" href={POSTHOG_HOST} />
+          </>
+        ) : null}
+      </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <AppShell market="us">{children}</AppShell>
       </body>

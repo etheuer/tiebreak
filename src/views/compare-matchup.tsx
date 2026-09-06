@@ -41,17 +41,28 @@ import {
 } from '@/lib/seo'
 import { displaySpec, formatCatalogDate } from '@/lib/format'
 import { casesFor } from '@/data/use-cases'
-import { SpecTables } from '@/components/SpecTables'
+import dynamic from 'next/dynamic'
 import { ProductImage } from '@/components/ProductImage'
-import { DecisionPanel } from '@/components/DecisionPanel'
 import { GenerationalUpgradeBanner } from '@/components/GenerationalUpgradeBanner'
 import { TcoCard } from '@/components/TcoCard'
 import { PhysicalFitSection } from '@/components/PhysicalFitSection'
 import { OwnerFrictionCheck } from '@/components/OwnerFrictionCheck'
-import { ShareVerdict } from '@/components/ShareVerdict'
 import { FinanceDisclaimer, PriceNote } from '@/components/CatalogNotes'
 import { CompareLink } from '@/components/CompareLink'
 import { OfficialSourceLink } from '@/components/OfficialSourceLink'
+
+const DecisionPanel = dynamic(
+  () => import('@/components/DecisionPanel').then((m) => ({ default: m.DecisionPanel })),
+  { loading: () => null }
+)
+const SpecTables = dynamic(
+  () => import('@/components/SpecTables').then((m) => ({ default: m.SpecTables })),
+  { loading: () => null }
+)
+const ShareVerdict = dynamic(
+  () => import('@/components/ShareVerdict').then((m) => ({ default: m.ShareVerdict })),
+  { loading: () => null }
+)
 
 export async function generateStaticParamsForMarket(market: MarketId) {
   const comparisons = await getComparisons(market)
@@ -234,7 +245,7 @@ function ProductPanel({
         </div>
 
         <div className="flex items-center gap-3.5 mt-3.5">
-          <ProductImage product={product} size="md" tone={side} />
+          <ProductImage product={product} size="md" tone={side} eager />
           <div className="min-w-0 flex-1">
             <Link
               href={productHref(product, market)}

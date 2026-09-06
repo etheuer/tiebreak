@@ -95,9 +95,11 @@ export function CompareBuilder({
             )}
           </div>
           <label className="block text-meta font-medium text-ink-2">
+            <span className="sr-only">First product</span>
             <select
               value={idA}
               onChange={(e) => chooseA(e.target.value)}
+              aria-label="First product"
               className="mt-1.5 w-full rounded-xl border border-line bg-surface px-3.5 py-3 text-body font-semibold text-ink shadow-2xs focus:border-accent focus:outline-none"
             >
               <option value="">Select first product…</option>
@@ -137,10 +139,12 @@ export function CompareBuilder({
             )}
           </div>
           <label className="block text-meta font-medium text-ink-2">
+            <span className="sr-only">Second product</span>
             <select
               value={idB}
               onChange={(e) => setIdB(e.target.value)}
               disabled={!productA}
+              aria-label="Second product"
               className="mt-1.5 w-full rounded-xl border border-line bg-surface px-3.5 py-3 text-body font-semibold text-ink shadow-2xs focus:border-rival focus:outline-none disabled:opacity-50"
             >
               <option value="">

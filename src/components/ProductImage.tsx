@@ -17,15 +17,8 @@ export function photoSources(product: Product): string[] {
 
 /**
  * Drop-in replacement for ProductMark with the same size/tone API.
- * Renders a real photo when one exists (local `public/images/products/` file
- * or a non-placeholder `image_url`), otherwise a branded monogram tile.
- * Plain <img> on purpose: the site is a static export, where Next's default
- * image optimizer is unsupported (see static-exports guide), and every photo
- * degrades to the monogram instead of a broken-image icon.
- *
- * Only five scalar identity fields cross the client boundary: the full
- * product (specs, market variants) stays server-side so regional spec
- * differences never leak into another market's page payload.
+ * Renders a real photo when one exists, otherwise a branded monogram tile.
+ * Uses next/image with unoptimized (static export) and prebuilt derived thumbs.
  */
 export function ProductImage({
   product,

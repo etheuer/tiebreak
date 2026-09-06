@@ -3,9 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: 'export',
   distDir: '.next-static',
-  // Disable experimental features that cause issues with export
+  images: {
+    // Static export has no image optimizer; we pre-generate derived thumbs.
+    unoptimized: true,
+  },
   experimental: {
-    optimizePackageImports: undefined,
+    optimizePackageImports: ['posthog-js'],
   },
   turbopack: {
     root: process.cwd(),
