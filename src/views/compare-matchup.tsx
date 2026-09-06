@@ -24,6 +24,7 @@ import {
   productHref,
   subLabel,
   subLabelSingular,
+  subcategoryHref,
 } from '@/lib/nav'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
 import type { MarketId } from '@/lib/markets'
@@ -31,6 +32,7 @@ import { buildAnswer, checkDealBreakers, flattenRows, shortName } from '@/lib/de
 import { buildCompareFaq, buildLensAnswers } from '@/lib/faq'
 import { absUrl, CATALOG_AS_OF, SITE_NAME } from '@/lib/site'
 import {
+  compareEditorialIntro,
   compareSeoDescription,
   compareSeoTitle,
   ogImagesForProducts,
@@ -302,7 +304,7 @@ export async function CompareMatchup({
   ])
 
   const verdict = buildVerdict(productA, productB, market)
-  const answer = verdictLine(productA, productB, verdict, market)
+  const editorialIntro = compareEditorialIntro(productA, productB, verdict, market)
   const category = categories.find((c) => c.id === productA.category)
   const rows = flattenRows(verdict)
   const checks = checkDealBreakers(productA, productB)
@@ -359,10 +361,10 @@ export async function CompareMatchup({
     }
   })
 
+  const marketProducts = await getProducts(market)
+  const productsById = new Map(marketProducts.map((p) => [p.id, p]))
   const sameType = new Set(
-    (await getProducts(market))
-      .filter((p) => p.subcategory === productA.subcategory)
-      .map((p) => p.id)
+    marketProducts.filter((p) => p.subcategory === productA.subcategory).map((p) => p.id)
   )
   const otherComparisons = relatedComparisonsForSubcategory(
     allComparisons,
@@ -388,7 +390,12 @@ export async function CompareMatchup({
               <span aria-hidden>/</span>
             </>
           )}
-          <span className="text-ink-2 font-medium">{subLabel(productA.subcategory)}</span>
+          <Link
+            href={subcategoryHref(productA.category, productA.subcategory, market)}
+            className="text-ink-2 font-medium hover:text-accent"
+          >
+            {subLabel(productA.subcategory)}
+          </Link>
         </nav>
 
         <header className="mt-5 max-w-4xl">
@@ -396,7 +403,9 @@ export async function CompareMatchup({
             <span>⚡</span> Verified Benchmark Matchup
           </div>
           <h1 className="display mt-3 text-h1">{comparison.productName}</h1>
-          <p className="mt-3.5 text-lead font-medium leading-relaxed text-ink">{answer}</p>
+          <p className="mt-3.5 max-w-3xl text-lead font-medium leading-relaxed text-ink">
+            {editorialIntro}
+          </p>
           <p className="mt-2 text-label text-ink-3">Verified catalog figures as of {formatCatalogDate(CATALOG_AS_OF)}</p>
 
           {whyInNumbers.length > 0 && (
@@ -695,20 +704,48 @@ export async function CompareMatchup({
 
         {otherComparisons.length > 0 && (
           <section className="mt-14" aria-labelledby="others">
-            <h2 id="others" className="display text-h4">
-              Related comparisons
-            </h2>
-            <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-              {otherComparisons.map((comp) => (
-                <CompareLink
-                  key={comp.productA + comp.productB}
-                  href={compareHref(comp, market)}
-                  className="card p-4 transition-colors hover:border-line-2"
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h2 id="others" className="display text-h4">
+                Related comparisons
+              </h2>
+              <p className="text-meta text-ink-3">
+                <Link
+                  href={subcategoryHref(productA.category, productA.subcategory, market)}
+                  className="text-accent hover:underline font-medium"
                 >
-                  <p className="text-body font-semibold leading-snug">{comp.productName}</p>
-
-                </CompareLink>
-              ))}
+                  All {subLabel(productA.subcategory).toLowerCase()} matchups
+                </Link>
+                {category ? (
+                  <>
+                    {' · '}
+                    <Link href={categoryHref(category.id, market)} className="text-accent hover:underline font-medium">
+                      {category.name} hub
+                    </Link>
+                  </>
+                ) : null}
+              </p>
+            </div>
+            <div className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+              {otherComparisons.map((comp) => {
+                const relatedA = productsById.get(comp.productA)
+                const relatedB = productsById.get(comp.productB)
+                const relatedClaim =
+                  relatedA && relatedB
+                    ? verdictLine(relatedA, relatedB, buildVerdict(relatedA, relatedB, market), market)
+                    : null
+                return (
+                  <CompareLink
+                    key={comp.productA + comp.productB}
+                    href={compareHref(comp, market)}
+                    className="card p-4 transition-colors hover:border-line-2"
+                  >
+                    <p className="text-body font-semibold leading-snug">{comp.productName}</p>
+                    {relatedClaim ? (
+                      <p className="mt-1.5 text-meta leading-relaxed text-ink-3">{relatedClaim}</p>
+                    ) : null}
+                  </CompareLink>
+                )
+              })}
             </div>
           </section>
         )}

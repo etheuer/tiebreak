@@ -4,10 +4,21 @@ import Link from 'next/link'
 import { getCategories, getComparisons, getProducts, getProductsByCategory, type Product } from '@/lib/data'
 import type { MarketId } from '@/lib/markets'
 import { pageAlternates, openGraphLocale } from '@/lib/hreflang'
-import { defaultOgImages } from '@/lib/seo'
+import { defaultOgImages, featuredComparisonsForCategory, rankComparisonsForHub } from '@/lib/seo'
 import { catalogFor } from '@/data/spec-catalog'
 import { buildVerdict } from '@/lib/verdict'
-import { categoryHref, compareHref, homeHref, isFeeBased, priceCaption, priceShort, productHref, subLabel } from '@/lib/nav'
+import {
+  categoryHref,
+  compareHref,
+  homeHref,
+  hubHref,
+  isFeeBased,
+  priceCaption,
+  priceShort,
+  productHref,
+  subLabel,
+  subcategoryHref,
+} from '@/lib/nav'
 import { absUrl, SITE_NAME } from '@/lib/site'
 import { casesFor } from '@/data/use-cases'
 import { ProductImage } from '@/components/ProductImage'
@@ -112,31 +123,14 @@ export async function CategoryListing({
     }
   })
 
-  // Electronics alone has ~50 published matchups. Show a spread across product
-  // types instead of the first N alphabetically, which would all be one type.
-  const featuredComparisons = (() => {
-    const buckets = new Map<string, typeof categoryComparisons>()
-    for (const comparison of categoryComparisons) {
-      const sub = byId.get(comparison.productA)?.subcategory ?? 'other'
-      const bucket = buckets.get(sub) ?? []
-      bucket.push(comparison)
-      buckets.set(sub, bucket)
-    }
-    const picked: typeof categoryComparisons = []
-    for (let round = 0; picked.length < 6; round += 1) {
-      let added = false
-      for (const bucket of buckets.values()) {
-        if (picked.length >= 6) break
-        const comparison = bucket[round]
-        if (comparison) {
-          picked.push(comparison)
-          added = true
-        }
-      }
-      if (!added) break
-    }
-    return picked
-  })()
+  // Spread across product types, prefer flagships / tradeoffs / denser sheets.
+  const featuredComparisons = featuredComparisonsForCategory(
+    categoryComparisons,
+    byId,
+    market,
+    12
+  )
+  const topCompareLinks = rankComparisonsForHub(categoryComparisons, byId, market, 4)
 
   const otherCategories = categories.filter(
     (category) => category.id !== slug && allProducts.some((product) => product.category === category.id)
@@ -168,15 +162,42 @@ export async function CategoryListing({
       <header className="mt-5 border-b border-line pb-8">
         <p className="eyebrow">Category</p>
         <h1 className="display mt-2 text-h1">{currentCategory.name}</h1>
-        <p className="mt-3 max-w-xl text-body leading-relaxed text-ink-2">
+        <p className="mt-3 max-w-2xl text-body leading-relaxed text-ink-2">
           {products.length > 0
             ? `${products.length} products in the catalog across ${shortlists.length} product ${
                 shortlists.length === 1 ? 'type' : 'types'
               }, with ${categoryComparisons.length} published ${
                 categoryComparisons.length === 1 ? 'matchup' : 'matchups'
-              }.`
+              }. Start with a top matchup or jump straight into a product-type hub.`
             : `We track ${currentCategory.subcategories.join(', ').toLowerCase()} here, but nothing is in the catalog yet.`}
         </p>
+        {shortlists.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {shortlists.map((list) => (
+              <Link
+                key={list.sub}
+                href={subcategoryHref(currentCategory.id, list.sub, market)}
+                className="chip"
+              >
+                {list.label}
+                <span className="num text-ink-3"> · {list.items.length}</span>
+              </Link>
+            ))}
+          </div>
+        )}
+        {topCompareLinks.length > 0 && (
+          <p className="mt-4 max-w-3xl text-cell leading-relaxed text-ink-2">
+            <span className="font-semibold text-ink">Top compares: </span>
+            {topCompareLinks.map((comparison, index) => (
+              <span key={comparison.productA + comparison.productB}>
+                {index > 0 ? ' · ' : null}
+                <CompareLink href={compareHref(comparison, market)} className="text-accent font-medium hover:underline">
+                  {comparison.productName}
+                </CompareLink>
+              </span>
+            ))}
+          </p>
+        )}
         {products.some((product) => isFeeBased(product.subcategory)) ? <FinanceDisclaimer /> : null}
       </header>
 
@@ -218,7 +239,7 @@ export async function CategoryListing({
             <section key={list.sub} className="py-10" aria-labelledby={`list-${list.sub}`}>
               <div className="flex flex-wrap items-baseline justify-between gap-3 border-b-2 border-line pb-2.5">
                 <h2 id={`list-${list.sub}`} className="display text-h3">
-                  <Link href={`/category/${currentCategory.id}/${list.sub}/`} className="hover:text-accent">
+                  <Link href={subcategoryHref(currentCategory.id, list.sub, market)} className="hover:text-accent">
                     {list.label}
                   </Link>
                 </h2>
@@ -228,7 +249,7 @@ export async function CategoryListing({
                     {priceCaption(list.sub).toLowerCase()}
                   </span>
                   <Link
-                    href={`/category/${currentCategory.id}/${list.sub}/`}
+                    href={subcategoryHref(currentCategory.id, list.sub, market)}
                     className="font-medium text-accent hover:underline hidden sm:inline"
                   >
                     All {list.label.toLowerCase()} comparisons →
@@ -306,12 +327,17 @@ export async function CategoryListing({
 
           {featuredComparisons.length > 0 && (
             <section className="border-t border-line py-12" aria-labelledby="cat-matchups">
-              <h2 id="cat-matchups" className="display text-h3">
-                Matchups in {currentCategory.name.toLowerCase()}
-              </h2>
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <h2 id="cat-matchups" className="display text-h3">
+                  Top matchups in {currentCategory.name.toLowerCase()}
+                </h2>
+                <Link href={hubHref(market)} className="text-meta font-medium text-accent hover:underline">
+                  Browse all matchups →
+                </Link>
+              </div>
               <p className="mt-2 text-cell text-ink-2">
                 {featuredComparisons.length < categoryComparisons.length
-                  ? `${featuredComparisons.length} of ${categoryComparisons.length} published matchups, one product type at a time.`
+                  ? `${featuredComparisons.length} highlighted of ${categoryComparisons.length} published matchups, ranked for flagships, tradeoffs, and denser sheets — one product type at a time.`
                   : 'Every published matchup in this category.'}
               </p>
               <div className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-[repeat(2,minmax(0,1fr))] md:gap-4">
@@ -334,6 +360,21 @@ export async function CategoryListing({
             </section>
           )}
         </>
+      )}
+
+      {otherCategories.length > 0 && products.length > 0 && (
+        <section className="border-t border-line py-12" aria-labelledby="other-cats">
+          <h2 id="other-cats" className="display text-h4">
+            Other category hubs
+          </h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {otherCategories.map((category) => (
+              <Link key={category.id} href={categoryHref(category.id, market)} className="chip">
+                {category.name}
+              </Link>
+            ))}
+          </div>
+        </section>
       )}
 
       {currentCategory.popular_searches.length > 0 && (
