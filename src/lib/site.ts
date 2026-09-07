@@ -4,7 +4,7 @@ export const SITE_NAME = 'Clinchmark'
 export const SITE_EMAIL = (process.env.NEXT_PUBLIC_SITE_EMAIL ?? '').trim()
 export const GITHUB_REPO = 'https://github.com/etheuer/tiebreak'
 export const CATALOG_AS_OF = '2026-09-01'
-export const LEGAL_UPDATED = 'September 2, 2026'
+export const LEGAL_UPDATED = 'September 6, 2026'
 export const absUrl = (path: string) => `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`
 
 export function clip(text: string, max = 158): string {

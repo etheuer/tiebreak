@@ -9,59 +9,71 @@
       "televisions": {
         "dataset": "pd96-rr3d",
         "url": "https://data.energystar.gov/resource/pd96-rr3d.json"
+      },
+      "matchDump": {
+        "path": "docs/clinchmark-seo/linchpin/energy-star-matches.json",
+        "generatedAtUtc": "2026-09-06T23:44:27Z",
+        "matchedTotal": 11
       }
     },
     "notes": [
-      "Curated high-confidence matches only. Do not invent matches.",
-      "TODO: replace with build-time fetch + automated model_number matching once Steve drops a full match dump.",
-      "Cordless vacuums are NOT an ENERGY STAR product category — never badge them.",
-      "Show ENERGY STAR badge / annual kWh only when a product id appears below."
+      "Matches adapted from the 2026-09-06 linchpin dump (brand + normalized model / SKU bridges).",
+      "Confidence: high = exact|strong dump match; medium = fuzzy SKU/name bridge (still certified).",
+      "TV rows are series matches \u2014 annual kWh shown for a representative screen size (usually 65\").",
+      "Cordless vacuums are NOT an ENERGY STAR product category \u2014 never badge them.",
+      "Show ENERGY STAR badge / annual kWh only when a product id appears below.",
+      "LG G3/G4 and several Sony/TCL/Hisense catalog TVs remain unmatched \u2014 not present (or not safely mappable) in pd96-rr3d snapshot."
     ],
-    "eligibleSubcategories": ["air-purifiers", "tvs"],
-    "excludedSubcategories": ["cordless-vacuums"]
+    "eligibleSubcategories": [
+      "air-purifiers",
+      "tvs"
+    ],
+    "excludedSubcategories": [
+      "cordless-vacuums"
+    ]
   },
   "matches": [
+    {
+      "productId": "levoit-core-300s",
+      "subcategory": "air-purifiers",
+      "certified": true,
+      "energyStarModelNumber": "LAP-C311S-WUSR",
+      "energyStarModelIdentifier": "ES_1149962_LAP-C311S-WUSR_06092026163300_0000001",
+      "annualEnergyUseKwh": 132.0,
+      "meetsMostEfficient": false,
+      "brandName": "Levoit",
+      "dataset": "gaa3-swy6",
+      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-cleaners/",
+      "confidence": "medium",
+      "matchNote": "SKU/name bridge LAPC311S (dump confidence: fuzzy)."
+    },
     {
       "productId": "levoit-core-400s",
       "subcategory": "air-purifiers",
       "certified": true,
       "energyStarModelNumber": "Core 400S",
       "energyStarModelIdentifier": "ES_1140786_Core 400S_09142024132031_9555932",
-      "annualEnergyUseKwh": 237,
+      "annualEnergyUseKwh": 237.0,
       "meetsMostEfficient": false,
       "brandName": "Levoit",
       "dataset": "gaa3-swy6",
       "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-cleaners/",
       "confidence": "high",
-      "matchNote": "Exact model_number match in room air cleaners dataset."
+      "matchNote": "model Core 400S in ES blob (dump confidence: strong)."
     },
     {
       "productId": "levoit-core-600s",
       "subcategory": "air-purifiers",
       "certified": true,
       "energyStarModelNumber": "LAP-C601S-WUS",
-      "energyStarModelIdentifier": null,
-      "annualEnergyUseKwh": 387,
+      "energyStarModelIdentifier": "ES_1140786_LAP-C601S-WUS_11142024192755_8289605",
+      "annualEnergyUseKwh": 387.0,
       "meetsMostEfficient": false,
       "brandName": "Levoit",
       "dataset": "gaa3-swy6",
       "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-cleaners/",
-      "confidence": "high",
-      "matchNote": "Levoit Core 600S ships as LAP-C601S-WUS on the ENERGY STAR list."
-    },
-    {
-      "productId": "aleno-breathe-smart-75i",
-      "subcategory": "air-purifiers",
-      "certified": true,
-      "energyStarModelNumber": "BreatheSmart 75i_V2",
-      "energyStarModelIdentifier": "ES_1059643_BreatheSmart 75i_V2_02202024104427_7296411",
-      "annualEnergyUseKwh": 304,
-      "meetsMostEfficient": false,
-      "brandName": "Alen",
-      "dataset": "gaa3-swy6",
-      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-cleaners/",
-      "confidence": "high",
-      "matchNote": "Alen BreatheSmart 75i listed as BreatheSmart 75i_V2."
+      "confidence": "medium",
+      "matchNote": "SKU/name bridge LAPC601S (dump confidence: fuzzy)."
     },
     {
       "productId": "blueair-blue-pure-211-plus-auto",
@@ -69,87 +81,41 @@
       "certified": true,
       "energyStarModelNumber": "Pure 211+",
       "energyStarModelIdentifier": "ES_1022565_Pure 211+_09172025160000_0000001",
-      "annualEnergyUseKwh": 350,
+      "annualEnergyUseKwh": 350.0,
       "meetsMostEfficient": false,
       "brandName": "Blueair",
       "dataset": "gaa3-swy6",
       "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-cleaners/",
-      "confidence": "high",
-      "matchNote": "Exact Pure 211+ model_number match."
+      "confidence": "medium",
+      "matchNote": "SKU/name bridge PURE211 (dump confidence: fuzzy)."
     },
     {
       "productId": "coway-airmega-400",
       "subcategory": "air-purifiers",
       "certified": true,
       "energyStarModelNumber": "AP-2015F",
-      "energyStarModelIdentifier": null,
-      "annualEnergyUseKwh": 366,
+      "energyStarModelIdentifier": "ES_1071392_AP-2015F_10232025080446_9834213",
+      "annualEnergyUseKwh": 366.0,
       "meetsMostEfficient": false,
       "brandName": "Coway",
       "dataset": "gaa3-swy6",
       "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-cleaners/",
       "confidence": "high",
-      "matchNote": "ENERGY STAR model_name is Airmega 400 (AP-2015F)."
+      "matchNote": "model Airmega 400 in ES blob (dump confidence: strong)."
     },
     {
-      "productId": "samsung-s95d",
-      "subcategory": "tvs",
+      "productId": "aleno-breathe-smart-75i",
+      "subcategory": "air-purifiers",
       "certified": true,
-      "energyStarModelNumber": "QN65S95DAF",
-      "energyStarModelIdentifier": "ES_1023593_QN65S95DAF_122620230443476_4584361",
-      "annualEnergyUseKwh": 276.9,
+      "energyStarModelNumber": "BreatheSmart 75i_V2",
+      "energyStarModelIdentifier": "ES_1059643_BreatheSmart 75i_V2_02202024104427_7296411",
+      "annualEnergyUseKwh": 304.0,
       "meetsMostEfficient": false,
-      "brandName": "Samsung",
-      "dataset": "pd96-rr3d",
-      "screenSizeInches": 65,
-      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
+      "brandName": "Alen",
+      "dataset": "gaa3-swy6",
+      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-cleaners/",
       "confidence": "high",
-      "matchNote": "65-inch S95D series (catalog size). Other sizes also certified."
-    },
-    {
-      "productId": "samsung-qn90d",
-      "subcategory": "tvs",
-      "certified": true,
-      "energyStarModelNumber": "QN65QN90DAF",
-      "energyStarModelIdentifier": "ES_1023593_QN65QN90DAF_121220230809405_3064777",
-      "annualEnergyUseKwh": 265.9,
-      "meetsMostEfficient": false,
-      "brandName": "Samsung",
-      "dataset": "pd96-rr3d",
-      "screenSizeInches": 65,
-      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
-      "confidence": "high",
-      "matchNote": "65-inch QN90D series match."
-    },
-    {
-      "productId": "samsung-s90d",
-      "subcategory": "tvs",
-      "certified": true,
-      "energyStarModelNumber": "QN65S90DAF",
-      "energyStarModelIdentifier": "ES_1023593_QN65S90DAF_121720230605698_3315653",
-      "annualEnergyUseKwh": 251.1,
-      "meetsMostEfficient": false,
-      "brandName": "Samsung",
-      "dataset": "pd96-rr3d",
-      "screenSizeInches": 65,
-      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
-      "confidence": "high",
-      "matchNote": "65-inch S90D series match."
-    },
-    {
-      "productId": "lg-c4-oled",
-      "subcategory": "tvs",
-      "certified": true,
-      "energyStarModelNumber": "OLED65C4PU*",
-      "energyStarModelIdentifier": null,
-      "annualEnergyUseKwh": 244,
-      "meetsMostEfficient": false,
-      "brandName": "LG",
-      "dataset": "pd96-rr3d",
-      "screenSizeInches": 65,
-      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
-      "confidence": "high",
-      "matchNote": "65-inch C4 OLED family (wildcard stand/enclosure suffix)."
+      "matchNote": "model BreatheSmart 75i in ES blob (dump confidence: strong)."
     },
     {
       "productId": "lg-b4-oled",
@@ -164,7 +130,67 @@
       "screenSizeInches": 65,
       "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
       "confidence": "high",
-      "matchNote": "65-inch B4 OLED family (wildcard stand/enclosure suffix)."
+      "matchNote": "TV series match (LG OLED series B4): 5 certified SKU size(s) in ENERGY STAR open data (e.g. OLED48B4PU*, OLED55B4PU*, OLED65B4PU*\u2026). Badge uses representative 65\" listing OLED65B4PU*."
+    },
+    {
+      "productId": "samsung-s90d",
+      "subcategory": "tvs",
+      "certified": true,
+      "energyStarModelNumber": "QN65S90DAF",
+      "energyStarModelIdentifier": "ES_1023593_QN65S90DAF_121720230605698_3315653",
+      "annualEnergyUseKwh": 251.1,
+      "meetsMostEfficient": false,
+      "brandName": "Samsung",
+      "dataset": "pd96-rr3d",
+      "screenSizeInches": 65,
+      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
+      "confidence": "high",
+      "matchNote": "TV series match (model S90D in ES blob): 5 certified SKU size(s) in ENERGY STAR open data (e.g. QN42S90DAE, QN48S90DAE, QN55S90DAF\u2026). Badge uses representative 65\" listing QN65S90DAF."
+    },
+    {
+      "productId": "lg-c4-oled",
+      "subcategory": "tvs",
+      "certified": true,
+      "energyStarModelNumber": "OLED65C4PU*",
+      "energyStarModelIdentifier": null,
+      "annualEnergyUseKwh": 244,
+      "meetsMostEfficient": false,
+      "brandName": "LG",
+      "dataset": "pd96-rr3d",
+      "screenSizeInches": 65,
+      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
+      "confidence": "high",
+      "matchNote": "TV series match (LG OLED series C4): 6 certified SKU size(s) in ENERGY STAR open data (e.g. OLED42C4PU*, OLED48C4PU*, OLED55C4PU*\u2026). Badge uses representative 65\" listing OLED65C4PU*."
+    },
+    {
+      "productId": "samsung-qn90d",
+      "subcategory": "tvs",
+      "certified": true,
+      "energyStarModelNumber": "QN65QN90DAF",
+      "energyStarModelIdentifier": "ES_1023593_QN65QN90DAF_121220230809405_3064777",
+      "annualEnergyUseKwh": 265.9,
+      "meetsMostEfficient": false,
+      "brandName": "Samsung",
+      "dataset": "pd96-rr3d",
+      "screenSizeInches": 65,
+      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
+      "confidence": "high",
+      "matchNote": "TV series match (model QN90D in ES blob): 6 certified SKU size(s) in ENERGY STAR open data (e.g. QN43QN90DAF, QN50QN90DAF, QN55QN90DAF\u2026). Badge uses representative 65\" listing QN65QN90DAF."
+    },
+    {
+      "productId": "samsung-s95d",
+      "subcategory": "tvs",
+      "certified": true,
+      "energyStarModelNumber": "QN65S95DAF",
+      "energyStarModelIdentifier": "ES_1023593_QN65S95DAF_122620230443476_4584361",
+      "annualEnergyUseKwh": 276.9,
+      "meetsMostEfficient": false,
+      "brandName": "Samsung",
+      "dataset": "pd96-rr3d",
+      "screenSizeInches": 65,
+      "productFinderUrl": "https://www.energystar.gov/productfinder/product/certified-televisions/",
+      "confidence": "high",
+      "matchNote": "TV series match (model S95D in ES blob): 3 certified SKU size(s) in ENERGY STAR open data (e.g. QN55S95DAF, QN65S95DAF, QN77S95DAF). Badge uses representative 65\" listing QN65S95DAF."
     }
   ]
 }

@@ -245,8 +245,7 @@ export async function EnergyStarLanding({ focus }: { focus?: 'air-cleaners' | 'a
             <p className="num text-label text-ink-3">{airMatches.length} matched</p>
           </div>
           <p className="mt-2 text-meta text-ink-3">
-            Sample high-confidence matches from dataset gaa3-swy6. More catalog SKUs will land as
-            matching improves.
+            Curated matches from dataset gaa3-swy6 (high = strong/exact; medium = fuzzy SKU bridge still on the ENERGY STAR list). Vacuums stay unbadged.
           </p>
           <ul className="mt-5 grid gap-2.5">
             {airMatches.map((match) => (
@@ -265,9 +264,7 @@ export async function EnergyStarLanding({ focus }: { focus?: 'air-cleaners' | 'a
             <p className="num text-label text-ink-3">{tvMatches.length} matched</p>
           </div>
           <p className="mt-2 text-meta text-ink-3">
-            Sample high-confidence matches from dataset pd96-rr3d (65&quot; catalog sizes). Sony /
-            TCL / Hisense rows are absent from the current ENERGY STAR® TV list — no badges there
-            yet.
+            Series matches from dataset pd96-rr3d — badge uses a representative 65&quot; listing when the series spans sizes. LG G3/G4 and several Sony / TCL / Hisense catalog TVs remain unmatched in the open-data snapshot.
           </p>
           <ul className="mt-5 grid gap-2.5">
             {tvMatches.map((match) => (

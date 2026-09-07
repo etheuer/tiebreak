@@ -15,7 +15,7 @@ function languages(usPath: string, includeUk: boolean): MetadataRoute.Sitemap[nu
   return { languages: langs }
 }
 
-const LEGAL_PATHS = ['/about/', '/privacy/', '/terms/', '/energy-star/', '/energy-star/air-cleaners/'] as const
+const LEGAL_PATHS = ['/about/', '/methodology/', '/editorial-policy/', '/privacy/', '/terms/', '/energy-star/', '/energy-star/air-cleaners/'] as const
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const publishUk = isMarketPublished('uk')
