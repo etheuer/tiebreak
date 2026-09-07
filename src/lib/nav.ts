@@ -85,6 +85,8 @@ export function hubHref(market: MarketId = 'us'): string {
 
 export const LEGAL_LINKS = [
   { label: 'About', href: '/about/' },
+  { label: 'Methodology', href: '/methodology/' },
+  { label: 'Editorial policy', href: '/editorial-policy/' },
   { label: 'Privacy', href: '/privacy/' },
   { label: 'Terms', href: '/terms/' },
 ] as const

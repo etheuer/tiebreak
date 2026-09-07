@@ -26,7 +26,7 @@ export default function TermsPage() {
         mark on the page. We do not run a lab. Makers change sheets, retailers change prices, and
         issuers change card terms. We do not promise that a page is complete or current. Confirm
         facts with the manufacturer, seller, or issuer before you buy or apply.
-        See <Link href="/about/" className="text-accent hover:underline">how Clinchmark works</Link>.
+        See <Link href="/methodology/" className="text-accent hover:underline">how Clinchmark scores products</Link> and the <Link href="/editorial-policy/" className="text-accent hover:underline">editorial policy</Link>.
       </p>
       <h2 className="mt-2 text-lead font-semibold tracking-[-0.02em] text-ink">Trademarks</h2>
       <p>
