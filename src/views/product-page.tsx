@@ -23,6 +23,8 @@ import { ogImagesForProducts, productImageAbsUrls } from '@/lib/seo'
 import { formatCatalogDate, formatMoney } from '@/lib/format'
 import { buildProductFaq } from '@/lib/faq'
 import { ProductImage } from '@/components/ProductImage'
+import { EnergyStarBadge } from '@/components/EnergyStarBadge'
+import { getEnergyStarMatchForProduct } from '@/lib/energy-star'
 import { ProductSpecs } from '@/components/ProductSpecs'
 import { VsCard } from '@/components/VsCard'
 import { CompareLink } from '@/components/CompareLink'
@@ -113,6 +115,8 @@ export async function ProductDetail({
     value: specValue(product, field.key),
   }))
 
+  const energyStarMatch = await getEnergyStarMatchForProduct(product)
+
   const attributeCount = catalogFor(product.subcategory).reduce(
     (sum, group) => sum + group.fields.length,
     0
@@ -145,6 +149,7 @@ export async function ProductDetail({
             {product.brand} · {subLabel(product.subcategory)}
           </p>
           <h1 className="display mt-2 text-h1">{product.name}</h1>
+          {energyStarMatch ? <EnergyStarBadge match={energyStarMatch} /> : null}
           <p className="mt-3 max-w-2xl text-body leading-relaxed text-ink-2">
             {product.description}
           </p>

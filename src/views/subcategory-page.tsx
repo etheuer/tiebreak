@@ -30,6 +30,9 @@ import { buildAnswer, checkDealBreakers, flattenRows, lensRows, shortName } from
 import { ProductImage } from '@/components/ProductImage'
 import { CompareLink } from '@/components/CompareLink'
 import { FinanceDisclaimer } from '@/components/CatalogNotes'
+import { EnergyStarBadge } from '@/components/EnergyStarBadge'
+import { EnergyStarHubNote } from '@/components/EnergyStarHubNote'
+import { getEnergyStarMatchForProduct } from '@/lib/energy-star'
 
 export async function generateStaticParamsForMarket(market: MarketId) {
   const products = await getProducts(market)
@@ -141,6 +144,15 @@ export async function SubcategoryListing({
   )
 
   const useCases = casesFor(sub)
+  const energyStarEntries = await Promise.all(
+    subProducts.map(async (product) => {
+      const match = await getEnergyStarMatchForProduct(product)
+      return [product.id, match] as const
+    })
+  )
+  const energyStarByProduct = new Map(
+    energyStarEntries.filter((entry): entry is readonly [string, NonNullable<(typeof entry)[1]>] => entry[1] !== null)
+  )
   const lensTableData = subComparisons.map((c) => {
     const a = byId.get(c.productA)!
     const b = byId.get(c.productB)!
@@ -244,6 +256,7 @@ export async function SubcategoryListing({
           ))}
         </p>
         {isFeeBased(sub) ? <FinanceDisclaimer /> : null}
+        <EnergyStarHubNote subcategory={sub} />
       </header>
 
       {useCases.length > 0 && subComparisons.length > 0 && (
@@ -371,6 +384,11 @@ export async function SubcategoryListing({
                           {product.name}
                         </Link>
                       </h3>
+                      {energyStarByProduct.get(product.id) ? (
+                        <div className="mt-2">
+                          <EnergyStarBadge match={energyStarByProduct.get(product.id)!} compact />
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                   <p className="mt-2 line-clamp-2 text-meta leading-relaxed text-ink-2">
