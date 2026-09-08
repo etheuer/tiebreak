@@ -40,8 +40,8 @@ export function SpecTables({
       );
     }
     const update = (e: Event) => setPriority((e as CustomEvent<string>).detail);
-    window.addEventListener("clinchbench:priority", update);
-    return () => window.removeEventListener("clinchbench:priority", update);
+    window.addEventListener("clinchmark:priority", update);
+    return () => window.removeEventListener("clinchmark:priority", update);
   }, [productA.subcategory]);
   const rows = groups.flatMap((group) =>
     group.rows.map((row) => ({ ...row, group: group.label })),

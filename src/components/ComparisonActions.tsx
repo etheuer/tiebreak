@@ -15,7 +15,7 @@ export function ComparisonActions({ name }: { name: string }) {
       const items = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key?.startsWith("clinchbench:saved:")) {
+        if (key?.startsWith("clinchmark:saved:")) {
           try {
             const item = JSON.parse(localStorage.getItem(key)!);
             const url = new URL(item.url, location.origin);
@@ -32,7 +32,7 @@ export function ComparisonActions({ name }: { name: string }) {
   }
   const storageKey = () => {
     const params = new URLSearchParams(location.search);
-    return `clinchbench:saved:${location.pathname}${params.has("a") ? `?a=${params.get("a")}&b=${params.get("b") ?? ""}` : ""}`;
+    return `clinchmark:saved:${location.pathname}${params.has("a") ? `?a=${params.get("a")}&b=${params.get("b") ?? ""}` : ""}`;
   };
   useEffect(() => {
     try {

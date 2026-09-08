@@ -28,14 +28,12 @@ import { pageAlternates, openGraphLocale } from "@/lib/hreflang";
 import type { MarketId } from "@/lib/markets";
 import { buildAnswer, checkDealBreakers, flattenRows } from "@/lib/decision";
 import { buildCompareFaq, buildLensAnswers } from "@/lib/faq";
-import { absUrl, clip, CATALOG_AS_OF, SITE_NAME } from "@/lib/site";
+import { absUrl, CATALOG_AS_OF, SITE_NAME } from "@/lib/site";
 import {
-  compareEditorialIntro,
   compareSeoDescription,
   compareSeoTitle,
   ogImagesForProducts,
   productImageAbsUrls,
-  relatedComparisonsForSubcategory,
 } from "@/lib/seo";
 import { formatCatalogDate } from "@/lib/format";
 import { casesFor } from "@/data/use-cases";
@@ -115,6 +113,46 @@ export async function generateMetadataForMarket(
     },
   };
 }
+
+type SwapOption = {
+  id: string;
+  name: string;
+  priceText: string;
+  href: string | null;
+};
+
+async function swapOptions(
+  target: Product,
+  keep: Product,
+  market: MarketId,
+): Promise<SwapOption[]> {
+  const [products, comparisons] = await Promise.all([
+    getProducts(market),
+    getComparisons(market),
+  ]);
+  return products
+    .filter(
+      (p) =>
+        p.subcategory === target.subcategory &&
+        p.id !== target.id &&
+        p.id !== keep.id,
+    )
+    .sort(
+      (x, y) =>
+        (priceOf(x, market)?.amount ?? x.price) -
+        (priceOf(y, market)?.amount ?? y.price),
+    )
+    .map((p) => {
+      const match = findComparison(comparisons, p.id, keep.id);
+      return {
+        id: p.id,
+        name: p.name,
+        priceText: priceShort(p, market),
+        href: match ? compareHref(match, market) : null,
+      };
+    });
+}
+
 
 export async function CompareMatchup({
   params,
@@ -387,6 +425,7 @@ export async function CompareMatchup({
                 item: {
                   "@type": "Product",
                   name: product.name,
+                  image: productImageAbsUrls(product),
                   brand: {
                     "@type": "Brand",
                     name: product.brand,

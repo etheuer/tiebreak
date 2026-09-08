@@ -115,7 +115,7 @@ export function DecisionPanel({
     capture("use_case_selected", { use_case: id });
     updatePreference("priority", id);
     window.dispatchEvent(
-      new CustomEvent("clinchbench:priority", { detail: id }),
+      new CustomEvent("clinchmark:priority", { detail: id }),
     );
     try {
       localStorage.setItem(lensKey(sub), id);
