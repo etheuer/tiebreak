@@ -18,10 +18,15 @@
     "check:comparisons": "node scripts/check-comparisons.mjs",
     "check:staleness": "node scripts/check-staleness.mjs",
     "check:export": "node scripts/check-catalog.mjs --export && node scripts/check-i18n.mjs --export",
-    "verify:internal": "npm run check:catalog && npm run check:i18n && npm run check:spec:schema && npm run check:spec:values && npm run check:spec:consistency && npm run check:comparisons && npm run check:staleness",
+    "verify:internal": "npm run check:catalog && npm run check:i18n && npm run check:spec:schema && npm run check:spec:values && npm run check:spec:consistency && npm run check:comparisons && npm run check:staleness && npm run check:reachability",
     "verify": "npm run lint && npm run typecheck && npm run verify:internal && npm run build && npm run check:export",
     "review": "node scripts/open-for-review.mjs",
-    "test": "npm run verify"
+    "test": "npm run verify",
+    "check:images": "node scripts/check-product-images.mjs",
+    "images:review": "node scripts/check-product-images.mjs review",
+    "images:approve": "node scripts/check-product-images.mjs approve",
+    "test:images": "node --test scripts/check-product-images.test.mjs",
+    "check:reachability": "node scripts/audit-reachability.mjs"
   },
   "dependencies": {
     "next": "16.3.4",

@@ -45,6 +45,9 @@ jobs:
       - name: Validate catalog integrity
         run: npm run check:catalog
 
+      - name: Validate product images and regression checks
+        run: npm run test:images && npm run check:images
+
       - name: Validate i18n & market rules
         run: npm run check:i18n
 

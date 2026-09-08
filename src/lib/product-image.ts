@@ -6,11 +6,10 @@
  * `src/data/generated/product-images.json`. Anything else falls back to a
  * branded monogram tile, never to a dead placeholder service.
  *
- * The catalog's `image_url` values all point at via.placeholder.com (long
- * dead), so they are treated as "no photo" on purpose: rendering them would
- * show broken images to shoppers. When a row gains a real manufacturer or
- * studio URL, `isRealImageUrl` lets it through automatically.
+ * Only reviewed local photos are rendered. Remote catalogue image_url values
+ * must be downloaded, prepared and reviewed before they enter the manifest.
  */
+
 
 const PLACEHOLDER_HOSTS = [
   'via.placeholder.com',
@@ -92,6 +91,7 @@ export const DERIVED_WIDTH_FOR_SIZE = {
   sm: 80,
   md: 160,
   lg: 320,
+  hero: 320,
 } as const
 
 export type DerivedWidth = (typeof DERIVED_WIDTH_FOR_SIZE)[keyof typeof DERIVED_WIDTH_FOR_SIZE]
